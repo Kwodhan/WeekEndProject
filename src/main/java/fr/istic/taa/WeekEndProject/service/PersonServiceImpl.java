@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.istic.taa.WeekEndProject.model.Location;
 import fr.istic.taa.WeekEndProject.model.Person;
 import fr.istic.taa.WeekEndProject.repository.PersonRepository;
 import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
@@ -14,13 +13,13 @@ import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
 @Service
 public class PersonServiceImpl implements PersonService {
 
-
 	@Autowired
 	private PersonRepository PersonRepository;
 
-	public PersonServiceImpl(){
-	
+	public PersonServiceImpl() {
+
 	}
+
 	@Transactional
 	public Person create(Person person) {
 		Person createdPerson = person;
@@ -29,12 +28,13 @@ public class PersonServiceImpl implements PersonService {
 
 	@Transactional
 	public Person delete(Long id) throws PersonNotFound {
-		Person deletedPerson = PersonRepository.findOne(id);
+		Person deletedPerson = PersonRepository.findById(id);
 
-		if (deletedPerson == null)
+		if (deletedPerson == null) {
 			throw new PersonNotFound();
-		
-		
+		}
+		deletedPerson.getHomes().clear();
+		deletedPerson.getActivities().clear();
 		PersonRepository.delete(deletedPerson);
 		return deletedPerson;
 	}
@@ -46,25 +46,24 @@ public class PersonServiceImpl implements PersonService {
 
 	@Transactional
 	public Person update(Person person) throws PersonNotFound {
-		Person updatedPerson = PersonRepository.findOne(person.getId());
+		Person updatedPerson = PersonRepository.findById(person.getId());
 
 		if (updatedPerson == null)
 			throw new PersonNotFound();
 
 		updatedPerson.setName(person.getName());
-		for(Location p : person.getHomes()) {
-			updatedPerson.getHomes().add(p);
-		}
-		
-		/*
-		 * TODO : others attribut
-		 */
+		updatedPerson.setHomes(person.getHomes());
+		updatedPerson.setActivities(person.getActivities());
 		return updatedPerson;
 	}
-	@Transactional
+
+	/**
+	 * fetch = eager
+	 */
 	public Person findById(Long id) {
 		// TODO Auto-generated method stub
-		return PersonRepository.findOne(id);
+
+		return PersonRepository.findById(id);
 
 	}
 
@@ -72,10 +71,20 @@ public class PersonServiceImpl implements PersonService {
 		// TODO Auto-generated method stub
 		return PersonRepository.findByName(name);
 	}
-	
+
 	public List<Person> findByNameWithLocation(String name) {
 		// TODO Auto-generated method stub
 		return PersonRepository.findByNameWithLocation(name);
+	}
+
+	public List<Person> findByNameWithActivities(String name) {
+		// TODO Auto-generated method stub
+		return PersonRepository.findByNameWithActivities(name);
+	}
+
+	public List<Person> findByNameWithAll(String name) {
+		// TODO Auto-generated method stub
+		return PersonRepository.findByNameWithAll(name);
 	}
 
 }

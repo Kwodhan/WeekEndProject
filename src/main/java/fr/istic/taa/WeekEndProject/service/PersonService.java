@@ -6,6 +6,7 @@ import fr.istic.taa.WeekEndProject.model.Person;
 import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
 
 public interface PersonService {
+
 	public Person create(Person person);
 
 	public Person delete(Long id) throws PersonNotFound;
@@ -15,10 +16,13 @@ public interface PersonService {
 	public Person update(Person person) throws PersonNotFound;
 
 	public Person findById(Long id);
-	
+
 	public List<Person> findByName(String name);
-	
+
 	public List<Person> findByNameWithLocation(String name);
-	
+
+	public List<Person> findByNameWithActivities(String name);
+
+	public List<Person> findByNameWithAll(String name);
 
 }

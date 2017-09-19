@@ -6,16 +6,18 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
- * Place 
+ * Place
  * 
  * @author aferey
  *
@@ -32,7 +34,7 @@ public class Location {
 		super();
 		this.name = name;
 	}
-	
+
 	public Location() {
 	}
 
@@ -55,8 +57,9 @@ public class Location {
 		this.name = name;
 	}
 
-	@ManyToMany(mappedBy = "homes",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH})
-	@JsonBackReference
+	@ManyToMany(mappedBy = "homes", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIgnoreProperties("homes")
 	public List<Person> getPerson() {
 		return person;
 	}
@@ -64,9 +67,9 @@ public class Location {
 	public void setPerson(List<Person> person) {
 		this.person = person;
 	}
-	
+
 	public String toString() {
-		return "Location : "+ this.name;
+		return "Location : " + this.name;
 	}
 
 }

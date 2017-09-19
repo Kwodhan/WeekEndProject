@@ -13,8 +13,10 @@ public interface LocationService {
 	public List<Location> findAll();
 
 	public Location update(Location location) throws LocationNotFound;
-
+	
 	public Location findById(Long id);
 	
 	public List<Location> findByName(String name);
+	
+	public List<Location> findByNameWithPerson(String name);
 }

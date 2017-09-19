@@ -10,7 +10,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyJoinColumn;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 
@@ -60,9 +59,9 @@ public class Person {
 		this.name = name;
 	}
 
-	@ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "PERS_LOCATION", joinColumns = @JoinColumn(name = "PERS_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "LOCATION_ID", referencedColumnName = "ID"))
-	@JsonManagedReference
+	@JsonIgnoreProperties("person")
 	public List<Location> getHomes() {
 		return homes;
 	}
@@ -90,8 +89,8 @@ public class Person {
 	}
 
 	public void addLocation(Location place) {
-		if (!homes.contains(place)) {
-			this.homes.add(place);
+		if (!this.getHomes().contains(place)) {
+			this.getHomes().add(place);
 		}
 
 	}
