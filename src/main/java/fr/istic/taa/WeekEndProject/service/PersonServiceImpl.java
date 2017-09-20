@@ -6,15 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.istic.taa.WeekEndProject.model.Location;
 import fr.istic.taa.WeekEndProject.model.Person;
+import fr.istic.taa.WeekEndProject.repository.LocationRepository;
 import fr.istic.taa.WeekEndProject.repository.PersonRepository;
+import fr.istic.taa.WeekEndProject.service.exception.LocationNotFound;
 import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
 
 @Service
 public class PersonServiceImpl implements PersonService {
 
 	@Autowired
-	private PersonRepository PersonRepository;
+	private PersonRepository personRepository;
+
+	@Autowired
+	private LocationRepository locationRepository;
 
 	public PersonServiceImpl() {
 
@@ -23,37 +29,36 @@ public class PersonServiceImpl implements PersonService {
 	@Transactional
 	public Person create(Person person) {
 		Person createdPerson = person;
-		return PersonRepository.save(createdPerson);
+		return personRepository.save(createdPerson);
 	}
 
 	@Transactional
 	public Person delete(Long id) throws PersonNotFound {
-		Person deletedPerson = PersonRepository.findById(id);
+		Person deletedPerson = personRepository.findById(id);
 
 		if (deletedPerson == null) {
 			throw new PersonNotFound();
 		}
 		deletedPerson.getHomes().clear();
 		deletedPerson.getActivities().clear();
-		PersonRepository.delete(deletedPerson);
+		personRepository.delete(deletedPerson);
 		return deletedPerson;
 	}
 
 	public List<Person> findAll() {
 		// TODO Auto-generated method stub
-		return PersonRepository.findAll();
+		return personRepository.findAll();
 	}
 
 	@Transactional
 	public Person update(Person person) throws PersonNotFound {
-		Person updatedPerson = PersonRepository.findById(person.getId());
+
+		Person updatedPerson = personRepository.findById(person.getId());
 
 		if (updatedPerson == null)
 			throw new PersonNotFound();
 
 		updatedPerson.setName(person.getName());
-		updatedPerson.setHomes(person.getHomes());
-		updatedPerson.setActivities(person.getActivities());
 		return updatedPerson;
 	}
 
@@ -63,28 +68,48 @@ public class PersonServiceImpl implements PersonService {
 	public Person findById(Long id) {
 		// TODO Auto-generated method stub
 
-		return PersonRepository.findById(id);
+		return personRepository.findById(id);
 
 	}
 
 	public List<Person> findByName(String name) {
 		// TODO Auto-generated method stub
-		return PersonRepository.findByName(name);
+		return personRepository.findByName(name);
 	}
 
 	public List<Person> findByNameWithLocation(String name) {
 		// TODO Auto-generated method stub
-		return PersonRepository.findByNameWithLocation(name);
+		return personRepository.findByNameWithLocation(name);
 	}
 
 	public List<Person> findByNameWithActivities(String name) {
 		// TODO Auto-generated method stub
-		return PersonRepository.findByNameWithActivities(name);
+		return personRepository.findByNameWithActivities(name);
 	}
 
 	public List<Person> findByNameWithAll(String name) {
 		// TODO Auto-generated method stub
-		return PersonRepository.findByNameWithAll(name);
+		return personRepository.findByNameWithAll(name);
+	}
+
+	@Transactional
+	public Person updateLocation(Long idPerson, Long idLocation) throws PersonNotFound, LocationNotFound {
+
+		Person updatedPerson = personRepository.findById(idPerson);
+
+		if (updatedPerson == null)
+			throw new PersonNotFound();
+
+		Location location = locationRepository.findOne(idLocation);
+
+		if (location == null)
+			throw new LocationNotFound();
+
+		if (!updatedPerson.getHomes().contains(location)) {
+			updatedPerson.getHomes().add(location);
+		}
+
+		return updatedPerson;
 	}
 
 }

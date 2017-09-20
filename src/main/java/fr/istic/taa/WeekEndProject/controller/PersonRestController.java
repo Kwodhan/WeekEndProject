@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.istic.taa.WeekEndProject.model.Person;
 import fr.istic.taa.WeekEndProject.service.PersonService;
+import fr.istic.taa.WeekEndProject.service.exception.LocationNotFound;
 import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
 
 /**
@@ -56,6 +57,22 @@ public class PersonRestController {
 			p1 = this.serviceP.update(person);
 			return new ResponseEntity<Person>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@RequestMapping(value = "{idP}/addLocation/{idL}", method = RequestMethod.PUT)
+	ResponseEntity<Person> updatePersonLocation(@PathVariable("idP") long idP, @PathVariable("idL") long idL) {
+		Person p1;
+		try {
+			p1 = this.serviceP.updateLocation(idP, idL);
+			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+		} catch (PersonNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		} catch (LocationNotFound e) {
 			// TODO Auto-generated catch block
 			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
 		}

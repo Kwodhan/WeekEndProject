@@ -15,21 +15,22 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import fr.istic.taa.WeekEndProject.model.Meteo;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@Table(name="Activity")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "Activity")
 public abstract class AbstractActivity {
 	private Long id;
 
 	/**
 	 * List of good meteo for the Activity
 	 */
-	
+
 	private List<Meteo> meteos = new ArrayList<Meteo>();
-	
+
 	private String name;
 
 	public AbstractActivity(String name) {
@@ -39,7 +40,7 @@ public abstract class AbstractActivity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ID")
+	@Column(name = "ID")
 	public Long getId() {
 		return id;
 	}
@@ -48,15 +49,13 @@ public abstract class AbstractActivity {
 		this.id = id;
 	}
 
-	
-
 	/**
 	 * return true if the meteo is good for the sport
 	 * 
 	 * @param meteo
 	 * @return
 	 */
-	
+
 	public boolean hasGoodMeteo(Meteo meteo) {
 		return this.meteos.contains(meteo);
 	}
@@ -64,6 +63,7 @@ public abstract class AbstractActivity {
 	protected void addGoodMeteo(Meteo meteo) {
 		this.meteos.add(meteo);
 	}
+
 	@Enumerated(EnumType.STRING)
 	@ElementCollection
 	@CollectionTable(name = "ACTIVITY_METEO")
@@ -82,7 +82,8 @@ public abstract class AbstractActivity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	@Transient
+	public abstract String getType();
 
 }

@@ -4,16 +4,6 @@ COMMIT
 /*C2*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C3*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C4*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C5*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C6*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C7*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C8*/SET SCHEMA PUBLIC
 drop table ACT_LEVEL if exists
 drop table Activity if exists
 drop table ACTIVITY_METEO if exists
@@ -22,7 +12,7 @@ drop table PERS_LOCATION if exists
 drop table Person if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C9*/SET SCHEMA PUBLIC
+/*C4*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
@@ -36,14 +26,37 @@ alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign ke
 alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
 alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
-/*C10*/SET SCHEMA PUBLIC
+/*C5*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C11*/SET SCHEMA PUBLIC
+/*C6*/SET SCHEMA PUBLIC
 INSERT INTO PERSON VALUES(1,'Hello')
 COMMIT
-/*C12*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(1,'Hello')
+COMMIT
+INSERT INTO PERS_LOCATION VALUES(1,1)
+COMMIT
+/*C7*/SET SCHEMA PUBLIC
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
 DISCONNECT
-/*C13*/SET SCHEMA PUBLIC
+/*C8*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(2,'rette')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+DISCONNECT
+/*C9*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(3,'rette')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+DISCONNECT
+/*C10*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=1
+INSERT INTO PERSON VALUES(1,'rette')
+DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+COMMIT
+DISCONNECT
+/*C11*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C12*/SET SCHEMA PUBLIC
 alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
 alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
@@ -57,7 +70,7 @@ drop table PERS_LOCATION if exists
 drop table Person if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C14*/SET SCHEMA PUBLIC
+/*C13*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
@@ -71,185 +84,150 @@ alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign ke
 alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
 alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO PERSON VALUES(1,'Hello')
+COMMIT
+INSERT INTO LOCATION VALUES(1,'Hello')
+COMMIT
+INSERT INTO PERS_LOCATION VALUES(1,1)
+COMMIT
 /*C15*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C16*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C17*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
 /*C18*/SET SCHEMA PUBLIC
+DELETE FROM LOCATION WHERE ID=1
+INSERT INTO LOCATION VALUES(1,'rette')
+COMMIT
 DISCONNECT
 /*C19*/SET SCHEMA PUBLIC
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
 DISCONNECT
 /*C20*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(2,'rette')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
 DISCONNECT
 /*C21*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+INSERT INTO LOCATION VALUES(3,'rette')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
 DISCONNECT
 /*C22*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+INSERT INTO LOCATION VALUES(4,'zerrze')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
 DISCONNECT
 /*C23*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
+INSERT INTO PERSON VALUES(5,'zerrze')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
 COMMIT
+DISCONNECT
 /*C24*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(6,'zerrze')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
 DISCONNECT
-/*C11*/INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C25*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C26*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=1
+INSERT INTO PERSON VALUES(1,'zerrze')
+DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+COMMIT
 DISCONNECT
 /*C27*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C28*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C29*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
 /*C30*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=1
+INSERT INTO PERSON VALUES(1,'zes')
+COMMIT
 DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C31*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C32*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C33*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
 /*C34*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
-/*C35*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
+/*C6*/INSERT INTO PERSON VALUES(1,'Hello')
 COMMIT
 INSERT INTO LOCATION VALUES(1,'Hello')
 COMMIT
 INSERT INTO PERS_LOCATION VALUES(1,1)
 COMMIT
+/*C35*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=1
+INSERT INTO PERSON VALUES(1,'zes')
+DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+COMMIT
+DISCONNECT
 /*C36*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=1
+INSERT INTO PERSON VALUES(1,'dsdq')
+COMMIT
 DISCONNECT
 /*C37*/SET SCHEMA PUBLIC
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
 DISCONNECT
 /*C38*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(2,'dsq')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
 DISCONNECT
 /*C39*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+DELETE FROM PERSON WHERE ID=2
+INSERT INTO PERSON VALUES(2,'dqsdsdq')
+COMMIT
 DISCONNECT
 /*C40*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DELETE FROM PERSON WHERE ID=2
+INSERT INTO PERSON VALUES(2,'dsqdsqdqs')
+COMMIT
 DISCONNECT
 /*C41*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=2
+INSERT INTO PERSON VALUES(2,'cwx')
+COMMIT
 DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C42*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C43*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=2
+INSERT INTO PERSON VALUES(2,'dqsdqsd')
+COMMIT
 DISCONNECT
 /*C44*/SET SCHEMA PUBLIC
 DISCONNECT
@@ -283,281 +261,199 @@ alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key
 DISCONNECT
 /*C47*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
+/*C6*/INSERT INTO PERSON VALUES(1,'Hello')
 COMMIT
 INSERT INTO LOCATION VALUES(1,'Hello')
 COMMIT
 INSERT INTO PERS_LOCATION VALUES(1,1)
 COMMIT
 /*C48*/SET SCHEMA PUBLIC
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
 DISCONNECT
 /*C49*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(2,'dqsdqsd')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
 DISCONNECT
 /*C50*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(3,'dqsdqsd')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
 DISCONNECT
 /*C51*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+DELETE FROM PERSON WHERE ID=1
+INSERT INTO PERSON VALUES(1,'dqsdqsd')
+DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+COMMIT
 DISCONNECT
 /*C52*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DELETE FROM PERSON WHERE ID=2
+INSERT INTO PERSON VALUES(2,'dsqdsqdsqdqsdsqdsdq')
+COMMIT
 DISCONNECT
 /*C53*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=2
+INSERT INTO PERSON VALUES(2,'cxwcwxcwxcqdqsdsqdqsdq')
+COMMIT
 DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C54*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=3
+INSERT INTO PERSON VALUES(3,'cxwcwxcwxcqdqsdsqdqsdq')
+COMMIT
 DISCONNECT
 /*C55*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=3
+INSERT INTO PERSON VALUES(3,'alerte')
+COMMIT
 DISCONNECT
 /*C56*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+INSERT INTO LOCATION VALUES(4,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
 DISCONNECT
 /*C57*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+INSERT INTO LOCATION VALUES(5,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
 DISCONNECT
 /*C58*/SET SCHEMA PUBLIC
+DELETE FROM LOCATION WHERE ID=1
+INSERT INTO LOCATION VALUES(1,'alerte')
+COMMIT
 DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C59*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C60*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C61*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
 /*C62*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
-/*C63*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C64*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C65*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
-DISCONNECT
-/*C66*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
-DISCONNECT
-/*C67*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C68*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C69*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
-DISCONNECT
-/*C70*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
-DISCONNECT
-/*C71*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C11*/INSERT INTO PERSON VALUES(1,'Hello')
+/*C6*/INSERT INTO PERSON VALUES(1,'Hello')
 COMMIT
 INSERT INTO LOCATION VALUES(1,'Hello')
 COMMIT
 INSERT INTO PERS_LOCATION VALUES(1,1)
+COMMIT
+/*C63*/SET SCHEMA PUBLIC
+DELETE FROM LOCATION WHERE ID=1
+INSERT INTO LOCATION VALUES(1,'alerte')
+COMMIT
+DISCONNECT
+/*C64*/SET SCHEMA PUBLIC
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+DISCONNECT
+/*C65*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(2,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+DISCONNECT
+/*C66*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(3,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+DISCONNECT
+/*C67*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(4,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+DISCONNECT
+/*C68*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(5,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+DISCONNECT
+/*C69*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(6,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+DISCONNECT
+/*C70*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(7,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+DISCONNECT
+/*C71*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(8,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+DISCONNECT
+/*C72*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(9,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
 COMMIT
 DISCONNECT
 /*C73*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(10,'alerte')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
+COMMIT
 DISCONNECT
 /*C74*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=1
+INSERT INTO PERSON VALUES(1,'alerte')
+DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+COMMIT
 DISCONNECT
+/*C6*/INSERT INTO PERS_LOCATION VALUES(1,1)
+COMMIT
 /*C75*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+COMMIT
 DISCONNECT
+/*C6*/INSERT INTO PERS_LOCATION VALUES(1,1)
+COMMIT
 /*C76*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
 /*C77*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=1
+INSERT INTO PERSON VALUES(1,'dsqdq')
+DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+COMMIT
 DISCONNECT
 /*C78*/SET SCHEMA PUBLIC
+DELETE FROM LOCATION WHERE ID=1
+INSERT INTO LOCATION VALUES(1,'dsqdq')
+COMMIT
 DISCONNECT
 /*C79*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C80*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DELETE FROM LOCATION WHERE ID=1
+INSERT INTO LOCATION VALUES(1,'dqsd')
+COMMIT
 DISCONNECT
 /*C81*/SET SCHEMA PUBLIC
+DELETE FROM LOCATION WHERE ID=1
+INSERT INTO LOCATION VALUES(1,'dsqdsqdqsdq')
+COMMIT
 DISCONNECT
-/*C72*/SET SCHEMA PUBLIC
-INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C82*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C83*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C84*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C85*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C86*/SET SCHEMA PUBLIC
 alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
 alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
@@ -571,7 +467,7 @@ drop table PERS_LOCATION if exists
 drop table Person if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C87*/SET SCHEMA PUBLIC
+/*C84*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
@@ -585,26 +481,28 @@ alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign ke
 alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
 alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
-/*C88*/SET SCHEMA PUBLIC
+/*C85*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C72*/INSERT INTO PERSON VALUES(1,'Hello')
+/*C6*/INSERT INTO PERSON VALUES(1,'Hello')
 COMMIT
 INSERT INTO LOCATION VALUES(1,'Hello')
 COMMIT
 INSERT INTO PERS_LOCATION VALUES(1,1)
 COMMIT
+/*C86*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C87*/SET SCHEMA PUBLIC
+DELETE FROM LOCATION WHERE ID=1
+INSERT INTO LOCATION VALUES(1,'dsqdsqdqsdq')
+COMMIT
+DISCONNECT
+/*C88*/SET SCHEMA PUBLIC
+DISCONNECT
 /*C89*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C90*/SET SCHEMA PUBLIC
-DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
-DELETE FROM PERSON WHERE ID=1
-COMMIT
 DISCONNECT
-/*C72*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
 /*C91*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C92*/SET SCHEMA PUBLIC
 alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
 alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
@@ -618,7 +516,7 @@ drop table PERS_LOCATION if exists
 drop table Person if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C93*/SET SCHEMA PUBLIC
+/*C92*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
@@ -632,53 +530,35 @@ alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign ke
 alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
 alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
+/*C93*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO PERSON VALUES(1,'Hello')
+COMMIT
+INSERT INTO LOCATION VALUES(1,'Hello')
+COMMIT
+INSERT INTO PERS_LOCATION VALUES(1,1)
+COMMIT
 /*C94*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C95*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C72*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C96*/SET SCHEMA PUBLIC
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
 DISCONNECT
 /*C97*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(2,'dsqdsqdqsdq')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
 DISCONNECT
 /*C98*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+INSERT INTO PERS_LOCATION VALUES(1,1)
+INSERT INTO PERS_LOCATION VALUES(1,2)
+COMMIT
 DISCONNECT
 /*C99*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
 /*C100*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C101*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C102*/SET SCHEMA PUBLIC
 alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
 alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
@@ -692,7 +572,7 @@ drop table PERS_LOCATION if exists
 drop table Person if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C103*/SET SCHEMA PUBLIC
+/*C101*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
@@ -706,105 +586,59 @@ alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign ke
 alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
 alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
-/*C104*/SET SCHEMA PUBLIC
+/*C102*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C72*/INSERT INTO PERSON VALUES(1,'Hello')
+/*C103*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(1,'dsqdsqdqsdq')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
 COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
+DISCONNECT
+/*C104*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(2,'salut')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
 COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
+DISCONNECT
 /*C105*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(3,'merde')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
 DISCONNECT
 /*C106*/SET SCHEMA PUBLIC
-DELETE FROM PERSON WHERE ID=1
-INSERT INTO PERSON VALUES(1,'TRuc')
-DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
+INSERT INTO LOCATION VALUES(4,'lol')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
 COMMIT
 DISCONNECT
 /*C107*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(5,'lol')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
 DISCONNECT
 /*C108*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
+INSERT INTO PERS_LOCATION VALUES(1,4)
+COMMIT
 DISCONNECT
 /*C109*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+INSERT INTO PERS_LOCATION VALUES(2,4)
+COMMIT
 DISCONNECT
 /*C110*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C72*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C111*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C112*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C113*/SET SCHEMA PUBLIC
-alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
-alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-drop table ACT_LEVEL if exists
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C114*/SET SCHEMA PUBLIC
-create sequence hibernate_sequence start with 1 increment by 1
-create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, name varchar(255), primary key (ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
-create table Person (ID bigint not null, name varchar(255), primary key (ID))
-alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
-alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+INSERT INTO PERSON VALUES(6,'lol')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
 DISCONNECT
 /*C115*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C72*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
 /*C116*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C117*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C118*/SET SCHEMA PUBLIC
 alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
 alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
@@ -818,7 +652,7 @@ drop table PERS_LOCATION if exists
 drop table Person if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C119*/SET SCHEMA PUBLIC
+/*C118*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
@@ -832,37 +666,360 @@ alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign ke
 alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
 alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
-/*C72*/INSERT INTO PERSON VALUES(1,'Hello')
-COMMIT
-INSERT INTO LOCATION VALUES(1,'Hello')
-COMMIT
-INSERT INTO PERS_LOCATION VALUES(1,1)
-COMMIT
+/*C119*/SET SCHEMA PUBLIC
+DISCONNECT
 /*C120*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C121*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
 /*C122*/SET SCHEMA PUBLIC
-DELETE FROM PERSON WHERE ID=1
-INSERT INTO PERSON VALUES(1,'TRuc')
-DELETE FROM PERS_LOCATION WHERE PERS_ID=1 AND LOCATION_ID=1
-COMMIT
 DISCONNECT
 /*C123*/SET SCHEMA PUBLIC
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C124*/SET SCHEMA PUBLIC
-INSERT INTO PERSON VALUES(2,'rette')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
-COMMIT
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
 /*C125*/SET SCHEMA PUBLIC
-INSERT INTO PERSON VALUES(3,'rette')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
-COMMIT
 DISCONNECT
 /*C126*/SET SCHEMA PUBLIC
-INSERT INTO PERSON VALUES(4,'rette')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C127*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DISCONNECT
+/*C128*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO ACTIVITY VALUES('Loisir',1,'name')
+COMMIT
+/*C129*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C130*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C131*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C132*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DISCONNECT
+/*C133*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO ACTIVITY VALUES('Loisir',1,'name')
+COMMIT
+/*C134*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C135*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C136*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C137*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DISCONNECT
+/*C138*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO ACTIVITY VALUES('Loisir',1,'name')
+COMMIT
+/*C139*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C140*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C141*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C142*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C143*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DISCONNECT
+/*C144*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO ACTIVITY VALUES('Loisir',1,'Name')
+COMMIT
+/*C145*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C146*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C147*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C148*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DISCONNECT
+/*C149*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO ACTIVITY VALUES('Loisir',1,'Name')
+COMMIT
+/*C150*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C151*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C152*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C153*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C154*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C155*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DISCONNECT
+/*C156*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C157*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO ACTIVITY VALUES('Location',1,'name')
+COMMIT
+/*C158*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C6*/INSERT INTO ACTIVITY VALUES('Loisir',2,'name')
+COMMIT
+/*C159*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C160*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C161*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C162*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DISCONNECT
+/*C163*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C164*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C165*/SET SCHEMA PUBLIC
+alter table ACT_LEVEL drop constraint FK48wataa3yurkcclgvj8k5o0tp
+alter table ACT_LEVEL drop constraint FKbsgm5xytc23fjeveatwppx1na
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table ACT_LEVEL if exists
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C166*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table ACT_LEVEL (Person_ID bigint not null, LEVEL varchar(255), ACT_ID bigint not null, primary key (Person_ID, ACT_ID))
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, name varchar(255), primary key (ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null)
+create table Person (ID bigint not null, name varchar(255), primary key (ID))
+alter table ACT_LEVEL add constraint FK48wataa3yurkcclgvj8k5o0tp foreign key (ACT_ID) references Activity
+alter table ACT_LEVEL add constraint FKbsgm5xytc23fjeveatwppx1na foreign key (Person_ID) references Person
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+DISCONNECT
+/*C167*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C168*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Loisir',1,'lol')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
 COMMIT
 DISCONNECT
