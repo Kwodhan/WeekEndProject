@@ -2,6 +2,11 @@ package fr.istic.taa.WeekEndProject.service.exception;
 
 public class ActivityNotFound extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4479866449566897966L;
+
 	public ActivityNotFound() {
 		super();
 		// TODO Auto-generated constructor stub

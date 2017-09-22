@@ -12,8 +12,8 @@ import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 @Repository
 public interface ActivityRepository extends JpaRepository<AbstractActivity, Long> {
 
-	@Query("select a from AbstractActivity a where a.id = :id")
-	public AbstractActivity findById(@Param("id") Long name);
+	@Query("select a from AbstractActivity a left join fetch a.meteos m where a.id = :id")
+	public AbstractActivity findById(@Param("id") Long id);
 
 	@Query("select a from AbstractActivity a where a.name = :name")
 	public List<AbstractActivity> findByName(@Param("name") String name);

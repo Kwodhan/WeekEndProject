@@ -12,8 +12,8 @@ import fr.istic.taa.WeekEndProject.model.Location;
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
-	@Query("select p from Location p left join p.person where p.id = :id")
-	public Location findById(@Param("id") Long name);
+	@Query("select p from Location p where p.id = :id")
+	public Location findById(@Param("id") Long id);
 
 	@Query("select p from Location p where p.name = :name")
 	public List<Location> findByName(@Param("name") String name);

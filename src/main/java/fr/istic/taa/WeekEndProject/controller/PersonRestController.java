@@ -32,9 +32,16 @@ public class PersonRestController {
 
 	@RequestMapping(value = "id/{id}", method = RequestMethod.GET)
 	ResponseEntity<Person> getPersonById(@PathVariable("id") long id) {
-		Person p1 = this.serviceP.findById(new Long(id));
+		Person p1 = null;
+		try {
+			p1 = this.serviceP.findById(new Long(id));
+			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+		} catch (PersonNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		}
 
-		return new ResponseEntity<Person>(p1, HttpStatus.OK);
+		
 	}
 
 	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)

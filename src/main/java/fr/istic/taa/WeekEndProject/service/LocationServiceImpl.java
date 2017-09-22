@@ -13,6 +13,9 @@ import fr.istic.taa.WeekEndProject.service.exception.LocationNotFound;
 @Service
 public class LocationServiceImpl implements LocationService {
 
+	public LocationServiceImpl() {
+	}
+
 	@Autowired
 	private LocationRepository locationRepository;
 
@@ -50,9 +53,15 @@ public class LocationServiceImpl implements LocationService {
 		return updatedLocation;
 	}
 
-	public Location findById(Long id) {
+	public Location findById(Long id) throws LocationNotFound {
 		// TODO Auto-generated method stub
-		return locationRepository.findById(id);
+		Location createdLocation = locationRepository.findById(id);
+
+		if (createdLocation == null) {
+			throw new LocationNotFound();
+		}
+
+		return createdLocation;
 
 	}
 

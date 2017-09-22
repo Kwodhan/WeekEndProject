@@ -12,11 +12,15 @@ public class TraceInvocation {
 
 	@AfterReturning("execution(* fr.istic.taa.WeekEndProject.service.*ServiceImpl.*(..))")
 	public void logServiceAfter(JoinPoint joinPoint) {
-		System.out.println("Completed: " + joinPoint);
+		System.out.println("Completed: " + joinPoint.getSignature().getName());
+		
 	}
-	
+
 	@Before("execution(* fr.istic.taa.WeekEndProject.service.*ServiceImpl.*(..))")
 	public void logServiceBefore(JoinPoint joinPoint) {
-		System.out.println("Begin: " + joinPoint);
+		System.out.println("Begin: " + joinPoint.getSignature().getName());
+		
 	}
+	
+	
 }

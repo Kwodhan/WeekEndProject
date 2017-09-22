@@ -14,7 +14,7 @@ public interface LocationService {
 
 	public Location update(Location location) throws LocationNotFound;
 	
-	public Location findById(Long id);
+	public Location findById(Long id) throws LocationNotFound;
 	
 	public List<Location> findByName(String name);
 	

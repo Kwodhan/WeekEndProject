@@ -28,7 +28,6 @@ public abstract class AbstractActivity {
 	/**
 	 * List of good meteo for the Activity
 	 */
-
 	private List<Meteo> meteos = new ArrayList<Meteo>();
 
 	private String name;
@@ -57,11 +56,11 @@ public abstract class AbstractActivity {
 	 */
 
 	public boolean hasGoodMeteo(Meteo meteo) {
-		return this.meteos.contains(meteo);
+		return this.getMeteos().contains(meteo);
 	}
 
 	protected void addGoodMeteo(Meteo meteo) {
-		this.meteos.add(meteo);
+		this.getMeteos().add(meteo);
 	}
 
 	@Enumerated(EnumType.STRING)

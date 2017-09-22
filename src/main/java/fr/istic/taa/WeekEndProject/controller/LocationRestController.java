@@ -31,9 +31,16 @@ public class LocationRestController {
 
 	@RequestMapping(value = "id/{id}", method = RequestMethod.GET)
 	ResponseEntity<Location> getLocationById(@PathVariable("id") long id) {
-		Location l1 = this.serviceL.findById(new Long(id));
+		Location l1;
+		try {
+			l1 = this.serviceL.findById(new Long(id));
+			return new ResponseEntity<Location>(l1, HttpStatus.OK);
+		} catch (LocationNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+		}
 
-		return new ResponseEntity<Location>(l1, HttpStatus.OK);
+		
 	}
 
 	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)

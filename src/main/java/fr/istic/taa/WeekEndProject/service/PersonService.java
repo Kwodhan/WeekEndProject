@@ -18,7 +18,7 @@ public interface PersonService {
 	
 	public Person updateLocation(Long idPerson,Long idLocation) throws LocationNotFound,PersonNotFound;
 
-	public Person findById(Long id);
+	public Person findById(Long id) throws PersonNotFound;
 
 	public List<Person> findByName(String name);
 

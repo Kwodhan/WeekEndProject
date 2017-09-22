@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.istic.taa.WeekEndProject.model.Meteo;
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 import fr.istic.taa.WeekEndProject.repository.ActivityRepository;
 import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
@@ -21,7 +22,10 @@ public class ActivityServiceImpl implements ActivityService {
 
 		return activityRepository.save(activity);
 	}
-	
+
+	public ActivityServiceImpl() {
+
+	}
 
 	@Transactional
 	public AbstractActivity delete(Long id) throws ActivityNotFound {
@@ -49,17 +53,36 @@ public class ActivityServiceImpl implements ActivityService {
 			throw new ActivityNotFound();
 		}
 		updatedActivity.setName(activity.getName());
+
 		return updatedActivity;
 	}
 
-	public AbstractActivity findById(Long id) {
+	public AbstractActivity findById(Long id) throws ActivityNotFound {
 		// TODO Auto-generated method stub
-		return activityRepository.findById(id);
+		AbstractActivity getActivity = activityRepository.findById(id);
+
+		if (getActivity == null) {
+			throw new ActivityNotFound();
+		}
+		return getActivity;
 	}
 
 	public List<AbstractActivity> findByName(String name) {
 		// TODO Auto-generated method stub
 		return activityRepository.findByName(name);
+	}
+
+	public AbstractActivity updateLocation(Long idActivity, Meteo meteo) throws ActivityNotFound {
+		AbstractActivity updatedActivity = activityRepository.findById(idActivity);
+
+		if (updatedActivity == null)
+			throw new ActivityNotFound();
+
+		if (!updatedActivity.getMeteos().contains(meteo)) {
+			updatedActivity.getMeteos().add(meteo);
+		}
+
+		return updatedActivity;
 	}
 
 }

@@ -64,11 +64,17 @@ public class PersonServiceImpl implements PersonService {
 
 	/**
 	 * fetch = eager
+	 * @throws PersonNotFound 
 	 */
-	public Person findById(Long id) {
+	public Person findById(Long id) throws PersonNotFound {
 		// TODO Auto-generated method stub
 
-		return personRepository.findById(id);
+		Person createPerson = personRepository.findById(id);
+		
+		if (createPerson == null)
+			throw new PersonNotFound();
+		
+		return createPerson;
 
 	}
 
