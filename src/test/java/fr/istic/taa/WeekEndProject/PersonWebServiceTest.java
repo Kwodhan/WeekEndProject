@@ -102,7 +102,7 @@ public class PersonWebServiceTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		String expected = "{\"id\":" + getPersonDataset.getId()
-				+ ",\"name\":\"create\",\"homes\":[],\"activities\":{}}";
+				+ ",\"name\":\"create\",\"homes\":[],\"activities\":[]}";
 		Assert.assertEquals(expected, jsonResponse);
 		
 	}
@@ -120,7 +120,7 @@ public class PersonWebServiceTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		String expected = "{\"id\":" + updatePersonDataset.getId()
-				+ ",\"name\":\"new\",\"homes\":[],\"activities\":{}}";
+				+ ",\"name\":\"new\",\"homes\":[],\"activities\":[]}";
 		Assert.assertEquals(expected, jsonResponse);
 	}
 	/**
@@ -140,7 +140,7 @@ public class PersonWebServiceTest {
 
 		String expected = "{\"id\":" + updateLocationPersonDataset.getId() + ",\"name\":\""
 				+ updateLocationPersonDataset.getName() + "\",\"homes\":[{\"id\":" + createLocationDataset.getId()
-				+ ",\"name\":\"" + createLocationDataset.getName() + "\"}],\"activities\":{}}";
+				+ ",\"name\":\"" + createLocationDataset.getName() + "\"}],\"activities\":[]}";
 		Assert.assertEquals(expected, jsonResponse);
 	}
 	/**

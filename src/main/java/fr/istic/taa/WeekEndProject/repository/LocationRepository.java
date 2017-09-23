@@ -12,12 +12,12 @@ import fr.istic.taa.WeekEndProject.model.Location;
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
-	@Query("select p from Location p where p.id = :id")
+	@Query("select l from Location l left join l.persons p left join l.sites s where l.id = :id")
 	public Location findById(@Param("id") Long id);
 
-	@Query("select p from Location p where p.name = :name")
+	@Query("select l from Location l where l.name = :name")
 	public List<Location> findByName(@Param("name") String name);
 
-	@Query("select p from Location p left join p.person where p.name = :name")
+	@Query("select l from Location l left join l.persons p where l.name = :name")
 	public List<Location> findByNameWithPerson(@Param("name") String name);
 }

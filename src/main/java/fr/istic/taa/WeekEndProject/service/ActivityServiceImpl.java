@@ -71,7 +71,8 @@ public class ActivityServiceImpl implements ActivityService {
 		// TODO Auto-generated method stub
 		return activityRepository.findByName(name);
 	}
-
+	
+	@Transactional
 	public AbstractActivity updateLocation(Long idActivity, Meteo meteo) throws ActivityNotFound {
 		AbstractActivity updatedActivity = activityRepository.findById(idActivity);
 

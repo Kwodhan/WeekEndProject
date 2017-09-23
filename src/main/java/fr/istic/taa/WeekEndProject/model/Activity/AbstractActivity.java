@@ -1,8 +1,9 @@
 package fr.istic.taa.WeekEndProject.model.Activity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -14,11 +15,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import fr.istic.taa.WeekEndProject.model.Meteo;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import fr.istic.taa.WeekEndProject.model.Meteo;
+import fr.istic.taa.WeekEndProject.model.Person;
+import fr.istic.taa.WeekEndProject.model.SiteActivity;
+
+/**
+ * Une activity
+ * 
+ * @author aferey
+ *
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "Activity")
@@ -28,9 +45,15 @@ public abstract class AbstractActivity {
 	/**
 	 * List of good meteo for the Activity
 	 */
-	private List<Meteo> meteos = new ArrayList<Meteo>();
+	private Set<Meteo> meteos = new HashSet<Meteo>();
 
 	private String name;
+
+	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
+	
+	private Set<Person> persons = new HashSet<Person>();
+	
+	
 
 	public AbstractActivity(String name) {
 		super();
@@ -66,14 +89,15 @@ public abstract class AbstractActivity {
 	@Enumerated(EnumType.STRING)
 	@ElementCollection
 	@CollectionTable(name = "ACTIVITY_METEO")
-	public List<Meteo> getMeteos() {
+	public Set<Meteo> getMeteos() {
 		return meteos;
 	}
 
-	public void setMeteos(List<Meteo> meteos) {
+	public void setMeteos(Set<Meteo> meteos) {
 		this.meteos = meteos;
 	}
 
+	@JsonUnwrapped
 	public String getName() {
 		return name;
 	}
@@ -84,5 +108,26 @@ public abstract class AbstractActivity {
 
 	@Transient
 	public abstract String getType();
+
+	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+	@JsonIgnore
+	public Set<SiteActivity> getSites() {
+		return sites;
+	}
+
+	public void setSites(Set<SiteActivity> sites) {
+		this.sites = sites;
+	}
+	@ManyToMany(mappedBy = "activities", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIgnoreProperties("activities")
+	@JsonIgnore
+	public Set<Person> getPersons() {
+		return persons;
+	}
+
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
+	}
 
 }

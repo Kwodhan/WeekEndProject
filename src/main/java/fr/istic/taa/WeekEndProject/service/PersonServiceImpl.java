@@ -8,8 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.istic.taa.WeekEndProject.model.Location;
 import fr.istic.taa.WeekEndProject.model.Person;
+import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
+import fr.istic.taa.WeekEndProject.repository.ActivityRepository;
 import fr.istic.taa.WeekEndProject.repository.LocationRepository;
 import fr.istic.taa.WeekEndProject.repository.PersonRepository;
+import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.WeekEndProject.service.exception.LocationNotFound;
 import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
 
@@ -21,6 +24,9 @@ public class PersonServiceImpl implements PersonService {
 
 	@Autowired
 	private LocationRepository locationRepository;
+
+	@Autowired
+	private ActivityRepository activityRepository;
 
 	public PersonServiceImpl() {
 
@@ -40,7 +46,7 @@ public class PersonServiceImpl implements PersonService {
 			throw new PersonNotFound();
 		}
 		deletedPerson.getHomes().clear();
-		deletedPerson.getActivities().clear();
+
 		personRepository.delete(deletedPerson);
 		return deletedPerson;
 	}
@@ -64,16 +70,17 @@ public class PersonServiceImpl implements PersonService {
 
 	/**
 	 * fetch = eager
-	 * @throws PersonNotFound 
+	 * 
+	 * @throws PersonNotFound
 	 */
 	public Person findById(Long id) throws PersonNotFound {
 		// TODO Auto-generated method stub
 
 		Person createPerson = personRepository.findById(id);
-		
+
 		if (createPerson == null)
 			throw new PersonNotFound();
-		
+
 		return createPerson;
 
 	}
@@ -81,16 +88,6 @@ public class PersonServiceImpl implements PersonService {
 	public List<Person> findByName(String name) {
 		// TODO Auto-generated method stub
 		return personRepository.findByName(name);
-	}
-
-	public List<Person> findByNameWithLocation(String name) {
-		// TODO Auto-generated method stub
-		return personRepository.findByNameWithLocation(name);
-	}
-
-	public List<Person> findByNameWithActivities(String name) {
-		// TODO Auto-generated method stub
-		return personRepository.findByNameWithActivities(name);
 	}
 
 	public List<Person> findByNameWithAll(String name) {
@@ -106,13 +103,33 @@ public class PersonServiceImpl implements PersonService {
 		if (updatedPerson == null)
 			throw new PersonNotFound();
 
-		Location location = locationRepository.findOne(idLocation);
+		Location location = locationRepository.findById(idLocation);
 
 		if (location == null)
 			throw new LocationNotFound();
 
 		if (!updatedPerson.getHomes().contains(location)) {
 			updatedPerson.getHomes().add(location);
+		}
+
+		return updatedPerson;
+	}
+
+	@Transactional
+	public Person updateActivity(Long idPerson, Long idActivity) throws PersonNotFound, ActivityNotFound {
+
+		Person updatedPerson = personRepository.findById(idPerson);
+
+		if (updatedPerson == null)
+			throw new PersonNotFound();
+
+		AbstractActivity activity = activityRepository.findById(idActivity);
+
+		if (activity == null)
+			throw new ActivityNotFound();
+
+		if (!updatedPerson.getActivities().contains(activity)) {
+			updatedPerson.getActivities().add(activity);
 		}
 
 		return updatedPerson;

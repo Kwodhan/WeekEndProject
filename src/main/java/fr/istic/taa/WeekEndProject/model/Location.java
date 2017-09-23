@@ -1,7 +1,7 @@
 package fr.istic.taa.WeekEndProject.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
- * Place
+ * Une Localisation geographique 
  * 
  * @author aferey
  *
@@ -28,7 +29,9 @@ public class Location {
 
 	private String name;
 
-	private List<Person> person = new ArrayList<Person>();
+	private Set<Person> persons = new HashSet<Person>();
+	
+	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
 
 	public Location(String name) {
 		super();
@@ -61,16 +64,29 @@ public class Location {
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIgnoreProperties("homes")
 	@JsonIgnore
-	public List<Person> getPerson() {
-		return person;
+	public Set<Person> getPersons() {
+		return persons;
 	}
 
-	public void setPerson(List<Person> person) {
-		this.person = person;
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
 	}
 
 	public String toString() {
 		return "Location : " + this.name;
 	}
+	
+	@OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("location")
+	@JsonIgnore
+	public Set<SiteActivity> getSites() {
+		return sites;
+	}
+
+	public void setSites(Set<SiteActivity> sites) {
+		this.sites = sites;
+	}
+
+	
 
 }

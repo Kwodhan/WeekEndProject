@@ -32,7 +32,6 @@ public class LocationServiceImpl implements LocationService {
 		if (deletedLocation == null)
 			throw new LocationNotFound();
 
-		deletedLocation.getPerson().clear();
 		locationRepository.delete(deletedLocation);
 		return deletedLocation;
 	}

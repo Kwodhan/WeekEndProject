@@ -1,6 +1,8 @@
 package fr.istic.taa.WeekEndProject.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,14 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.istic.taa.WeekEndProject.model.Meteo;
-import fr.istic.taa.WeekEndProject.model.Person;
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 import fr.istic.taa.WeekEndProject.model.Activity.Loisir;
 import fr.istic.taa.WeekEndProject.model.Activity.Sport;
 import fr.istic.taa.WeekEndProject.service.ActivityService;
 import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
-import fr.istic.taa.WeekEndProject.service.exception.LocationNotFound;
-import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
 
 /**
  * 
@@ -29,6 +28,14 @@ import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
 @RestController
 @RequestMapping(value = "/activity/")
 public class ActivityRestController {
+	
+	@RequestMapping(value = "truc", method = RequestMethod.GET)
+	ResponseEntity<Map<String, String>> getMap() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("foo", "bar");
+		return new ResponseEntity<Map<String,String>>(map, HttpStatus.OK);
+	}
+	
 	/*
 	 * Par defaut : Nb requete == Nb association
 	 */
@@ -92,19 +99,22 @@ public class ActivityRestController {
 		}
 
 	}
-	
+
 	@RequestMapping(value = "{idA}/addMeteo/{idM}", method = RequestMethod.PUT)
 	ResponseEntity<AbstractActivity> updateActivityMeteo(@PathVariable("idA") long idA, @PathVariable("idM") long idM) {
 		AbstractActivity p1;
-		//todo verif idM
+		if (idM <= 0 || idM > Meteo.values().length) {
+			return new ResponseEntity<AbstractActivity>(HttpStatus.NOT_FOUND);
+		}
+		// todo verif idM
 		try {
-			p1 = this.serviceA.updateLocation(idA, Meteo.values()[(int) (idM-1)]);
+			p1 = this.serviceA.updateLocation(idA, Meteo.values()[(int) (idM - 1)]);
 			return new ResponseEntity<AbstractActivity>(p1, HttpStatus.OK);
 		} catch (ActivityNotFound e) {
 			// TODO Auto-generated catch block
 			return new ResponseEntity<AbstractActivity>(HttpStatus.NOT_FOUND);
 		}
-		
+
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)

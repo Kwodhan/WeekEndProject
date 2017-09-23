@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.istic.taa.WeekEndProject.model.Person;
 import fr.istic.taa.WeekEndProject.service.PersonService;
+import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.WeekEndProject.service.exception.LocationNotFound;
 import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
 
@@ -41,7 +42,6 @@ public class PersonRestController {
 			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
 		}
 
-		
 	}
 
 	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
@@ -85,6 +85,23 @@ public class PersonRestController {
 		}
 
 	}
+	
+	@RequestMapping(value = "{idP}/addActivity/{idA}", method = RequestMethod.PUT)
+	ResponseEntity<Person> updatePersonActivity(@PathVariable("idP") long idP, @PathVariable("idA") long idA) {
+		Person p1;
+		try {
+			p1 = this.serviceP.updateActivity(idP, idA);
+			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+		} catch (PersonNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		} catch (ActivityNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	ResponseEntity<Person> deletePerson(@PathVariable("id") long id) {
