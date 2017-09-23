@@ -38,21 +38,21 @@ public class ActivityWebServiceTest {
 	private ActivityService activityService;
 
 
-	private AbstractActivity getSportDataset;
+	private AbstractActivity getSport;
 
-	private AbstractActivity updateSportDataset;
+	private AbstractActivity updateSport;
 
-	private AbstractActivity deleteSportDataset;
+	private AbstractActivity deleteSport;
 
-	private AbstractActivity createSportDataset;
+	private AbstractActivity createSport;
 	
-	private AbstractActivity getLoisirDataset;
+	private AbstractActivity getLoisir;
 
-	private AbstractActivity updateLoisirDataset;
+	private AbstractActivity updateLoisir;
 
-	private AbstractActivity deleteLoisirDataset;
+	private AbstractActivity deleteLoisir;
 
-	private AbstractActivity createLoisirDataset;
+	private AbstractActivity createLoisir;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -62,33 +62,33 @@ public class ActivityWebServiceTest {
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		//Sport
-		getSportDataset = new Sport("Name");
-		getSportDataset = activityService.create(getSportDataset);
+		getSport = new Sport("Name");
+		getSport = activityService.create(getSport);
 
-		updateSportDataset = new Sport("dsq");
-		updateSportDataset = activityService.create(updateSportDataset);
+		updateSport = new Sport("dsq");
+		updateSport = activityService.create(updateSport);
 
-		createSportDataset = new Sport("qds");
-		createSportDataset = activityService.create(createSportDataset);
+		createSport = new Sport("qds");
+		createSport = activityService.create(createSport);
 
-		deleteSportDataset = new Sport("cxw");
-		deleteSportDataset = activityService.create(deleteSportDataset);
+		deleteSport = new Sport("cxw");
+		deleteSport = activityService.create(deleteSport);
 		
 		//Loisir
-		getLoisirDataset = new Loisir("Name");
-		getLoisirDataset = activityService.create(getLoisirDataset);
+		getLoisir = new Loisir("Name");
+		getLoisir = activityService.create(getLoisir);
 
-		updateLoisirDataset = new Loisir("dsq");
-		updateLoisirDataset = activityService.create(updateLoisirDataset);
+		updateLoisir = new Loisir("dsq");
+		updateLoisir = activityService.create(updateLoisir);
 
-		createLoisirDataset = new Loisir("qds");
-		createLoisirDataset = activityService.create(createLoisirDataset);
+		createLoisir = new Loisir("qds");
+		createLoisir = activityService.create(createLoisir);
 
-		deleteLoisirDataset = new Loisir("cxw");
-		deleteLoisirDataset = activityService.create(deleteLoisirDataset);
+		deleteLoisir = new Loisir("cxw");
+		deleteLoisir = activityService.create(deleteLoisir);
 	}
 	/**
-	 * Create a AbstractActivity
+	 * Create a Sport
 	 * @throws Exception
 	 */
 	@Test
@@ -100,65 +100,15 @@ public class ActivityWebServiceTest {
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		// F String expected = "{\"id\":" + Mockito.anyLong()+
-		// ",\"name\":\"nameCreate\",\"homes\":[],\"activities\":{}}";
+
 		Assert.assertTrue(jsonResponse.contains("\"name\":\"nameCreate\""));
-	}
-	/**
-	 * Get a AbstractActivity
-	 * @throws Exception
-	 */
-	@Test
-	public void testGetSport() throws Exception {
-		
-		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + getSportDataset.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-
-		String expected = "{\"id\":" + getSportDataset.getId()
-				+ ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Sport\"}";
-		Assert.assertEquals(expected, jsonResponse);
-	}
-	/**
-	 * Update the name of a AbstractActivity
-	 * @throws Exception
-	 */
-	@Test
-	public void testUpdateSport() throws Exception {
-		String maj = "new";
-		String payload = "{\"id\":\"" + updateSportDataset.getId() + "\",\"name\":\"" + maj + "\"}";
-		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI+"sport/").contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		String expected = "{\"id\":" + updateSportDataset.getId()
-				+ ",\"meteos\":[],\"name\":\"new\",\"type\":\"Sport\"}";
-		Assert.assertEquals(expected, jsonResponse);
+		Assert.assertTrue(jsonResponse.contains("\"type\":\"Sport\""));
 	}
 	
 	/**
-	 * Delete a AbstractActivity
+	 * Create a Sport
 	 * @throws Exception
 	 */
-	@Test(expected = ActivityNotFound.class)
-	public void testDeleteSport() throws Exception {
-
-		this.mockMvc
-				.perform(delete(SERVICE_URI + deleteSportDataset.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + deleteSportDataset.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		activityService.findById(deleteSportDataset.getId());
-	}
-
 	@Test
 	public void testCreateLoisir() throws Exception {
 		String maj = "nameCreate";
@@ -168,43 +118,149 @@ public class ActivityWebServiceTest {
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		// F String expected = "{\"id\":" + Mockito.anyLong()+
-		// ",\"name\":\"nameCreate\",\"homes\":[],\"activities\":{}}";
 		Assert.assertTrue(jsonResponse.contains("\"name\":\"nameCreate\""));
+		Assert.assertTrue(jsonResponse.contains("\"type\":\"Loisir\""));
 	}
 	/**
-	 * Get a AbstractActivity
+	 * Get a Sport
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetSport() throws Exception {
+		
+		String jsonResponse = this.mockMvc
+				.perform(get(SERVICE_URI + "/id/" + getSport.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+
+		String expected = "{\"id\":" + getSport.getId()
+				+ ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Sport\"}";
+		Assert.assertEquals(expected, jsonResponse);
+	}
+	
+	/**
+	 * Get Sports
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetAllSports() throws Exception {
+		
+		String jsonResponse = this.mockMvc
+				.perform(get(SERVICE_URI + "/sport/").contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+
+		
+		Assert.assertTrue(!jsonResponse.contains("\"type\":\"Loisir\""));
+		
+	}
+	
+	/**
+	 * Get Loisirs
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetAllLoisirs() throws Exception {
+		
+		String jsonResponse = this.mockMvc
+				.perform(get(SERVICE_URI + "/loisir/").contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+
+	
+		Assert.assertTrue(!jsonResponse.contains("\"type\":\"Sport\""));
+		
+		
+	}
+	/**
+	 * Update the name of a sport
+	 * @throws Exception
+	 */
+	@Test
+	public void testUpdateSport() throws Exception {
+		String maj = "new";
+		String payload = "{\"id\":\"" + updateSport.getId() + "\",\"name\":\"" + maj + "\"}";
+		String jsonResponse = this.mockMvc
+				.perform(put(SERVICE_URI+"sport/").contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		String expected = "{\"id\":" + updateSport.getId()
+				+ ",\"meteos\":[],\"name\":\"new\",\"type\":\"Sport\"}";
+		Assert.assertEquals(expected, jsonResponse);
+		
+		String jsonResponse2 = this.mockMvc
+				.perform(get(SERVICE_URI + "/id/" + updateSport.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		Assert.assertEquals(expected, jsonResponse2);
+	}
+	
+	/**
+	 * Delete a Loisir
+	 * @throws Exception
+	 */
+	@Test(expected = ActivityNotFound.class)
+	public void testDeleteSport() throws Exception {
+
+		this.mockMvc
+				.perform(delete(SERVICE_URI + deleteSport.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		this.mockMvc
+				.perform(get(SERVICE_URI + "/id/" + deleteSport.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+
+		activityService.findById(deleteSport.getId());
+	}
+
+	
+	/**
+	 * Get a Loisir
 	 * @throws Exception
 	 */
 	@Test
 	public void testGetLoisir() throws Exception {
 		
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + getLoisirDataset.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + "/id/" + getLoisir.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 
-		String expected = "{\"id\":" + getLoisirDataset.getId()
+		String expected = "{\"id\":" + getLoisir.getId()
 				+ ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Loisir\"}";
 		Assert.assertEquals(expected, jsonResponse);
 	}
 	/**
-	 * Update the name of a AbstractActivity
+	 * Update the name of a loisir
 	 * @throws Exception
 	 */
 	@Test
 	public void testUpdateLoisir() throws Exception {
 		String maj = "new";
-		String payload = "{\"id\":\"" + updateLoisirDataset.getId() + "\",\"name\":\"" + maj + "\"}";
+		String payload = "{\"id\":\"" + updateLoisir.getId() + "\",\"name\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
 				.perform(put(SERVICE_URI+"loisir/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateLoisirDataset.getId()
+		String expected = "{\"id\":" + updateLoisir.getId()
 				+ ",\"meteos\":[],\"name\":\"new\",\"type\":\"Loisir\"}";
 		Assert.assertEquals(expected, jsonResponse);
+		
+		String jsonResponse2 = this.mockMvc
+				.perform(get(SERVICE_URI + "/id/" + updateLoisir.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		Assert.assertEquals(expected, jsonResponse2);
 	}
 
 }

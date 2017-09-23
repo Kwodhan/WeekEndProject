@@ -36,13 +36,13 @@ public class LocationWebServiceTest {
 	private LocationService locationService;
 
 
-	private Location getLocationDataset;
+	private Location getLocation;
 
-	private Location updateLocationDataset;
+	private Location updateLocation;
 
-	private Location deleteLocationDataset;
+	private Location deleteLocation;
 
-	private Location createLocationDataset;
+	private Location createLocation;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -51,17 +51,17 @@ public class LocationWebServiceTest {
 	public void setUp() {
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		getLocationDataset = new Location("create");
-		getLocationDataset = locationService.create(getLocationDataset);
+		getLocation = new Location("create");
+		getLocation = locationService.create(getLocation);
 
-		updateLocationDataset = new Location("dsq");
-		updateLocationDataset = locationService.create(updateLocationDataset);
+		updateLocation = new Location("dsq");
+		updateLocation = locationService.create(updateLocation);
 
-		createLocationDataset = new Location("qds");
-		createLocationDataset = locationService.create(createLocationDataset);
+		createLocation = new Location("qds");
+		createLocation = locationService.create(createLocation);
 
-		deleteLocationDataset = new Location("cxw");
-		deleteLocationDataset = locationService.create(deleteLocationDataset);
+		deleteLocation = new Location("cxw");
+		deleteLocation = locationService.create(deleteLocation);
 	}
 	/**
 	 * Create a Location
@@ -87,11 +87,11 @@ public class LocationWebServiceTest {
 	public void testGetLocation() throws Exception {
 		
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + getLocationDataset.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + "/id/" + getLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + getLocationDataset.getId()
+		String expected = "{\"id\":" + getLocation.getId()
 				+ ",\"name\":\"create\"}";
 		Assert.assertEquals(expected, jsonResponse);
 	}
@@ -101,17 +101,24 @@ public class LocationWebServiceTest {
 	 */
 	@Test
 	public void testUpdateLocation() throws Exception {
-		//Assert.assertEquals(updateLocationDataset.getName(),updateLocationDataset.getId());
+		//Assert.assertEquals(updateLocation.getName(),updateLocation.getId());
 		String maj = "azerty";
-		String payload = "{\"id\":" + updateLocationDataset.getId() + ",\"name\":\"" + maj + "\"}";
+		String payload = "{\"id\":" + updateLocation.getId() + ",\"name\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
 				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateLocationDataset.getId()
+		String expected = "{\"id\":" + updateLocation.getId()
 				+ ",\"name\":\"azerty\"}";
 		Assert.assertEquals(expected, jsonResponse);
+		
+		String jsonResponse2 = this.mockMvc
+				.perform(get(SERVICE_URI + "/id/" + updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		
+		Assert.assertEquals(expected, jsonResponse2);
 	}
 	
 	/**
@@ -122,16 +129,16 @@ public class LocationWebServiceTest {
 	public void testDeleteLocation() throws Exception {
 
 		this.mockMvc
-				.perform(delete(SERVICE_URI + "/" + deleteLocationDataset.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(delete(SERVICE_URI + "/" + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + deleteLocationDataset.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + "/id/" + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
 
-		locationService.findById(deleteLocationDataset.getId());
+		locationService.findById(deleteLocation.getId());
 	}
 
 	

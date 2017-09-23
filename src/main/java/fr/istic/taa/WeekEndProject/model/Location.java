@@ -60,7 +60,7 @@ public class Location {
 		this.name = name;
 	}
 
-	@ManyToMany(mappedBy = "homes", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany(mappedBy = "homes", cascade = { CascadeType.MERGE })
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIgnoreProperties("homes")
 	@JsonIgnore

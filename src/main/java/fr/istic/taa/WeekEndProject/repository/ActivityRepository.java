@@ -17,5 +17,11 @@ public interface ActivityRepository extends JpaRepository<AbstractActivity, Long
 
 	@Query("select a from AbstractActivity a where a.name = :name")
 	public List<AbstractActivity> findByName(@Param("name") String name);
+	
+	@Query("select a from AbstractActivity a left join fetch a.meteos m left join fetch a.sites s where a.type = 'Sport'")
+	public List<AbstractActivity> findAllSport();
+	
+	@Query("select a from AbstractActivity a left join fetch a.meteos m left join fetch a.sites s where a.type = 'Loisir'")
+	public List<AbstractActivity> findAllLoisir();
 
 }

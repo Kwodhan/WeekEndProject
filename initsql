@@ -1,3 +1,0 @@
-insert into Person values(1,'Hello');
-insert into location values(1,'Hello');
-insert into pers_location values(1,1);

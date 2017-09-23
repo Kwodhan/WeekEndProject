@@ -10,6 +10,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,6 +48,8 @@ public abstract class AbstractActivity {
 	private Set<Meteo> meteos = new HashSet<Meteo>();
 
 	private String name;
+	
+	private String type;
 
 	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
 	
@@ -87,7 +89,7 @@ public abstract class AbstractActivity {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "ACTIVITY_METEO")
 	public Set<Meteo> getMeteos() {
 		return meteos;
@@ -106,8 +108,6 @@ public abstract class AbstractActivity {
 		this.name = name;
 	}
 
-	@Transient
-	public abstract String getType();
 
 	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -118,7 +118,7 @@ public abstract class AbstractActivity {
 	public void setSites(Set<SiteActivity> sites) {
 		this.sites = sites;
 	}
-	@ManyToMany(mappedBy = "activities", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany(mappedBy = "activities", cascade = { CascadeType.MERGE })
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIgnoreProperties("activities")
 	@JsonIgnore
@@ -129,5 +129,15 @@ public abstract class AbstractActivity {
 	public void setPersons(Set<Person> persons) {
 		this.persons = persons;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		
+	}
+
+	
 
 }

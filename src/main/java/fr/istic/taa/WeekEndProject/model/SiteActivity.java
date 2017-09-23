@@ -22,17 +22,17 @@ public class SiteActivity {
 	private Location location;
 	private String name;
 
-	public SiteActivity(AbstractActivity activity, Location location) {
+	public SiteActivity(String name) {
 		super();
-		this.activity = activity;
-		this.location = location;
+		this.name = name;
 	}
 
 	public SiteActivity() {
 
 	}
+
 	@ManyToOne
-    @JoinColumn(name = "ACTIVITY_ID",referencedColumnName = "ID")
+	@JoinColumn(name = "ACTIVITY_ID", referencedColumnName = "ID")
 	public AbstractActivity getActivity() {
 		return activity;
 	}
@@ -40,8 +40,9 @@ public class SiteActivity {
 	public void setActivity(AbstractActivity activity) {
 		this.activity = activity;
 	}
+
 	@ManyToOne
-    @JoinColumn(name = "SITE_ID",referencedColumnName = "ID")
+	@JoinColumn(name = "SITE_ID", referencedColumnName = "ID")
 	public Location getLocation() {
 		return location;
 	}
@@ -49,8 +50,9 @@ public class SiteActivity {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	public Long getId() {
 		return id;

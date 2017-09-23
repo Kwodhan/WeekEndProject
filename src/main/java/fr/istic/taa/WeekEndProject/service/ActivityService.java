@@ -12,6 +12,10 @@ public interface ActivityService {
 	public AbstractActivity delete(Long id) throws ActivityNotFound;
 
 	public List<AbstractActivity> findAll();
+	
+	public List<AbstractActivity> findAllSport();
+	
+	public List<AbstractActivity> findAllLoisir();
 
 	public AbstractActivity update(AbstractActivity activity) throws ActivityNotFound;
 	

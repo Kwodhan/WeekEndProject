@@ -28,14 +28,14 @@ import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
 @RestController
 @RequestMapping(value = "/activity/")
 public class ActivityRestController {
-	
+
 	@RequestMapping(value = "truc", method = RequestMethod.GET)
 	ResponseEntity<Map<String, String>> getMap() {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("foo", "bar");
-		return new ResponseEntity<Map<String,String>>(map, HttpStatus.OK);
+		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
 	}
-	
+
 	/*
 	 * Par defaut : Nb requete == Nb association
 	 */
@@ -52,6 +52,24 @@ public class ActivityRestController {
 			// TODO Auto-generated catch block
 			return new ResponseEntity<AbstractActivity>(HttpStatus.NOT_FOUND);
 		}
+
+	}
+
+	@RequestMapping(value = "loisir/", method = RequestMethod.GET)
+	ResponseEntity<List<AbstractActivity>> getLoisir() {
+		List<AbstractActivity> l1;
+
+		l1 = this.serviceA.findAllLoisir();
+		return new ResponseEntity<List<AbstractActivity>>(l1, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(value = "sport/", method = RequestMethod.GET)
+	ResponseEntity<List<AbstractActivity>> getSport() {
+		List<AbstractActivity> l1;
+
+		l1 = this.serviceA.findAllSport();
+		return new ResponseEntity<List<AbstractActivity>>(l1, HttpStatus.OK);
 
 	}
 

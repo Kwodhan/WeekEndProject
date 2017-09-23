@@ -1,5 +1,6 @@
 package fr.istic.taa.WeekEndProject.service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.istic.taa.WeekEndProject.model.Meteo;
+import fr.istic.taa.WeekEndProject.model.Person;
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 import fr.istic.taa.WeekEndProject.repository.ActivityRepository;
 import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
@@ -35,7 +37,14 @@ public class ActivityServiceImpl implements ActivityService {
 			throw new ActivityNotFound();
 
 		deletedActivity.getMeteos().clear();
+
+		for (Person p : deletedActivity.getPersons()) {
+			p.getActivities().clear();
+		}
+		deletedActivity.getPersons().clear();
+
 		activityRepository.delete(deletedActivity);
+
 		return deletedActivity;
 	}
 
@@ -71,7 +80,7 @@ public class ActivityServiceImpl implements ActivityService {
 		// TODO Auto-generated method stub
 		return activityRepository.findByName(name);
 	}
-	
+
 	@Transactional
 	public AbstractActivity updateLocation(Long idActivity, Meteo meteo) throws ActivityNotFound {
 		AbstractActivity updatedActivity = activityRepository.findById(idActivity);
@@ -84,6 +93,16 @@ public class ActivityServiceImpl implements ActivityService {
 		}
 
 		return updatedActivity;
+	}
+
+	public List<AbstractActivity> findAllSport() {
+		// TODO Auto-generated method stub
+		return activityRepository.findAllSport();
+	}
+
+	public List<AbstractActivity> findAllLoisir() {
+		// TODO Auto-generated method stub
+		return activityRepository.findAllLoisir();
 	}
 
 }

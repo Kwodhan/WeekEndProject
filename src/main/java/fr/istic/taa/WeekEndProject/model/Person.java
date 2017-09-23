@@ -13,9 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 
@@ -57,7 +55,7 @@ public class Person {
 		this.name = name;
 	}
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany(cascade = { CascadeType.MERGE })
 	@JoinTable(name = "PERS_LOCATION", joinColumns = @JoinColumn(name = "PERS_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "LOCATION_ID", referencedColumnName = "ID"))
 	@JsonIgnoreProperties("persons")
 	public Set<Location> getHomes() {
