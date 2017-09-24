@@ -23,7 +23,7 @@ import fr.istic.taa.WeekEndProject.service.exception.PersonNotFound;
  *
  */
 @RestController
-@RequestMapping(value = "/person/")
+@RequestMapping(value = "/persons/")
 public class PersonRestController {
 	/*
 	 * Par defaut : Nb requete == Nb association
@@ -31,7 +31,7 @@ public class PersonRestController {
 	@Autowired
 	PersonService serviceP;
 
-	@RequestMapping(value = "id/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	ResponseEntity<Person> getPersonById(@PathVariable("id") long id) {
 		Person p1 = null;
 		try {

@@ -21,7 +21,7 @@ import fr.istic.taa.WeekEndProject.service.exception.LocationNotFound;
  *
  */
 @RestController
-@RequestMapping(value = "/location/")
+@RequestMapping(value = "/locations/")
 public class LocationRestController {
 	/*
 	 * Par defaut : Nb requete == Nb association
@@ -29,7 +29,7 @@ public class LocationRestController {
 	@Autowired
 	LocationService serviceL;
 
-	@RequestMapping(value = "id/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	ResponseEntity<Location> getLocationById(@PathVariable("id") long id) {
 		Location l1;
 		try {

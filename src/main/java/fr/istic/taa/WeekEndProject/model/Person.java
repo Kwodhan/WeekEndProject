@@ -14,22 +14,29 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 
 @Entity
+@JsonPropertyOrder({ "id", "firstName", "lastName", "emailAddress", "homes", "activities" })
 public class Person {
 	private Long id;
 
-	private String name;
+	private String firstName;
+	private String lastName;
+	private String emailAddress;
 
 	private Set<Location> homes = new HashSet<Location>();
 
 	private Set<AbstractActivity> activities = new HashSet<AbstractActivity>();
 
-	public Person(String name) {
+	
+
+	public Person(String firstName, String lastName) {
 		super();
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public Person() {
@@ -47,12 +54,28 @@ public class Person {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	@ManyToMany(cascade = { CascadeType.MERGE })
@@ -77,23 +100,10 @@ public class Person {
 		this.activities = activities;
 	}
 
-	public void addActivities(AbstractActivity act) {
-		if (!this.getActivities().contains(act)) {
-			this.getActivities().add(act);
-		}
+	
 
-	}
+	
 
-	public void addLocation(Location place) {
-		if (!this.getHomes().contains(place)) {
-			this.getHomes().add(place);
-		}
-
-	}
-
-	public String toString() {
-
-		return "my name is " + this.name;
-	}
+	
 
 }

@@ -1,6 +1,5 @@
 package fr.istic.taa.WeekEndProject.service;
 
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,9 +99,9 @@ public class ActivityServiceImpl implements ActivityService {
 		return activityRepository.findAllSport();
 	}
 
-	public List<AbstractActivity> findAllLoisir() {
+	public List<AbstractActivity> findAllLeisure() {
 		// TODO Auto-generated method stub
-		return activityRepository.findAllLoisir();
+		return activityRepository.findAllLeisure();
 	}
 
 }

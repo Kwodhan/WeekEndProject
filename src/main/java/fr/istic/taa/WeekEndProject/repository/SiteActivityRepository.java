@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import fr.istic.taa.WeekEndProject.model.SiteActivity;
-import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 
 @Repository
 public interface SiteActivityRepository extends JpaRepository<SiteActivity, Long> {

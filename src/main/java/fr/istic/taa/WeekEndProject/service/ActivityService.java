@@ -15,7 +15,7 @@ public interface ActivityService {
 	
 	public List<AbstractActivity> findAllSport();
 	
-	public List<AbstractActivity> findAllLoisir();
+	public List<AbstractActivity> findAllLeisure();
 
 	public AbstractActivity update(AbstractActivity activity) throws ActivityNotFound;
 	

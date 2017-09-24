@@ -64,7 +64,9 @@ public class PersonServiceImpl implements PersonService {
 		if (updatedPerson == null)
 			throw new PersonNotFound();
 
-		updatedPerson.setName(person.getName());
+		updatedPerson.setFirstName(person.getFirstName());
+		updatedPerson.setLastName(person.getLastName());
+		updatedPerson.setEmailAddress(person.getEmailAddress());
 		return updatedPerson;
 	}
 

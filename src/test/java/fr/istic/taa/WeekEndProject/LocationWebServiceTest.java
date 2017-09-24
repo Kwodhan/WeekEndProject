@@ -30,7 +30,7 @@ public class LocationWebServiceTest {
 
 	private MockMvc mockMvc;
 
-	private static final String SERVICE_URI = "/location/";
+	private static final String SERVICE_URI = "/locations/";
 
 	@Autowired
 	private LocationService locationService;
@@ -70,14 +70,14 @@ public class LocationWebServiceTest {
 	@Test
 	public void testCreateLocation() throws Exception {
 		String maj = "nameCreate";
-		String payload = "{\"name\":\"" + maj + "\"}";
+		String payload = "{\"city\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
 				.perform(post(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 
-		Assert.assertTrue(jsonResponse.contains("\"name\":\"nameCreate\""));
+		Assert.assertTrue(jsonResponse.contains("\"city\":\"nameCreate\""));
 	}
 	/**
 	 * Get a Location
@@ -87,12 +87,13 @@ public class LocationWebServiceTest {
 	public void testGetLocation() throws Exception {
 		
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + getLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI +  getLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + getLocation.getId()
-				+ ",\"name\":\"create\"}";
+//		String expected = "{\"id\":" + getLocation.getId()
+//				+ ",\"city\":\"create\"}";
+		String expected = FactoryJSON.Location( getLocation.getId(),  getLocation.getCity());
 		Assert.assertEquals(expected, jsonResponse);
 	}
 	/**
@@ -103,18 +104,19 @@ public class LocationWebServiceTest {
 	public void testUpdateLocation() throws Exception {
 		//Assert.assertEquals(updateLocation.getName(),updateLocation.getId());
 		String maj = "azerty";
-		String payload = "{\"id\":" + updateLocation.getId() + ",\"name\":\"" + maj + "\"}";
+		String payload = "{\"id\":" + updateLocation.getId() + ",\"city\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
 				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateLocation.getId()
-				+ ",\"name\":\"azerty\"}";
+//		String expected = "{\"id\":" + updateLocation.getId()
+//				+ ",\"city\":\"azerty\"}";
+		String expected = FactoryJSON.Location( updateLocation.getId(),  maj);
 		Assert.assertEquals(expected, jsonResponse);
 		
 		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI +  updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		
@@ -134,7 +136,7 @@ public class LocationWebServiceTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI +  deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
 

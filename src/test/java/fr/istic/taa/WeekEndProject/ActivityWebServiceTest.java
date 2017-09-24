@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
-import fr.istic.taa.WeekEndProject.model.Activity.Loisir;
+import fr.istic.taa.WeekEndProject.model.Activity.Leisure;
 import fr.istic.taa.WeekEndProject.model.Activity.Sport;
 import fr.istic.taa.WeekEndProject.service.ActivityService;
 import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
@@ -32,7 +32,7 @@ public class ActivityWebServiceTest {
 
 	private MockMvc mockMvc;
 
-	private static final String SERVICE_URI = "/activity/";
+	private static final String SERVICE_URI = "/activities/";
 
 	@Autowired
 	private ActivityService activityService;
@@ -46,13 +46,13 @@ public class ActivityWebServiceTest {
 
 	private AbstractActivity createSport;
 	
-	private AbstractActivity getLoisir;
+	private AbstractActivity getLeisure;
 
-	private AbstractActivity updateLoisir;
+	private AbstractActivity updateLeisure;
 
-	private AbstractActivity deleteLoisir;
+	private AbstractActivity deleteLeisure;
 
-	private AbstractActivity createLoisir;
+	private AbstractActivity createLeisure;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -74,18 +74,18 @@ public class ActivityWebServiceTest {
 		deleteSport = new Sport("cxw");
 		deleteSport = activityService.create(deleteSport);
 		
-		//Loisir
-		getLoisir = new Loisir("Name");
-		getLoisir = activityService.create(getLoisir);
+		//Leisure
+		getLeisure = new Leisure("Name");
+		getLeisure = activityService.create(getLeisure);
 
-		updateLoisir = new Loisir("dsq");
-		updateLoisir = activityService.create(updateLoisir);
+		updateLeisure = new Leisure("Loisir");
+		updateLeisure = activityService.create(updateLeisure);
 
-		createLoisir = new Loisir("qds");
-		createLoisir = activityService.create(createLoisir);
+		createLeisure = new Leisure("qds");
+		createLeisure = activityService.create(createLeisure);
 
-		deleteLoisir = new Loisir("cxw");
-		deleteLoisir = activityService.create(deleteLoisir);
+		deleteLeisure = new Leisure("cxw");
+		deleteLeisure = activityService.create(deleteLeisure);
 	}
 	/**
 	 * Create a Sport
@@ -96,7 +96,7 @@ public class ActivityWebServiceTest {
 		String maj = "nameCreate";
 		String payload = "{\"name\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
-				.perform(post(SERVICE_URI+"sport/").contentType(MediaType.APPLICATION_JSON)
+				.perform(post(SERVICE_URI+"sports/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
@@ -110,16 +110,16 @@ public class ActivityWebServiceTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testCreateLoisir() throws Exception {
+	public void testCreateLeisure() throws Exception {
 		String maj = "nameCreate";
 		String payload = "{\"name\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
-				.perform(post(SERVICE_URI+"loisir/").contentType(MediaType.APPLICATION_JSON)
+				.perform(post(SERVICE_URI+"/leisures/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		Assert.assertTrue(jsonResponse.contains("\"name\":\"nameCreate\""));
-		Assert.assertTrue(jsonResponse.contains("\"type\":\"Loisir\""));
+		Assert.assertTrue(jsonResponse.contains("\"type\":\"Leisure\""));
 	}
 	/**
 	 * Get a Sport
@@ -129,13 +129,14 @@ public class ActivityWebServiceTest {
 	public void testGetSport() throws Exception {
 		
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + getSport.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI +  getSport.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 
-		String expected = "{\"id\":" + getSport.getId()
-				+ ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Sport\"}";
+//		String expected = "{\"id\":" + getSport.getId()
+//				+ ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Sport\"}";
+		String expected = FactoryJSON.Activity(getSport.getId(), getSport.getName(), getSport.getType());
 		Assert.assertEquals(expected, jsonResponse);
 	}
 	
@@ -147,25 +148,25 @@ public class ActivityWebServiceTest {
 	public void testGetAllSports() throws Exception {
 		
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/sport/").contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + "/sports/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 
 		
-		Assert.assertTrue(!jsonResponse.contains("\"type\":\"Loisir\""));
+		Assert.assertTrue(!jsonResponse.contains("\"type\":\"Leisure\""));
 		
 	}
 	
 	/**
-	 * Get Loisirs
+	 * Get Leisures
 	 * @throws Exception
 	 */
 	@Test
-	public void testGetAllLoisirs() throws Exception {
+	public void testGetAllLeisures() throws Exception {
 		
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/loisir/").contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + "/leisures/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
@@ -184,16 +185,17 @@ public class ActivityWebServiceTest {
 		String maj = "new";
 		String payload = "{\"id\":\"" + updateSport.getId() + "\",\"name\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI+"sport/").contentType(MediaType.APPLICATION_JSON)
+				.perform(put(SERVICE_URI+"sports/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateSport.getId()
-				+ ",\"meteos\":[],\"name\":\"new\",\"type\":\"Sport\"}";
+//		String expected = "{\"id\":" + updateSport.getId()
+//				+ ",\"meteos\":[],\"name\":\"new\",\"type\":\"Sport\"}";
+		String expected = FactoryJSON.Activity(updateSport.getId(), maj, updateSport.getType());
 		Assert.assertEquals(expected, jsonResponse);
 		
 		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + updateSport.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI +  updateSport.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		
@@ -201,7 +203,7 @@ public class ActivityWebServiceTest {
 	}
 	
 	/**
-	 * Delete a Loisir
+	 * Delete a Leisure
 	 * @throws Exception
 	 */
 	@Test(expected = ActivityNotFound.class)
@@ -213,7 +215,7 @@ public class ActivityWebServiceTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + deleteSport.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + deleteSport.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
 
@@ -222,41 +224,43 @@ public class ActivityWebServiceTest {
 
 	
 	/**
-	 * Get a Loisir
+	 * Get a Leisure
 	 * @throws Exception
 	 */
 	@Test
-	public void testGetLoisir() throws Exception {
+	public void testGetLeisure() throws Exception {
 		
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + getLoisir.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI  + getLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 
-		String expected = "{\"id\":" + getLoisir.getId()
-				+ ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Loisir\"}";
+//		String expected = "{\"id\":" + getLeisure.getId()
+//				+ ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Leisure\"}";
+		String expected = FactoryJSON.Activity(getLeisure.getId(), getLeisure.getName(), getLeisure.getType());
 		Assert.assertEquals(expected, jsonResponse);
 	}
 	/**
-	 * Update the name of a loisir
+	 * Update the name of a Leisure
 	 * @throws Exception
 	 */
 	@Test
-	public void testUpdateLoisir() throws Exception {
+	public void testUpdateLeisure() throws Exception {
 		String maj = "new";
-		String payload = "{\"id\":\"" + updateLoisir.getId() + "\",\"name\":\"" + maj + "\"}";
+		String payload = "{\"id\":\"" + updateLeisure.getId() + "\",\"name\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI+"loisir/").contentType(MediaType.APPLICATION_JSON)
+				.perform(put(SERVICE_URI+"leisures/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateLoisir.getId()
-				+ ",\"meteos\":[],\"name\":\"new\",\"type\":\"Loisir\"}";
+//		String expected = "{\"id\":" + updateLeisure.getId()
+//				+ ",\"meteos\":[],\"name\":\"new\",\"type\":\"Leisure\"}";
+		String expected = FactoryJSON.Activity(updateLeisure.getId(), maj, updateLeisure.getType());
 		Assert.assertEquals(expected, jsonResponse);
 		
 		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + updateLoisir.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI +  updateLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		

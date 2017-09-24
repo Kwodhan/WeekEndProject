@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.istic.taa.WeekEndProject.model.Meteo;
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
-import fr.istic.taa.WeekEndProject.model.Activity.Loisir;
+import fr.istic.taa.WeekEndProject.model.Activity.Leisure;
 import fr.istic.taa.WeekEndProject.model.Activity.Sport;
 import fr.istic.taa.WeekEndProject.service.ActivityService;
 import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
@@ -26,23 +26,13 @@ import fr.istic.taa.WeekEndProject.service.exception.ActivityNotFound;
  *
  */
 @RestController
-@RequestMapping(value = "/activity/")
+@RequestMapping(value = "/activities/")
 public class ActivityRestController {
 
-	@RequestMapping(value = "truc", method = RequestMethod.GET)
-	ResponseEntity<Map<String, String>> getMap() {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("foo", "bar");
-		return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
-	}
-
-	/*
-	 * Par defaut : Nb requete == Nb association
-	 */
 	@Autowired
 	ActivityService serviceA;
 
-	@RequestMapping(value = "id/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	ResponseEntity<AbstractActivity> getActivityById(@PathVariable("id") long id) {
 		AbstractActivity l1;
 		try {
@@ -55,16 +45,16 @@ public class ActivityRestController {
 
 	}
 
-	@RequestMapping(value = "loisir/", method = RequestMethod.GET)
-	ResponseEntity<List<AbstractActivity>> getLoisir() {
+	@RequestMapping(value = "leisures/", method = RequestMethod.GET)
+	ResponseEntity<List<AbstractActivity>> getLeisure() {
 		List<AbstractActivity> l1;
 
-		l1 = this.serviceA.findAllLoisir();
+		l1 = this.serviceA.findAllLeisure();
 		return new ResponseEntity<List<AbstractActivity>>(l1, HttpStatus.OK);
 
 	}
 
-	@RequestMapping(value = "sport/", method = RequestMethod.GET)
+	@RequestMapping(value = "sports/", method = RequestMethod.GET)
 	ResponseEntity<List<AbstractActivity>> getSport() {
 		List<AbstractActivity> l1;
 
@@ -80,19 +70,19 @@ public class ActivityRestController {
 		return new ResponseEntity<List<AbstractActivity>>(listp, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "loisir/", method = RequestMethod.POST)
-	ResponseEntity<Loisir> createLoisir(@RequestBody Loisir activity) {
-		Loisir l1 = (Loisir) this.serviceA.create(activity);
-		return new ResponseEntity<Loisir>(l1, HttpStatus.OK);
+	@RequestMapping(value = "leisures/", method = RequestMethod.POST)
+	ResponseEntity<Leisure> createLeisure(@RequestBody Leisure activity) {
+		Leisure l1 = (Leisure) this.serviceA.create(activity);
+		return new ResponseEntity<Leisure>(l1, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "sport/", method = RequestMethod.POST)
+	@RequestMapping(value = "sports/", method = RequestMethod.POST)
 	ResponseEntity<Sport> createSport(@RequestBody Sport activity) {
 		Sport l1 = (Sport) this.serviceA.create(activity);
 		return new ResponseEntity<Sport>(l1, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "loisir/", method = RequestMethod.PUT)
+	@RequestMapping(value = "leisures/", method = RequestMethod.PUT)
 	ResponseEntity<AbstractActivity> updateActivity(@RequestBody Sport activity) {
 		AbstractActivity l1;
 		try {
@@ -105,8 +95,8 @@ public class ActivityRestController {
 
 	}
 
-	@RequestMapping(value = "sport/", method = RequestMethod.PUT)
-	ResponseEntity<AbstractActivity> updateActivity(@RequestBody Loisir activity) {
+	@RequestMapping(value = "sports/", method = RequestMethod.PUT)
+	ResponseEntity<AbstractActivity> updateActivity(@RequestBody Leisure activity) {
 		AbstractActivity l1;
 		try {
 			l1 = this.serviceA.update(activity);

@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -39,6 +40,7 @@ import fr.istic.taa.WeekEndProject.model.SiteActivity;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "Activity")
+@JsonPropertyOrder({ "id", "name", "type","meteos", "persons", "sites" })
 public abstract class AbstractActivity {
 	private Long id;
 
@@ -48,14 +50,12 @@ public abstract class AbstractActivity {
 	private Set<Meteo> meteos = new HashSet<Meteo>();
 
 	private String name;
-	
+
 	private String type;
 
 	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
-	
+
 	private Set<Person> persons = new HashSet<Person>();
-	
-	
 
 	public AbstractActivity(String name) {
 		super();
@@ -108,7 +108,6 @@ public abstract class AbstractActivity {
 		this.name = name;
 	}
 
-
 	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	@JsonIgnore
 	public Set<SiteActivity> getSites() {
@@ -118,6 +117,7 @@ public abstract class AbstractActivity {
 	public void setSites(Set<SiteActivity> sites) {
 		this.sites = sites;
 	}
+
 	@ManyToMany(mappedBy = "activities", cascade = { CascadeType.MERGE })
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIgnoreProperties("activities")
@@ -135,9 +135,7 @@ public abstract class AbstractActivity {
 	}
 
 	public void setType(String type) {
-		
-	}
 
-	
+	}
 
 }

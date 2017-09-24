@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.HashSet;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 import fr.istic.taa.WeekEndProject.model.Location;
 import fr.istic.taa.WeekEndProject.model.Person;
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
-import fr.istic.taa.WeekEndProject.model.Activity.Loisir;
+import fr.istic.taa.WeekEndProject.model.Activity.Leisure;
 import fr.istic.taa.WeekEndProject.service.ActivityService;
 import fr.istic.taa.WeekEndProject.service.LocationService;
 import fr.istic.taa.WeekEndProject.service.PersonService;
@@ -37,7 +39,7 @@ public class PersonWebServiceTest {
 
 	private MockMvc mockMvc;
 
-	private static final String SERVICE_URI = "/person/";
+	private static final String SERVICE_URI = "/persons/";
 
 	@Autowired
 	private PersonService personService;
@@ -69,25 +71,25 @@ public class PersonWebServiceTest {
 	public void setUp() {
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		getPerson = new Person("create");
+		getPerson = new Person("create", "last");
 		getPerson = personService.create(getPerson);
 
-		updatePerson = new Person("update");
+		updatePerson = new Person("update", "last");
 		updatePerson = personService.create(updatePerson);
 
 		createLocation = new Location("Location");
 		createLocation = locationService.create(createLocation);
 
-		updateLocationPerson = new Person("updateLocation");
+		updateLocationPerson = new Person("updateLocation", "last");
 		updateLocationPerson = personService.create(updateLocationPerson);
 
-		createActivity = new Loisir("Activity");
+		createActivity = new Leisure("Activity");
 		createActivity = activityService.create(createActivity);
 
-		updateActivityPerson = new Person("updateActivity");
+		updateActivityPerson = new Person("updateActivity", "last");
 		updateActivityPerson = personService.create(updateActivityPerson);
 
-		deletePerson = new Person("delete");
+		deletePerson = new Person("delete", "last");
 		deletePerson = personService.create(deletePerson);
 	}
 
@@ -98,8 +100,9 @@ public class PersonWebServiceTest {
 	 */
 	@Test
 	public void testCreatePerson() throws Exception {
-		String maj = "nameCreate";
-		String payload = "{\"name\":\"" + maj + "\"}";
+
+		String payload = FactoryJSON.Person(new Long(1234), "firstname", "lastname",
+				"email");
 		String jsonResponse = this.mockMvc
 				.perform(post(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
@@ -107,7 +110,8 @@ public class PersonWebServiceTest {
 
 		// F String expected = "{\"id\":" + Mockito.anyLong()+
 		// ",\"name\":\"nameCreate\",\"homes\":[],\"activities\":{}}";
-		Assert.assertTrue(jsonResponse.contains("\"name\":\"nameCreate\""));
+		Assert.assertTrue(jsonResponse.contains("\"firstName\":\"firstname\",\"lastName\":\"lastname\",\"emailAddress\":\"email\",\"homes\":[],\"activities\":[]"));
+		//Assert.assertEquals(payload, jsonResponse);
 	}
 
 	/**
@@ -119,12 +123,14 @@ public class PersonWebServiceTest {
 	public void testGetPerson() throws Exception {
 
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + getPerson.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + getPerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + getPerson.getId()
-				+ ",\"name\":\"create\",\"homes\":[],\"activities\":[]}";
+		// String expected = "{\"id\":" + getPerson.getId()
+		// + ",\"name\":\"create\",\"homes\":[],\"activities\":[]}";
+		String expected = FactoryJSON.Person(getPerson.getId(), getPerson.getFirstName(), getPerson.getLastName(),
+				getPerson.getEmailAddress());
 		Assert.assertEquals(expected, jsonResponse);
 
 	}
@@ -136,22 +142,24 @@ public class PersonWebServiceTest {
 	 */
 	@Test
 	public void testUpdatePerson() throws Exception {
-		String maj = "new";
-		String payload = "{\"id\":\"" + updatePerson.getId() + "\",\"name\":\"" + maj + "\"}";
+		String maj1 = "new1";
+		String maj2 = "new2";
+		String maj3 = "new3";
+		String payload = FactoryJSON.Person(updatePerson.getId(), maj1, maj2, maj3);
 		String jsonResponse = this.mockMvc
 				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updatePerson.getId()
-				+ ",\"name\":\"new\",\"homes\":[],\"activities\":[]}";
+		// String expected = FactoryJSON.Person(updatePerson.getId(), maj1, maj2, maj3);
+		String expected = FactoryJSON.Person(updatePerson.getId(), maj1, maj2, maj3);
 		Assert.assertEquals(expected, jsonResponse);
-		
+
 		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + updatePerson.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + updatePerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		
+
 		Assert.assertEquals(expected, jsonResponse2);
 	}
 
@@ -163,24 +171,28 @@ public class PersonWebServiceTest {
 	@Test
 	public void testUpdatePersonWithLocation() throws Exception {
 
-		String maj = "new";
-		String payload = "{\"id\":\"" + updateLocationPerson.getId() + "\",\"name\":\"" + maj + "\"}";
-		String jsonResponse = this.mockMvc.perform(
-				put(SERVICE_URI + updateLocationPerson.getId() + "/addLocation/" + createLocation.getId())
+	
+		String jsonResponse = this.mockMvc
+				.perform(put(SERVICE_URI + updateLocationPerson.getId() + "/addLocation/" + createLocation.getId())
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8)
-						.content(payload))
+						)
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateLocationPerson.getId() + ",\"name\":\""
-				+ updateLocationPerson.getName() + "\",\"homes\":[{\"id\":" + createLocation.getId()
-				+ ",\"name\":\"" + createLocation.getName() + "\"}],\"activities\":[]}";
+		// String expected = "{\"id\":" + updateLocationPerson.getId() +
+		// ",\"firstName\":\""
+		// + updateLocationPerson.getFirstName() + "\",\"homes\":[{\"id\":" +
+		// createLocation.getId()
+		// + ",\"city\":\"" + createLocation.getCity() + "\"}],\"activities\":[]}";
+		HashSet<Location> locations = new HashSet<Location>();
+		locations.add(createLocation);
+		String expected = FactoryJSON.PersonLocation(updateLocationPerson.getId(), updateLocationPerson.getFirstName(), updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations);
 		Assert.assertEquals(expected, jsonResponse);
-		
+
 		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + updateLocationPerson.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + updateLocationPerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		
+
 		Assert.assertEquals(expected, jsonResponse2);
 	}
 
@@ -192,25 +204,31 @@ public class PersonWebServiceTest {
 	@Test
 	public void testUpdatePersonWithActivity() throws Exception {
 
-		String maj = "new";
-		String payload = "{\"id\":\"" + updateActivityPerson.getId() + "\",\"name\":\"" + maj + "\"}";
-		String jsonResponse = this.mockMvc.perform(
-				put(SERVICE_URI + updateActivityPerson.getId() + "/addActivity/" + createActivity.getId())
+	
+	
+		String jsonResponse = this.mockMvc
+				.perform(put(SERVICE_URI + updateActivityPerson.getId() + "/addActivity/" + createActivity.getId())
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8)
-						.content(payload))
+						)
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateActivityPerson.getId() + ",\"name\":\""
-				+ updateActivityPerson.getName() + "\",\"homes\":[],\"activities\":[{\"id\":"
-				+ createActivity.getId() + ",\"meteos\":[],\"name\":\"" + createActivity.getName()
-				+ "\",\"type\":\"Loisir\"}]}";
+		// String expected = "{\"id\":" + updateActivityPerson.getId() +
+		// ",\"firstName\":\""
+		// + updateActivityPerson.getFirstName() +
+		// "\",\"homes\":[],\"activities\":[{\"id\":"
+		// + createActivity.getId() + ",\"meteos\":[],\"name\":\"" +
+		// createActivity.getName()
+		// + "\",\"type\":\"Leisure\"}]}";
+		HashSet<AbstractActivity> activities = new HashSet<AbstractActivity>();
+		activities.add(createActivity);
+		String expected = FactoryJSON.PersonActivity(updateActivityPerson.getId(), updateActivityPerson.getFirstName(), updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities);
 		Assert.assertEquals(expected, jsonResponse);
-		
+
 		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + updateActivityPerson.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + updateActivityPerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		
+
 		Assert.assertEquals(expected, jsonResponse2);
 
 	}
@@ -223,28 +241,31 @@ public class PersonWebServiceTest {
 	@Test
 	public void testDeleteActivityPersonExist() throws Exception {
 
-		String maj = "new";
-		String payload = "{\"id\":\"" + updateActivityPerson.getId() + "\",\"name\":\"" + maj + "\"}";
-		String jsonResponse = this.mockMvc.perform(
-				put(SERVICE_URI + updateActivityPerson.getId() + "/addActivity/" + createActivity.getId())
+		
+		String jsonResponse = this.mockMvc
+				.perform(put(SERVICE_URI + updateActivityPerson.getId() + "/addActivity/" + createActivity.getId())
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8)
-						.content(payload))
+						)
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateActivityPerson.getId() + ",\"name\":\""
-				+ updateActivityPerson.getName() + "\",\"homes\":[],\"activities\":[{\"id\":"
-				+ createActivity.getId() + ",\"meteos\":[],\"name\":\"" + createActivity.getName()
-				+ "\",\"type\":\"Loisir\"}]}";
-
+//		String expected = "{\"id\":" + updateActivityPerson.getId() + ",\"firstName\":\""
+//				+ updateActivityPerson.getFirstName() + "\",\"homes\":[],\"activities\":[{\"id\":"
+//				+ createActivity.getId() + ",\"meteos\":[],\"name\":\"" + createActivity.getName()
+//				+ "\",\"type\":\"Leisure\"}]}";
+		
+		HashSet<AbstractActivity> activities = new HashSet<AbstractActivity>();
+		activities.add(createActivity);
+		String expected = FactoryJSON.PersonActivity(updateActivityPerson.getId(), updateActivityPerson.getFirstName(), updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities);
 		Assert.assertEquals(expected, jsonResponse);
 
+
 		this.mockMvc
-				.perform(delete("/activity/" + createActivity.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(delete("/activities/" + createActivity.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
-				.perform(get("/activity/id/" + createActivity.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get("/activities/" + createActivity.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
 
@@ -256,6 +277,7 @@ public class PersonWebServiceTest {
 		}
 
 	}
+
 	/**
 	 * delete a Location and verify that the person is not delete
 	 * 
@@ -266,25 +288,28 @@ public class PersonWebServiceTest {
 
 		String maj = "new";
 		String payload = "{\"id\":\"" + updateLocationPerson.getId() + "\",\"name\":\"" + maj + "\"}";
-		String jsonResponse = this.mockMvc.perform(
-				put(SERVICE_URI + updateLocationPerson.getId() + "/addLocation/" + createLocation.getId())
+		String jsonResponse = this.mockMvc
+				.perform(put(SERVICE_URI + updateLocationPerson.getId() + "/addLocation/" + createLocation.getId())
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8)
 						.content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = "{\"id\":" + updateLocationPerson.getId() + ",\"name\":\""
-				+ updateLocationPerson.getName() + "\",\"homes\":[{\"id\":" + createLocation.getId()
-				+ ",\"name\":\"" + createLocation.getName() + "\"}],\"activities\":[]}";
+//		String expected = "{\"id\":" + updateLocationPerson.getId() + ",\"firstName\":\""
+//				+ updateLocationPerson.getFirstName() + "\",\"homes\":[{\"id\":" + createLocation.getId()
+//				+ ",\"city\":\"" + createLocation.getCity() + "\"}],\"activities\":[]}";
 
+		HashSet<Location> locations = new HashSet<Location>();
+		locations.add(createLocation);
+		String expected = FactoryJSON.PersonLocation(updateLocationPerson.getId(), updateLocationPerson.getFirstName(), updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations);
 		Assert.assertEquals(expected, jsonResponse);
 
 		this.mockMvc
-				.perform(delete("/location/" + createLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(delete("/locations/" + createLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
-				.perform(get("/location/id/" + createLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get("/locations/" + createLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
 
@@ -307,12 +332,12 @@ public class PersonWebServiceTest {
 	public void testDeletePerson() throws Exception {
 
 		this.mockMvc
-				.perform(delete(SERVICE_URI + "/" + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(delete(SERVICE_URI + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
-				.perform(get(SERVICE_URI + "/id/" + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
 

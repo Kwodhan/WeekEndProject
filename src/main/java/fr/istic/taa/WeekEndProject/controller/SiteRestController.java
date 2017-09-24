@@ -21,7 +21,7 @@ import fr.istic.taa.WeekEndProject.service.exception.SiteActivityNotFound;
  *
  */
 @RestController
-@RequestMapping(value = "/site/")
+@RequestMapping(value = "/sites/")
 public class SiteRestController {
 	/*
 	 * Par defaut : Nb requete == Nb association
@@ -29,7 +29,7 @@ public class SiteRestController {
 	@Autowired
 	SiteActivityService serviceS;
 
-	@RequestMapping(value = "id/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	ResponseEntity<SiteActivity> getSiteActivityById(@PathVariable("id") long id) {
 		SiteActivity p1 = null;
 		try {

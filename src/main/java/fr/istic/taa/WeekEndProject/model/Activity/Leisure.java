@@ -4,14 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 @Entity
-public class Loisir extends AbstractActivity {
+public class Leisure extends AbstractActivity {
 
-	public Loisir(String name) {
+	public Leisure(String name) {
 		super(name);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Loisir() {
+	public Leisure() {
 		super("");
 	}
 
@@ -19,7 +19,7 @@ public class Loisir extends AbstractActivity {
 	@Transient
 	public String getType() {
 		// TODO Auto-generated method stub
-		return "Loisir";
+		return "Leisure";
 	}
 
 }

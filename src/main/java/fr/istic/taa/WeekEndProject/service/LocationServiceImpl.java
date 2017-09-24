@@ -53,7 +53,7 @@ public class LocationServiceImpl implements LocationService {
 		if (updatedLocation == null) {
 			throw new LocationNotFound();
 		}
-		updatedLocation.setName(Location.getName());
+		updatedLocation.setCity(Location.getCity());
 		return updatedLocation;
 	}
 

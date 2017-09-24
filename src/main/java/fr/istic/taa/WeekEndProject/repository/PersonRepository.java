@@ -12,13 +12,17 @@ import fr.istic.taa.WeekEndProject.model.Person;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
-	@Query("select p from Person p where p.name = :name")
-	public List<Person> findByName(@Param("name") String name);
+	@Query("select p from Person p where p.firstName = :firstName")
+	public List<Person> findByName(@Param("firstName") String firstName);
 
-	@Query("select p from Person p left join fetch p.homes h  where p.name = :name")
-	public List<Person> findByNameWithAll(@Param("name") String name);
+	@Query("select p from Person p left join fetch p.homes h  where p.firstName = :firstName")
+	public List<Person> findByNameWithAll(@Param("firstName") String firstName);
 
 	@Query("select p from Person p left join fetch p.homes h left join fetch p.activities a where p.id = :id")
 	public Person findById(@Param("id") Long id);
+	
+	
+	
+	
 
 }

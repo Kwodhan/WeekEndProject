@@ -56,7 +56,7 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
         <property name="jpaProperties">
            <props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
 			</props>
         </property>
     </bean>

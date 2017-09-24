@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
@@ -24,10 +25,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  *
  */
 @Entity
+@JsonPropertyOrder({ "id", "city", "persons", "sites" })
 public class Location {
 	private Long id;
-
-	private String name;
+	
+	private String city;
 
 	private Set<Person> persons = new HashSet<Person>();
 	
@@ -35,7 +37,7 @@ public class Location {
 
 	public Location(String name) {
 		super();
-		this.name = name;
+		this.city = name;
 	}
 
 	public Location() {
@@ -52,12 +54,12 @@ public class Location {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getCity() {
+		return city;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	@ManyToMany(mappedBy = "homes", cascade = { CascadeType.MERGE })
@@ -73,7 +75,7 @@ public class Location {
 	}
 
 	public String toString() {
-		return "Location : " + this.name;
+		return "Location : " + this.city;
 	}
 	
 	@OneToMany(mappedBy = "location", cascade = CascadeType.ALL)

@@ -13,9 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import fr.istic.taa.WeekEndProject.model.Activity.AbstractActivity;
 
 @Entity
+@JsonPropertyOrder({ "id", "name", "location", "activity" })
 public class SiteActivity {
 	private Long id;
 	private AbstractActivity activity;
