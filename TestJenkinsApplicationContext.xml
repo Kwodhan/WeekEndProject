@@ -18,7 +18,7 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
     <mvc:resources mapping="/static/**" location="/static/"/>
     <mvc:default-servlet-handler/>
 
-    <context:component-scan base-package="fr.istic.taa.WeekEndProject.controller"/>
+    <context:component-scan base-package="fr.istic.taa.weekEndProject.controller"/>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
@@ -52,7 +52,7 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="VmdataSource"/>
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
-        <property name="packagesToScan" value="fr.istic.taa.WeekEndProject.model"/>
+        <property name="packagesToScan" value="fr.istic.taa.weekEndProject.model"/>
         <property name="jpaProperties">
            <props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
@@ -61,9 +61,9 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
         </property>
     </bean>
 
-    <jpa:repositories base-package="fr.istic.taa.WeekEndProject.repository"/>
+    <jpa:repositories base-package="fr.istic.taa.weekEndProject.repository"/>
 
-    <context:component-scan base-package="fr.istic.taa.WeekEndProject.service"/>
+    <context:component-scan base-package="fr.istic.taa.weekEndProject.service"/>
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basename" value="i18n/messages"/>

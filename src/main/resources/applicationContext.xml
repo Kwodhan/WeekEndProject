@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
-           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
-           http://www.springframework.org/schema/data/jpa  http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd http://www.springframework.org/schema/aop 
-   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd " >
+	xsi:schemaLocation="http://www.springframework.org/schema/security
+      http://www.springframework.org/schema/security/spring-security-4.2.xsd
+      http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+      http://www.springframework.org/schema/data/jpa  http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd http://www.springframework.org/schema/aop 
+  	  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
 
 	<context:annotation-config />
-	<context:component-scan base-package="fr.istic.taa.WeekEndProject" />
+	<context:component-scan base-package="fr.istic.taa.weekEndProject" />
 
 
 	<!-- SPRING - JPA -->
-	<jpa:repositories base-package="fr.istic.taa.WeekEndProject.repository" />
+	<jpa:repositories base-package="fr.istic.taa.weekEndProject.repository" />
 
 	<bean class="org.springframework.orm.jpa.JpaTransactionManager"
 		id="transactionManager">
@@ -35,7 +41,7 @@
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="mainDataSource" />
-		<property name="packagesToScan" value="fr.istic.taa.WeekEndProject.model" />
+		<property name="packagesToScan" value="fr.istic.taa.weekEndProject.model" />
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
@@ -51,6 +57,8 @@
 		</property>
 
 	</bean>
+	
 
+	
 
 </beans>
