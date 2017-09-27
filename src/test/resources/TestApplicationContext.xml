@@ -47,7 +47,10 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 
     <tx:annotation-driven/>
 
-    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+    <bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl"/>
+
+<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>

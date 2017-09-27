@@ -21,6 +21,7 @@ import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 @JsonPropertyOrder({ "id", "name", "location", "activity" })
 public class SiteActivity {
 	private Long id;
+	//TODO : tranform to list
 	private AbstractActivity activity;
 	private Location location;
 	private String name;

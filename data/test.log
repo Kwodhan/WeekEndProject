@@ -4,44 +4,62 @@ COMMIT
 /*C2*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C3*/SET SCHEMA PUBLIC
-create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
-create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
-create table Location (ID bigint not null, city varchar(255), primary key (ID))
-create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
-create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
-create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
-create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
-create sequence hibernate_sequence start with 1 increment by 1
-alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
-alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
-alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
-alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
-alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
-alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
-alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C4*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
 /*C5*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C6*/SET SCHEMA PUBLIC
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
-alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
-alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_ACTIVITY if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop table SiteActivity if exists
-drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C7*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C8*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
 create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
@@ -58,11 +76,7 @@ alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key
 alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
 alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
-/*C8*/SET SCHEMA PUBLIC
-DISCONNECT
 /*C9*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C10*/SET SCHEMA PUBLIC
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
 alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
 alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
@@ -79,9 +93,9 @@ drop table Person if exists
 drop table SiteActivity if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C11*/SET SCHEMA PUBLIC
+/*C10*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C12*/SET SCHEMA PUBLIC
+/*C11*/SET SCHEMA PUBLIC
 drop table Activity if exists
 drop table ACTIVITY_METEO if exists
 drop table Location if exists
@@ -91,7 +105,7 @@ drop table Person if exists
 drop table SiteActivity if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C13*/SET SCHEMA PUBLIC
+/*C12*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
 create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
@@ -107,17 +121,27 @@ alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key
 alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
 alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+DISCONNECT
+/*C13*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C14*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C15*/SET SCHEMA PUBLIC
-alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
-alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
-alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
-alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
-alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
-alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
-alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
 drop table Activity if exists
 drop table ACTIVITY_METEO if exists
 drop table Location if exists
@@ -128,18 +152,6 @@ drop table SiteActivity if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C16*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C17*/SET SCHEMA PUBLIC
-drop table Activity if exists
-drop table ACTIVITY_METEO if exists
-drop table Location if exists
-drop table PERS_ACTIVITY if exists
-drop table PERS_LOCATION if exists
-drop table Person if exists
-drop table SiteActivity if exists
-drop sequence hibernate_sequence if exists
-DISCONNECT
-/*C18*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
 create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
@@ -156,9 +168,7 @@ alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key
 alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
 alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
-/*C19*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C20*/SET SCHEMA PUBLIC
+/*C17*/SET SCHEMA PUBLIC
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
 alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
 alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
@@ -175,9 +185,9 @@ drop table Person if exists
 drop table SiteActivity if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C21*/SET SCHEMA PUBLIC
+/*C18*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C22*/SET SCHEMA PUBLIC
+/*C19*/SET SCHEMA PUBLIC
 drop table Activity if exists
 drop table ACTIVITY_METEO if exists
 drop table Location if exists
@@ -187,7 +197,7 @@ drop table Person if exists
 drop table SiteActivity if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
-/*C23*/SET SCHEMA PUBLIC
+/*C20*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
 create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
@@ -204,7 +214,51 @@ alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key
 alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
 alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
+/*C21*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C22*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C23*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
 /*C24*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
 /*C25*/SET SCHEMA PUBLIC
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
@@ -226,6 +280,17 @@ DISCONNECT
 /*C26*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C27*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C28*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
 create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
 create table Location (ID bigint not null, city varchar(255), primary key (ID))
@@ -233,7 +298,6 @@ create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null
 create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
 create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
 create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
-create sequence hibernate_sequence start with 1 increment by 1
 alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
 alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
 alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
@@ -242,47 +306,235 @@ alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key
 alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
 alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
-/*C28*/SET SCHEMA PUBLIC
-DISCONNECT
 /*C29*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C30*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C31*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C32*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
 /*C33*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C34*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C35*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C36*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
 /*C37*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C38*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C39*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C40*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
 /*C41*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C42*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C43*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C44*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
 /*C45*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C46*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C47*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C48*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
 /*C49*/SET SCHEMA PUBLIC
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
@@ -302,6 +554,18 @@ drop table SiteActivity if exists
 drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C50*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C51*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C52*/SET SCHEMA PUBLIC
 create sequence hibernate_sequence start with 1 increment by 1
 create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
 create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
@@ -318,407 +582,1535 @@ alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key
 alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
 alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
-/*C51*/SET SCHEMA PUBLIC
-INSERT INTO ACTIVITY VALUES('Sport',1,'Name','Sport')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
-COMMIT
-DISCONNECT
-/*C52*/SET SCHEMA PUBLIC
-INSERT INTO ACTIVITY VALUES('Sport',2,'dsq','Sport')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
-COMMIT
-DISCONNECT
 /*C53*/SET SCHEMA PUBLIC
-INSERT INTO ACTIVITY VALUES('Sport',3,'qds','Sport')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
-COMMIT
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C54*/SET SCHEMA PUBLIC
-INSERT INTO ACTIVITY VALUES('Sport',4,'cxw','Sport')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
-COMMIT
 DISCONNECT
 /*C55*/SET SCHEMA PUBLIC
-INSERT INTO ACTIVITY VALUES('Leisure',5,'Name','Leisure')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
-COMMIT
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C56*/SET SCHEMA PUBLIC
-INSERT INTO ACTIVITY VALUES('Leisure',6,'Loisir','Leisure')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
-COMMIT
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
 DISCONNECT
 /*C57*/SET SCHEMA PUBLIC
-INSERT INTO ACTIVITY VALUES('Leisure',7,'qds','Leisure')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
-COMMIT
 DISCONNECT
 /*C58*/SET SCHEMA PUBLIC
-INSERT INTO ACTIVITY VALUES('Leisure',8,'cxw','Leisure')
-ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
-COMMIT
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C59*/SET SCHEMA PUBLIC
-DELETE FROM ACTIVITY WHERE ID=4
-COMMIT
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
 DISCONNECT
 /*C60*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
 DISCONNECT
 /*C61*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C62*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C63*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+DISCONNECT
+/*C64*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C65*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C66*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C67*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+DISCONNECT
+/*C68*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C69*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C70*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C71*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+DISCONNECT
+/*C72*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C73*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C74*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C75*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+DISCONNECT
+/*C76*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C77*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C78*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C79*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+DISCONNECT
+/*C80*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C81*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C82*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C83*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+DISCONNECT
+/*C84*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table SiteActivity drop constraint FKcuh71ylx2dikqxv59ee6m29oj
+alter table SiteActivity drop constraint FK7f4j3iq6mcr11ry2eft05vfgi
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C85*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C86*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C87*/SET SCHEMA PUBLIC
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table SiteActivity if exists
+drop sequence hibernate_sequence if exists
+DISCONNECT
+/*C88*/SET SCHEMA PUBLIC
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (DTYPE varchar(31) not null, ID bigint not null, name varchar(255), type varchar(255), primary key (ID))
+create table ACTIVITY_METEO (AbstractActivity_ID bigint not null, meteos varchar(255))
+create table Location (ID bigint not null, city varchar(255), primary key (ID))
+create table PERS_ACTIVITY (PERS_ID bigint not null, ACTIVITY_ID bigint not null, primary key (PERS_ID, ACTIVITY_ID))
+create table PERS_LOCATION (PERS_ID bigint not null, LOCATION_ID bigint not null, primary key (PERS_ID, LOCATION_ID))
+create table Person (ID bigint not null, emailAddress varchar(255), firstName varchar(255), lastName varchar(255), primary key (ID))
+create table SiteActivity (ID bigint not null, name varchar(255), ACTIVITY_ID bigint, SITE_ID bigint, primary key (ID))
+alter table ACTIVITY_METEO add constraint FK3px8vlsvoqi8oqwvb8tk1c5s7 foreign key (AbstractActivity_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKnm3p5lj4joynps6fsdrsj4kxc foreign key (ACTIVITY_ID) references Activity
+alter table PERS_ACTIVITY add constraint FKjxr8711pfys95wi46n2maxnof foreign key (PERS_ID) references Person
+alter table PERS_LOCATION add constraint FKo08s1waocga5hod7vcmax6djy foreign key (LOCATION_ID) references Location
+alter table PERS_LOCATION add constraint FKg4t974wrct4drp6rtsbe5l2d8 foreign key (PERS_ID) references Person
+alter table SiteActivity add constraint FKcuh71ylx2dikqxv59ee6m29oj foreign key (ACTIVITY_ID) references Activity
+alter table SiteActivity add constraint FK7f4j3iq6mcr11ry2eft05vfgi foreign key (SITE_ID) references Location
+DISCONNECT
+/*C89*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Sport',1,'Name','Sport')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 2
+COMMIT
+DISCONNECT
+/*C90*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Sport',2,'dsq','Sport')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 3
+COMMIT
+DISCONNECT
+/*C91*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Sport',3,'qds','Sport')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 4
+COMMIT
+DISCONNECT
+/*C92*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Sport',4,'cxw','Sport')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 5
+COMMIT
+DISCONNECT
+/*C93*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',5,'Name','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 6
+COMMIT
+DISCONNECT
+/*C94*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',6,'Loisir','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 7
+COMMIT
+DISCONNECT
+/*C95*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',7,'qds','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+DISCONNECT
+/*C96*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',8,'cxw','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 9
+COMMIT
+DISCONNECT
+/*C97*/SET SCHEMA PUBLIC
+DELETE FROM ACTIVITY WHERE ID=4
+COMMIT
+DISCONNECT
+/*C98*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C99*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C100*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',9,'Name','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 10
 COMMIT
 DISCONNECT
-/*C63*/SET SCHEMA PUBLIC
+/*C101*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',10,'dsq','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 11
 COMMIT
 DISCONNECT
-/*C64*/SET SCHEMA PUBLIC
+/*C102*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',11,'qds','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
 COMMIT
 DISCONNECT
-/*C65*/SET SCHEMA PUBLIC
+/*C103*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',12,'cxw','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 13
 COMMIT
 DISCONNECT
-/*C66*/SET SCHEMA PUBLIC
+/*C104*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',13,'Name','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 14
 COMMIT
 DISCONNECT
-/*C67*/SET SCHEMA PUBLIC
+/*C105*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',14,'Loisir','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 15
 COMMIT
 DISCONNECT
-/*C68*/SET SCHEMA PUBLIC
+/*C106*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',15,'qds','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 16
 COMMIT
 DISCONNECT
-/*C69*/SET SCHEMA PUBLIC
+/*C107*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',16,'cxw','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 17
 COMMIT
 DISCONNECT
-/*C70*/SET SCHEMA PUBLIC
+/*C108*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C71*/SET SCHEMA PUBLIC
+/*C109*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',17,'Name','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 18
 COMMIT
 DISCONNECT
-/*C72*/SET SCHEMA PUBLIC
+/*C110*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',18,'dsq','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 19
 COMMIT
 DISCONNECT
-/*C73*/SET SCHEMA PUBLIC
+/*C111*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',19,'qds','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 20
 COMMIT
 DISCONNECT
-/*C74*/SET SCHEMA PUBLIC
+/*C112*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',20,'cxw','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 21
 COMMIT
 DISCONNECT
-/*C75*/SET SCHEMA PUBLIC
+/*C113*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',21,'Name','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 22
 COMMIT
 DISCONNECT
-/*C76*/SET SCHEMA PUBLIC
+/*C114*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',22,'Loisir','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 23
 COMMIT
 DISCONNECT
-/*C77*/SET SCHEMA PUBLIC
+/*C115*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',23,'qds','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 24
 COMMIT
 DISCONNECT
-/*C78*/SET SCHEMA PUBLIC
+/*C116*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',24,'cxw','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 25
 COMMIT
 DISCONNECT
-/*C79*/SET SCHEMA PUBLIC
+/*C117*/SET SCHEMA PUBLIC
 DELETE FROM ACTIVITY WHERE ID=18
 INSERT INTO ACTIVITY VALUES('Sport',18,'new','Sport')
 COMMIT
 DISCONNECT
-/*C80*/SET SCHEMA PUBLIC
+/*C118*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C81*/SET SCHEMA PUBLIC
+/*C119*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',25,'Name','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 26
 COMMIT
 DISCONNECT
-/*C82*/SET SCHEMA PUBLIC
+/*C120*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',26,'dsq','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 27
 COMMIT
 DISCONNECT
-/*C83*/SET SCHEMA PUBLIC
+/*C121*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',27,'qds','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 28
 COMMIT
 DISCONNECT
-/*C84*/SET SCHEMA PUBLIC
+/*C122*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',28,'cxw','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 29
 COMMIT
 DISCONNECT
-/*C85*/SET SCHEMA PUBLIC
+/*C123*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',29,'Name','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 30
 COMMIT
 DISCONNECT
-/*C86*/SET SCHEMA PUBLIC
+/*C124*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',30,'Loisir','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 31
 COMMIT
 DISCONNECT
-/*C87*/SET SCHEMA PUBLIC
+/*C125*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',31,'qds','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 32
 COMMIT
 DISCONNECT
-/*C88*/SET SCHEMA PUBLIC
+/*C126*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',32,'cxw','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 33
 COMMIT
 DISCONNECT
-/*C89*/SET SCHEMA PUBLIC
+/*C127*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',33,'nameCreate','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 34
 COMMIT
 DISCONNECT
-/*C90*/SET SCHEMA PUBLIC
+/*C128*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',34,'Name','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 35
 COMMIT
 DISCONNECT
-/*C91*/SET SCHEMA PUBLIC
+/*C129*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',35,'dsq','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 36
 COMMIT
 DISCONNECT
-/*C92*/SET SCHEMA PUBLIC
+/*C130*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',36,'qds','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 37
 COMMIT
 DISCONNECT
-/*C93*/SET SCHEMA PUBLIC
+/*C131*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',37,'cxw','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 38
 COMMIT
 DISCONNECT
-/*C94*/SET SCHEMA PUBLIC
+/*C132*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',38,'Name','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 39
 COMMIT
 DISCONNECT
-/*C95*/SET SCHEMA PUBLIC
+/*C133*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',39,'Loisir','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 40
 COMMIT
 DISCONNECT
-/*C96*/SET SCHEMA PUBLIC
+/*C134*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',40,'qds','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 41
 COMMIT
 DISCONNECT
-/*C97*/SET SCHEMA PUBLIC
+/*C135*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',41,'cxw','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 42
 COMMIT
 DISCONNECT
-/*C98*/SET SCHEMA PUBLIC
+/*C136*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',42,'nameCreate','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 43
 COMMIT
 DISCONNECT
-/*C99*/SET SCHEMA PUBLIC
+/*C137*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',43,'Name','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 44
 COMMIT
 DISCONNECT
-/*C100*/SET SCHEMA PUBLIC
+/*C138*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',44,'dsq','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 45
 COMMIT
 DISCONNECT
-/*C101*/SET SCHEMA PUBLIC
+/*C139*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',45,'qds','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 46
 COMMIT
 DISCONNECT
-/*C102*/SET SCHEMA PUBLIC
+/*C140*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',46,'cxw','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 47
 COMMIT
 DISCONNECT
-/*C103*/SET SCHEMA PUBLIC
+/*C141*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',47,'Name','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 48
 COMMIT
 DISCONNECT
-/*C104*/SET SCHEMA PUBLIC
+/*C142*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',48,'Loisir','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 49
 COMMIT
 DISCONNECT
-/*C105*/SET SCHEMA PUBLIC
+/*C143*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',49,'qds','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 50
 COMMIT
 DISCONNECT
-/*C106*/SET SCHEMA PUBLIC
+/*C144*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',50,'cxw','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 51
 COMMIT
 DISCONNECT
-/*C107*/SET SCHEMA PUBLIC
+/*C145*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C108*/SET SCHEMA PUBLIC
+/*C146*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',51,'Name','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 52
 COMMIT
 DISCONNECT
-/*C109*/SET SCHEMA PUBLIC
+/*C147*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',52,'dsq','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 53
 COMMIT
 DISCONNECT
-/*C110*/SET SCHEMA PUBLIC
+/*C148*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',53,'qds','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 54
 COMMIT
 DISCONNECT
-/*C111*/SET SCHEMA PUBLIC
+/*C149*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',54,'cxw','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 55
 COMMIT
 DISCONNECT
-/*C112*/SET SCHEMA PUBLIC
+/*C150*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',55,'Name','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 56
 COMMIT
 DISCONNECT
-/*C113*/SET SCHEMA PUBLIC
+/*C151*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',56,'Loisir','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 57
 COMMIT
 DISCONNECT
-/*C114*/SET SCHEMA PUBLIC
+/*C152*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',57,'qds','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 58
 COMMIT
 DISCONNECT
-/*C115*/SET SCHEMA PUBLIC
+/*C153*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',58,'cxw','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 59
 COMMIT
 DISCONNECT
-/*C116*/SET SCHEMA PUBLIC
+/*C154*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C117*/SET SCHEMA PUBLIC
+/*C155*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',59,'Name','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 60
 COMMIT
 DISCONNECT
-/*C118*/SET SCHEMA PUBLIC
+/*C156*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',60,'dsq','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 61
 COMMIT
 DISCONNECT
-/*C119*/SET SCHEMA PUBLIC
+/*C157*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',61,'qds','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 62
 COMMIT
 DISCONNECT
-/*C120*/SET SCHEMA PUBLIC
+/*C158*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',62,'cxw','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 63
 COMMIT
 DISCONNECT
-/*C121*/SET SCHEMA PUBLIC
+/*C159*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',63,'Name','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 64
 COMMIT
 DISCONNECT
-/*C122*/SET SCHEMA PUBLIC
+/*C160*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',64,'Loisir','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 65
 COMMIT
 DISCONNECT
-/*C123*/SET SCHEMA PUBLIC
+/*C161*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',65,'qds','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 66
 COMMIT
 DISCONNECT
-/*C124*/SET SCHEMA PUBLIC
+/*C162*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',66,'cxw','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 67
 COMMIT
 DISCONNECT
-/*C125*/SET SCHEMA PUBLIC
+/*C163*/SET SCHEMA PUBLIC
 DELETE FROM ACTIVITY WHERE ID=64
 INSERT INTO ACTIVITY VALUES('Leisure',64,'new','Leisure')
 COMMIT
 DISCONNECT
-/*C126*/SET SCHEMA PUBLIC
+/*C164*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C127*/SET SCHEMA PUBLIC
+/*C165*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',67,'Name','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 68
 COMMIT
 DISCONNECT
-/*C128*/SET SCHEMA PUBLIC
+/*C166*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',68,'dsq','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 69
 COMMIT
 DISCONNECT
-/*C129*/SET SCHEMA PUBLIC
+/*C167*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',69,'qds','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 70
 COMMIT
 DISCONNECT
-/*C130*/SET SCHEMA PUBLIC
+/*C168*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Sport',70,'cxw','Sport')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 71
 COMMIT
 DISCONNECT
-/*C131*/SET SCHEMA PUBLIC
+/*C169*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',71,'Name','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 72
 COMMIT
 DISCONNECT
-/*C132*/SET SCHEMA PUBLIC
+/*C170*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',72,'Loisir','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 73
 COMMIT
 DISCONNECT
-/*C133*/SET SCHEMA PUBLIC
+/*C171*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',73,'qds','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 74
 COMMIT
 DISCONNECT
-/*C134*/SET SCHEMA PUBLIC
+/*C172*/SET SCHEMA PUBLIC
 INSERT INTO ACTIVITY VALUES('Leisure',74,'cxw','Leisure')
 ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 75
 COMMIT
 DISCONNECT
-/*C135*/SET SCHEMA PUBLIC
+/*C173*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C136*/SET SCHEMA PUBLIC
+/*C174*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(75,'SiteGet',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 76
+COMMIT
+DISCONNECT
+/*C175*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(76,'SiteUpdate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 77
+COMMIT
+DISCONNECT
+/*C176*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(77,'SiteDelete',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 78
+COMMIT
+DISCONNECT
+/*C177*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(78,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 79
+COMMIT
+DISCONNECT
+/*C178*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',79,'Leisure','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 80
+COMMIT
+DISCONNECT
+/*C179*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=77
+INSERT INTO SITEACTIVITY VALUES(77,'SiteDelete',79,NULL)
+COMMIT
+DISCONNECT
+/*C180*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C181*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=77
+INSERT INTO SITEACTIVITY VALUES(77,'SiteDelete',79,78)
+COMMIT
+DISCONNECT
+/*C182*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C183*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=77
+COMMIT
+DISCONNECT
+/*C184*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C185*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C186*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(80,'SiteGet',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 81
+COMMIT
+DISCONNECT
+/*C187*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(81,'SiteUpdate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 82
+COMMIT
+DISCONNECT
+/*C188*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(82,'SiteDelete',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 83
+COMMIT
+DISCONNECT
+/*C189*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(83,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 84
+COMMIT
+DISCONNECT
+/*C190*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',84,'Leisure','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 85
+COMMIT
+DISCONNECT
+/*C191*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=81
+INSERT INTO SITEACTIVITY VALUES(81,'new',NULL,NULL)
+COMMIT
+DISCONNECT
+/*C192*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(85,'SiteGet',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 86
+COMMIT
+DISCONNECT
+/*C193*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(86,'SiteUpdate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 87
+COMMIT
+DISCONNECT
+/*C194*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(87,'SiteDelete',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 88
+COMMIT
+DISCONNECT
+/*C195*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(88,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 89
+COMMIT
+DISCONNECT
+/*C196*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',89,'Leisure','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 90
+COMMIT
+DISCONNECT
+/*C197*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=86
+INSERT INTO SITEACTIVITY VALUES(86,'SiteUpdate',NULL,88)
+COMMIT
+DISCONNECT
+/*C198*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C199*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(90,'SiteGet',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 91
+COMMIT
+DISCONNECT
+/*C200*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(91,'SiteUpdate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 92
+COMMIT
+DISCONNECT
+/*C201*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(92,'SiteDelete',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 93
+COMMIT
+DISCONNECT
+/*C202*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(93,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 94
+COMMIT
+DISCONNECT
+/*C203*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',94,'Leisure','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 95
+COMMIT
+DISCONNECT
+/*C204*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=92
+INSERT INTO SITEACTIVITY VALUES(92,'SiteDelete',NULL,93)
+COMMIT
+DISCONNECT
+/*C205*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C206*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=92
+DELETE FROM LOCATION WHERE ID=93
+COMMIT
+DISCONNECT
+/*C207*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C208*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C209*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C210*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(95,'SiteGet',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 96
+COMMIT
+DISCONNECT
+/*C211*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(96,'SiteUpdate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 97
+COMMIT
+DISCONNECT
+/*C212*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(97,'SiteDelete',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 98
+COMMIT
+DISCONNECT
+/*C213*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(98,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 99
+COMMIT
+DISCONNECT
+/*C214*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',99,'Leisure','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 100
+COMMIT
+DISCONNECT
+/*C215*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C216*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(100,'SiteGet',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 101
+COMMIT
+DISCONNECT
+/*C217*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(101,'SiteUpdate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 102
+COMMIT
+DISCONNECT
+/*C218*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(102,'SiteDelete',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 103
+COMMIT
+DISCONNECT
+/*C219*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(103,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 104
+COMMIT
+DISCONNECT
+/*C220*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',104,'Leisure','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 105
+COMMIT
+DISCONNECT
+/*C221*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=101
+INSERT INTO SITEACTIVITY VALUES(101,'SiteUpdate',104,NULL)
+COMMIT
+DISCONNECT
+/*C222*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C223*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(105,'SiteGet',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 106
+COMMIT
+DISCONNECT
+/*C224*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(106,'SiteUpdate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 107
+COMMIT
+DISCONNECT
+/*C225*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(107,'SiteDelete',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 108
+COMMIT
+DISCONNECT
+/*C226*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(108,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 109
+COMMIT
+DISCONNECT
+/*C227*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',109,'Leisure','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 110
+COMMIT
+DISCONNECT
+/*C228*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(110,'nameCreate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 111
+COMMIT
+DISCONNECT
+/*C229*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(111,'SiteGet',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 112
+COMMIT
+DISCONNECT
+/*C230*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(112,'SiteUpdate',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 113
+COMMIT
+DISCONNECT
+/*C231*/SET SCHEMA PUBLIC
+INSERT INTO SITEACTIVITY VALUES(113,'SiteDelete',NULL,NULL)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 114
+COMMIT
+DISCONNECT
+/*C232*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(114,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 115
+COMMIT
+DISCONNECT
+/*C233*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',115,'Leisure','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 116
+COMMIT
+DISCONNECT
+/*C234*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=113
+INSERT INTO SITEACTIVITY VALUES(113,'SiteDelete',115,NULL)
+COMMIT
+DISCONNECT
+/*C235*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C236*/SET SCHEMA PUBLIC
+DELETE FROM SITEACTIVITY WHERE ID=113
+DELETE FROM ACTIVITY WHERE ID=115
+COMMIT
+DISCONNECT
+/*C237*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C238*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C239*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C240*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(116,'create')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 117
+COMMIT
+DISCONNECT
+/*C241*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(117,'dsq')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 118
+COMMIT
+DISCONNECT
+/*C242*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(118,'qds')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 119
+COMMIT
+DISCONNECT
+/*C243*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(119,'cxw')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 120
+COMMIT
+DISCONNECT
+/*C244*/SET SCHEMA PUBLIC
+DELETE FROM LOCATION WHERE ID=119
+COMMIT
+DISCONNECT
+/*C245*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C246*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C247*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(120,'create')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 121
+COMMIT
+DISCONNECT
+/*C248*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(121,'dsq')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 122
+COMMIT
+DISCONNECT
+/*C249*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(122,'qds')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 123
+COMMIT
+DISCONNECT
+/*C250*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(123,'cxw')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 124
+COMMIT
+DISCONNECT
+/*C251*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C252*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(124,'create')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 125
+COMMIT
+DISCONNECT
+/*C253*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(125,'dsq')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 126
+COMMIT
+DISCONNECT
+/*C254*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(126,'qds')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 127
+COMMIT
+DISCONNECT
+/*C255*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(127,'cxw')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 128
+COMMIT
+DISCONNECT
+/*C256*/SET SCHEMA PUBLIC
+DELETE FROM LOCATION WHERE ID=125
+INSERT INTO LOCATION VALUES(125,'azerty')
+COMMIT
+DISCONNECT
+/*C257*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C258*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(128,'create')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 129
+COMMIT
+DISCONNECT
+/*C259*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(129,'dsq')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 130
+COMMIT
+DISCONNECT
+/*C260*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(130,'qds')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 131
+COMMIT
+DISCONNECT
+/*C261*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(131,'cxw')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 132
+COMMIT
+DISCONNECT
+/*C262*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(132,'nameCreate')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 133
+COMMIT
+DISCONNECT
+/*C263*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(133,NULL,'create','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 134
+COMMIT
+DISCONNECT
+/*C264*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(134,NULL,'update','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 135
+COMMIT
+DISCONNECT
+/*C265*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(135,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 136
+COMMIT
+DISCONNECT
+/*C266*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(136,NULL,'updateLocation','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 137
+COMMIT
+DISCONNECT
+/*C267*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',137,'Activity','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 138
+COMMIT
+DISCONNECT
+/*C268*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(138,NULL,'updateActivity','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 139
+COMMIT
+DISCONNECT
+/*C269*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(139,NULL,'delete','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 140
+COMMIT
+DISCONNECT
+/*C270*/SET SCHEMA PUBLIC
+INSERT INTO PERS_LOCATION VALUES(136,135)
+COMMIT
+DISCONNECT
+/*C271*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C272*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(140,NULL,'create','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 141
+COMMIT
+DISCONNECT
+/*C273*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(141,NULL,'update','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 142
+COMMIT
+DISCONNECT
+/*C274*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(142,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 143
+COMMIT
+DISCONNECT
+/*C275*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(143,NULL,'updateLocation','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 144
+COMMIT
+DISCONNECT
+/*C276*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',144,'Activity','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 145
+COMMIT
+DISCONNECT
+/*C277*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(145,NULL,'updateActivity','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 146
+COMMIT
+DISCONNECT
+/*C278*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(146,NULL,'delete','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 147
+COMMIT
+DISCONNECT
+/*C279*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(147,'email','firstname','lastname')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 148
+COMMIT
+DISCONNECT
+/*C280*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(148,NULL,'create','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 149
+COMMIT
+DISCONNECT
+/*C281*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(149,NULL,'update','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 150
+COMMIT
+DISCONNECT
+/*C282*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(150,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 151
+COMMIT
+DISCONNECT
+/*C283*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(151,NULL,'updateLocation','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 152
+COMMIT
+DISCONNECT
+/*C284*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',152,'Activity','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 153
+COMMIT
+DISCONNECT
+/*C285*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(153,NULL,'updateActivity','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 154
+COMMIT
+DISCONNECT
+/*C286*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(154,NULL,'delete','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 155
+COMMIT
+DISCONNECT
+/*C287*/SET SCHEMA PUBLIC
+INSERT INTO PERS_LOCATION VALUES(151,150)
+COMMIT
+DISCONNECT
+/*C288*/SET SCHEMA PUBLIC
+DELETE FROM PERS_LOCATION WHERE PERS_ID=151 AND LOCATION_ID=150
+DELETE FROM LOCATION WHERE ID=150
+COMMIT
+DISCONNECT
+/*C289*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C290*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C291*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(155,NULL,'create','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 156
+COMMIT
+DISCONNECT
+/*C292*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(156,NULL,'update','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 157
+COMMIT
+DISCONNECT
+/*C293*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(157,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 158
+COMMIT
+DISCONNECT
+/*C294*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(158,NULL,'updateLocation','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 159
+COMMIT
+DISCONNECT
+/*C295*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',159,'Activity','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 160
+COMMIT
+DISCONNECT
+/*C296*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(160,NULL,'updateActivity','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 161
+COMMIT
+DISCONNECT
+/*C297*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(161,NULL,'delete','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 162
+COMMIT
+DISCONNECT
+/*C298*/SET SCHEMA PUBLIC
+INSERT INTO PERS_ACTIVITY VALUES(160,159)
+COMMIT
+DISCONNECT
+/*C299*/SET SCHEMA PUBLIC
+DELETE FROM PERS_ACTIVITY WHERE PERS_ID=160 AND ACTIVITY_ID=159
+DELETE FROM ACTIVITY WHERE ID=159
+COMMIT
+DISCONNECT
+/*C300*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C301*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C302*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(162,NULL,'create','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 163
+COMMIT
+DISCONNECT
+/*C303*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(163,NULL,'update','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 164
+COMMIT
+DISCONNECT
+/*C304*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(164,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 165
+COMMIT
+DISCONNECT
+/*C305*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(165,NULL,'updateLocation','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 166
+COMMIT
+DISCONNECT
+/*C306*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',166,'Activity','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 167
+COMMIT
+DISCONNECT
+/*C307*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(167,NULL,'updateActivity','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 168
+COMMIT
+DISCONNECT
+/*C308*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(168,NULL,'delete','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 169
+COMMIT
+DISCONNECT
+/*C309*/SET SCHEMA PUBLIC
+INSERT INTO PERS_ACTIVITY VALUES(167,166)
+COMMIT
+DISCONNECT
+/*C310*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C311*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(169,NULL,'create','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 170
+COMMIT
+DISCONNECT
+/*C312*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(170,NULL,'update','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 171
+COMMIT
+DISCONNECT
+/*C313*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(171,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 172
+COMMIT
+DISCONNECT
+/*C314*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(172,NULL,'updateLocation','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 173
+COMMIT
+DISCONNECT
+/*C315*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',173,'Activity','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 174
+COMMIT
+DISCONNECT
+/*C316*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(174,NULL,'updateActivity','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 175
+COMMIT
+DISCONNECT
+/*C317*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(175,NULL,'delete','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 176
+COMMIT
+DISCONNECT
+/*C318*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=170
+INSERT INTO PERSON VALUES(170,'new3','new1','new2')
+COMMIT
+DISCONNECT
+/*C319*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C320*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(176,NULL,'create','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 177
+COMMIT
+DISCONNECT
+/*C321*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(177,NULL,'update','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 178
+COMMIT
+DISCONNECT
+/*C322*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(178,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 179
+COMMIT
+DISCONNECT
+/*C323*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(179,NULL,'updateLocation','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 180
+COMMIT
+DISCONNECT
+/*C324*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',180,'Activity','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 181
+COMMIT
+DISCONNECT
+/*C325*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(181,NULL,'updateActivity','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 182
+COMMIT
+DISCONNECT
+/*C326*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(182,NULL,'delete','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 183
+COMMIT
+DISCONNECT
+/*C327*/SET SCHEMA PUBLIC
+DELETE FROM PERSON WHERE ID=182
+COMMIT
+DISCONNECT
+/*C328*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C329*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C330*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(183,NULL,'create','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 184
+COMMIT
+DISCONNECT
+/*C331*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(184,NULL,'update','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 185
+COMMIT
+DISCONNECT
+/*C332*/SET SCHEMA PUBLIC
+INSERT INTO LOCATION VALUES(185,'Location')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 186
+COMMIT
+DISCONNECT
+/*C333*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(186,NULL,'updateLocation','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 187
+COMMIT
+DISCONNECT
+/*C334*/SET SCHEMA PUBLIC
+INSERT INTO ACTIVITY VALUES('Leisure',187,'Activity','Leisure')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 188
+COMMIT
+DISCONNECT
+/*C335*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(188,NULL,'updateActivity','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 189
+COMMIT
+DISCONNECT
+/*C336*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(189,NULL,'delete','last')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 190
+COMMIT
+DISCONNECT
+/*C337*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C338*/SET SCHEMA PUBLIC
 alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
 alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
 alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
