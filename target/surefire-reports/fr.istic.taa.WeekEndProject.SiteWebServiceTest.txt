@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: fr.istic.taa.WeekEndProject.SiteWebServiceTest
--------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.027 sec - in fr.istic.taa.WeekEndProject.SiteWebServiceTest
