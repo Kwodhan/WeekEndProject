@@ -1,11 +1,9 @@
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/ActivityService.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/PersonService.java
-/home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/security/MySavedRequestAwareAuthenticationSuccessHandler.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/ActivityServiceImpl.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/jpa/JpaTest.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/exception/SiteActivityNotFound.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/repository/PersonRepository.java
-/home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/security/RestAuthenticationEntryPoint.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/controller/ActivityRestController.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/exception/PersonNotFound.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/model/activity/AbstractActivity.java

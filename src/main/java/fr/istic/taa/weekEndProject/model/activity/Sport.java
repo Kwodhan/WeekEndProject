@@ -3,6 +3,8 @@ package fr.istic.taa.weekEndProject.model.activity;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fr.istic.taa.weekEndProject.model.Meteo;
 
 @Entity
@@ -33,6 +35,7 @@ public class Sport extends AbstractActivity {
 
 	@Override
 	@Transient
+	@JsonIgnore
 	public String getType() {
 		// TODO Auto-generated method stub
 		return "Sport";

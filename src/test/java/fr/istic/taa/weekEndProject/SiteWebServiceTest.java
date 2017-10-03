@@ -6,6 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,11 +26,13 @@ import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.model.activity.Leisure;
+import fr.istic.taa.weekEndProject.model.activity.Sport;
 import fr.istic.taa.weekEndProject.service.ActivityService;
 import fr.istic.taa.weekEndProject.service.LocationService;
 import fr.istic.taa.weekEndProject.service.SiteActivityService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
+import fr.istic.taa.weekEndProject.service.exception.SiteActivityNotFound;
 
 /**
  * 
@@ -65,6 +70,8 @@ public class SiteWebServiceTest {
 
 	AbstractActivity updateActivity;
 
+	AbstractActivity updateActivity2;
+
 	@Before
 	public void setUp() {
 
@@ -81,8 +88,11 @@ public class SiteWebServiceTest {
 		updateLocation = new Location("Location");
 		updateLocation = locationService.create(updateLocation);
 
-		updateActivity = new Leisure("Leisure");
+		updateActivity = new Leisure("leisure");
 		updateActivity = activityService.create(updateActivity);
+
+		updateActivity2 = new Sport("sport");
+		updateActivity2 = activityService.create(updateActivity2);
 	}
 
 	/**
@@ -148,10 +158,10 @@ public class SiteWebServiceTest {
 	 */
 	@Test
 	public void testUpdateSiteWithLocation() throws Exception {
-
+		String expected = FactoryJSON.Site(updateSite.getId(), updateSite.getName(), updateLocation);
 		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI + updateSite.getId() + "/addLocation/" + updateLocation.getId())
-						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(""))
+				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(expected))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		// String expected = "{\"id\":" + updateSite.getId() + ",\"name\":\"" +
@@ -159,7 +169,7 @@ public class SiteWebServiceTest {
 		// + "\",\"location\":{\"id\":" + updateLocation.getId() + ",\"city\":\"" +
 		// updateLocation.getCity()
 		// + "\"}" + ",\"activity\":" + "null" + "}";
-		String expected = FactoryJSON.Site(updateSite.getId(), updateSite.getName(), updateLocation);
+
 		Assert.assertEquals(expected, jsonResponse);
 
 		String jsonResponseGet = this.mockMvc
@@ -177,10 +187,12 @@ public class SiteWebServiceTest {
 	 */
 	@Test
 	public void testUpdateSiteWithActivity() throws Exception {
-
+		Set<AbstractActivity> set = new HashSet<AbstractActivity>();
+		set.add(updateActivity);
+		String strActivity = FactoryJSON.ArrayActivity(set);
 		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI + updateSite.getId() + "/addActivity/" + updateActivity.getId())
-						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(""))
+				.perform(post(SERVICE_URI + updateSite.getId() + "/activities/").contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(strActivity))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		// String expected = "{\"id\":" + updateSite.getId() + ",\"name\":\"" +
@@ -188,7 +200,7 @@ public class SiteWebServiceTest {
 		// + "\",\"location\":null" + ",\"activity\":{\"id\":" + updateActivity.getId()
 		// + ",\"name\":\""
 		// + this.updateActivity.getName() + "\",\"type\":\"Leisure\",\"meteos\":[]}}";
-		String expected = FactoryJSON.Site(updateSite.getId(), updateSite.getName(), updateActivity);
+		String expected = FactoryJSON.Site(updateSite.getId(), updateSite.getName(), set);
 		Assert.assertEquals(expected, jsonResponse);
 
 		String jsonResponseGet = this.mockMvc
@@ -207,13 +219,15 @@ public class SiteWebServiceTest {
 	 */
 	@Test
 	public void testDeleteSiteWithActivityAndLocation() throws Exception {
-
+		Set<AbstractActivity> set = new HashSet<AbstractActivity>();
+		set.add(updateActivity);
+		String strActivity = FactoryJSON.ArrayActivity(set);
 		String jsonResponseActivity = this.mockMvc
-				.perform(put(SERVICE_URI + deleteSite.getId() + "/addActivity/" + updateActivity.getId())
-						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(""))
+				.perform(post(SERVICE_URI + deleteSite.getId() + "/activities/").contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(strActivity))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expectedActivity = FactoryJSON.Site(deleteSite.getId(), deleteSite.getName(), updateActivity);
+		String expectedActivity = FactoryJSON.Site(deleteSite.getId(), deleteSite.getName(), set);
 		Assert.assertEquals(expectedActivity, jsonResponseActivity);
 
 		String jsonResponseGetActivity = this.mockMvc
@@ -223,13 +237,12 @@ public class SiteWebServiceTest {
 
 		Assert.assertEquals(expectedActivity, jsonResponseGetActivity);
 
+		String expectedLocation = FactoryJSON.Site(deleteSite.getId(), deleteSite.getName(), updateLocation, set);
 		String jsonResponseLocation = this.mockMvc
-				.perform(put(SERVICE_URI + deleteSite.getId() + "/addLocation/" + updateLocation.getId())
-						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(""))
+				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(expectedLocation))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expectedLocation = FactoryJSON.Site(deleteSite.getId(), deleteSite.getName(), updateLocation,
-				updateActivity);
 		Assert.assertEquals(expectedLocation, jsonResponseLocation);
 
 		String jsonResponseGetLocation = this.mockMvc
@@ -240,8 +253,8 @@ public class SiteWebServiceTest {
 		Assert.assertEquals(expectedLocation, jsonResponseGetLocation);
 
 		this.mockMvc
-				.perform(delete(SERVICE_URI + deleteSite.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
+				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(expectedActivity))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		String jsonResponseVerifLoc = this.mockMvc
@@ -264,18 +277,21 @@ public class SiteWebServiceTest {
 	}
 
 	/**
-	 * Delete a Activity and verify that Site doesn't exist
+	 * Delete a Activity and verify that Site exist
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testDeleteActivitySiteDontExist() throws Exception {
+		Set<AbstractActivity> set = new HashSet<AbstractActivity>();
+		set.add(updateActivity);
+		String strActivity = FactoryJSON.ArrayActivity(set);
 		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI + deleteSite.getId() + "/addActivity/" + updateActivity.getId())
-						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(""))
+				.perform(post(SERVICE_URI + deleteSite.getId() + "/activities/").contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(strActivity))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = FactoryJSON.Site(deleteSite.getId(), deleteSite.getName(), updateActivity);
+		String expected = FactoryJSON.Site(deleteSite.getId(), deleteSite.getName(), set);
 		Assert.assertEquals(expected, jsonResponse);
 
 		String jsonResponseGet = this.mockMvc
@@ -284,10 +300,11 @@ public class SiteWebServiceTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		Assert.assertEquals(expected, jsonResponseGet);
-
+		String contentActivity = FactoryJSON.Activity(updateActivity.getId(), updateActivity.getName(),
+				updateActivity.getType());
 		this.mockMvc
-				.perform(delete("/activities/" + updateActivity.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
+				.perform(delete("/activities/").contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(contentActivity))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
@@ -305,23 +322,23 @@ public class SiteWebServiceTest {
 		this.mockMvc
 				.perform(get(SERVICE_URI + deleteSite.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 	}
 
 	/**
-	 * Delete a Activity and verify that Site doesn't exist
+	 * Delete a Location and verify that Site exist
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testDeleteLocationSiteDontExist() throws Exception {
+		String expected = FactoryJSON.Site(deleteSite.getId(), deleteSite.getName(), updateLocation);
 		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI + deleteSite.getId() + "/addLocation/" + updateLocation.getId())
-						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(""))
+				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(expected))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expected = FactoryJSON.Site(deleteSite.getId(), deleteSite.getName(), updateLocation);
 		Assert.assertEquals(expected, jsonResponse);
 
 		String jsonResponseGet = this.mockMvc
@@ -331,9 +348,10 @@ public class SiteWebServiceTest {
 
 		Assert.assertEquals(expected, jsonResponseGet);
 
+		String contentLocation = FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity());
 		this.mockMvc
-				.perform(delete("/locations/" + updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
+				.perform(delete("/locations/").contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(contentLocation))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
@@ -353,6 +371,76 @@ public class SiteWebServiceTest {
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
 
+	}
+
+	@Test(expected = SiteActivityNotFound.class)
+	public void testDeletePersonId() throws Exception {
+
+		this.mockMvc
+				.perform(delete(SERVICE_URI + deleteSite.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		this.mockMvc
+				.perform(get(SERVICE_URI + deleteSite.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+
+		siteService.findById(deleteSite.getId());
+	}
+
+	@Test
+	public void testAddActivities() throws Exception {
+		Set<AbstractActivity> set = new HashSet<AbstractActivity>();
+		set.add(updateActivity);
+		String jsonResponse = this.mockMvc
+				.perform(put(SERVICE_URI + updateSite.getId() + "/activities/" + updateActivity.getId())
+						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		String expected = FactoryJSON.Site(updateSite.getId(), updateSite.getName(), set);
+		Assert.assertEquals(jsonResponse, expected);
+
+		set.add(updateActivity2);
+		String jsonResponse2 = this.mockMvc
+				.perform(put(SERVICE_URI + updateSite.getId() + "/activities/" + updateActivity2.getId())
+						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		Assert.assertTrue(jsonResponse2.contains(
+				FactoryJSON.Activity(updateActivity.getId(), updateActivity.getName(), updateActivity.getType())));
+		Assert.assertTrue(jsonResponse2.contains(
+				FactoryJSON.Activity(updateActivity2.getId(), updateActivity2.getName(), updateActivity2.getType())));
+	}
+
+	@Test
+	public void testDeleteActivities() throws Exception {
+		Set<AbstractActivity> set = new HashSet<AbstractActivity>();
+		set.add(updateActivity);
+		String jsonResponse = this.mockMvc
+				.perform(put(SERVICE_URI + updateSite.getId() + "/activities/" + updateActivity.getId())
+						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		String expected = FactoryJSON.Site(updateSite.getId(), updateSite.getName(), set);
+		Assert.assertEquals(jsonResponse, expected);
+
+		set.add(updateActivity2);
+		String jsonResponse2 = this.mockMvc
+				.perform(put(SERVICE_URI + updateSite.getId() + "/activities/" + updateActivity2.getId())
+						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		Assert.assertTrue(jsonResponse2.contains(
+				FactoryJSON.Activity(updateActivity.getId(), updateActivity.getName(), updateActivity.getType())));
+		Assert.assertTrue(jsonResponse2.contains(
+				FactoryJSON.Activity(updateActivity2.getId(), updateActivity2.getName(), updateActivity2.getType())));
+
+		String jsonResponse3 = this.mockMvc
+				.perform(delete(SERVICE_URI + updateSite.getId() + "/activities/" + updateActivity2.getId())
+						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		set.remove(updateActivity2);
+		String expected3 = FactoryJSON.Site(updateSite.getId(), updateSite.getName(), set);
+		Assert.assertEquals(jsonResponse3, expected3);
 	}
 
 }

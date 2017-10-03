@@ -25,10 +25,8 @@ fr/istic/taa/weekEndProject/service/exception/SiteActivityNotFound.class
 fr/istic/taa/weekEndProject/service/LocationServiceImpl.class
 fr/istic/taa/weekEndProject/aop/SecurityAspect.class
 fr/istic/taa/weekEndProject/model/Meteo.class
-fr/istic/taa/weekEndProject/security/RestAuthenticationEntryPoint.class
 fr/istic/taa/weekEndProject/service/SiteActivityServiceImpl.class
 fr/istic/taa/weekEndProject/service/ActivityService.class
 fr/istic/taa/weekEndProject/model/Location.class
 fr/istic/taa/weekEndProject/model/SiteActivity.class
-fr/istic/taa/weekEndProject/security/MySavedRequestAwareAuthenticationSuccessHandler.class
 fr/istic/taa/weekEndProject/service/PersonServiceImpl.class

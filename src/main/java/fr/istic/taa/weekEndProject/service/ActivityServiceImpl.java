@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.istic.taa.weekEndProject.model.Meteo;
 import fr.istic.taa.weekEndProject.model.Person;
+import fr.istic.taa.weekEndProject.model.SiteActivity;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.repository.ActivityRepository;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
@@ -38,10 +39,13 @@ public class ActivityServiceImpl implements ActivityService {
 		deletedActivity.getMeteos().clear();
 
 		for (Person p : deletedActivity.getPersons()) {
-			p.getActivities().clear();
+			p.getActivities().remove(deletedActivity);
 		}
 		deletedActivity.getPersons().clear();
-
+		for (SiteActivity s : deletedActivity.getSites()) {
+			s.getActivities().remove(deletedActivity);
+		}
+		deletedActivity.getSites().clear();
 		activityRepository.delete(deletedActivity);
 
 		return deletedActivity;

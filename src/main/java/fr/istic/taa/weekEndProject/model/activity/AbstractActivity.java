@@ -17,13 +17,16 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -40,7 +43,9 @@ import fr.istic.taa.weekEndProject.model.SiteActivity;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "Activity")
-@JsonPropertyOrder({ "id", "name", "type","meteos", "persons", "sites" })
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type")
+@JsonSubTypes({ @Type(value = Sport.class, name = "Sport"), @Type(value = Leisure.class, name = "Leisure") })
+@JsonPropertyOrder({ "id", "name", "type", "meteos", "persons", "sites" })
 public abstract class AbstractActivity {
 	private Long id;
 
@@ -50,8 +55,6 @@ public abstract class AbstractActivity {
 	private Set<Meteo> meteos = new HashSet<Meteo>();
 
 	private String name;
-
-	private String type;
 
 	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
 
@@ -108,7 +111,9 @@ public abstract class AbstractActivity {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "activities")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIgnoreProperties("activities")
 	@JsonIgnore
 	public Set<SiteActivity> getSites() {
 		return sites;
@@ -130,9 +135,8 @@ public abstract class AbstractActivity {
 		this.persons = persons;
 	}
 
-	public String getType() {
-		return type;
-	}
+	@JsonIgnore
+	public abstract String getType();
 
 	public void setType(String type) {
 

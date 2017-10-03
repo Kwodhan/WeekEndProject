@@ -61,27 +61,14 @@ public class ActivityRestController {
 
 	}
 
-	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
-	ResponseEntity<List<AbstractActivity>> getActivityByName(@PathVariable("name") String name) {
-		List<AbstractActivity> listp = this.serviceA.findByName(name);
-
-		return new ResponseEntity<List<AbstractActivity>>(listp, HttpStatus.OK);
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	ResponseEntity<AbstractActivity> create(@RequestBody AbstractActivity activity) {
+		AbstractActivity l1 = this.serviceA.create(activity);
+		return new ResponseEntity<AbstractActivity>(l1, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "leisures/", method = RequestMethod.POST)
-	ResponseEntity<Leisure> createLeisure(@RequestBody Leisure activity) {
-		Leisure l1 = (Leisure) this.serviceA.create(activity);
-		return new ResponseEntity<Leisure>(l1, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "sports/", method = RequestMethod.POST)
-	ResponseEntity<Sport> createSport(@RequestBody Sport activity) {
-		Sport l1 = (Sport) this.serviceA.create(activity);
-		return new ResponseEntity<Sport>(l1, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "leisures/", method = RequestMethod.PUT)
-	ResponseEntity<AbstractActivity> updateActivity(@RequestBody Sport activity) {
+	@RequestMapping(value = "", method = RequestMethod.PUT)
+	ResponseEntity<AbstractActivity> updateActivity(@RequestBody AbstractActivity activity) {
 		AbstractActivity l1;
 		try {
 			l1 = this.serviceA.update(activity);
@@ -92,9 +79,10 @@ public class ActivityRestController {
 		}
 
 	}
-
-	@RequestMapping(value = "sports/", method = RequestMethod.PUT)
-	ResponseEntity<AbstractActivity> updateActivity(@RequestBody Leisure activity) {
+	
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	ResponseEntity<AbstractActivity> updateActivity(@PathVariable("id") long id,@RequestBody AbstractActivity activity) {
+		activity.setId(id);
 		AbstractActivity l1;
 		try {
 			l1 = this.serviceA.update(activity);
@@ -105,17 +93,15 @@ public class ActivityRestController {
 		}
 
 	}
+	
+	
 
-	@RequestMapping(value = "{idA}/addMeteo/{idM}", method = RequestMethod.PUT)
-	ResponseEntity<AbstractActivity> updateActivityMeteo(@PathVariable("idA") long idA, @PathVariable("idM") long idM) {
-		AbstractActivity p1;
-		if (idM <= 0 || idM > Meteo.values().length) {
-			return new ResponseEntity<AbstractActivity>(HttpStatus.NOT_FOUND);
-		}
-		// todo verif idM
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	ResponseEntity<AbstractActivity> deleteActivity(@RequestBody AbstractActivity activity) {
+
 		try {
-			p1 = this.serviceA.updateLocation(idA, Meteo.values()[(int) (idM - 1)]);
-			return new ResponseEntity<AbstractActivity>(p1, HttpStatus.OK);
+			this.serviceA.delete(activity.getId());
+			return new ResponseEntity<AbstractActivity>(HttpStatus.OK);
 		} catch (ActivityNotFound e) {
 			// TODO Auto-generated catch block
 			return new ResponseEntity<AbstractActivity>(HttpStatus.NOT_FOUND);

@@ -1,5 +1,7 @@
 package fr.istic.taa.weekEndProject.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.istic.taa.weekEndProject.model.Person;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
+import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.service.SiteActivityService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
+import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
 import fr.istic.taa.weekEndProject.service.exception.SiteActivityNotFound;
 
 /**
@@ -36,7 +41,7 @@ public class SiteRestController {
 			p1 = this.serviceS.findById(new Long(id));
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-			// TODO Auto-generated catch block
+
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -55,40 +60,35 @@ public class SiteRestController {
 			p1 = this.serviceS.update(SiteActivity);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-			// TODO Auto-generated catch block
+
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{idP}/addLocation/{idL}", method = RequestMethod.PUT)
-	ResponseEntity<SiteActivity> updateSiteActivityLocation(@PathVariable("idP") long idP,
-			@PathVariable("idL") long idL) {
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	ResponseEntity<SiteActivity> updateSiteActivity(@PathVariable("id") long id,
+			@RequestBody SiteActivity SiteActivity) {
+		SiteActivity.setId(id);
 		SiteActivity p1;
 		try {
-			p1 = this.serviceS.updateLocation(idP, idL);
+			p1 = this.serviceS.update(SiteActivity);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
-		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
+
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{idP}/addActivity/{idA}", method = RequestMethod.PUT)
-	ResponseEntity<SiteActivity> updateSiteActivity(@PathVariable("idP") long idP, @PathVariable("idA") long idA) {
-		SiteActivity p1;
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	ResponseEntity<SiteActivity> deleteSiteActivity(@RequestBody SiteActivity SiteActivity) {
+
 		try {
-			p1 = this.serviceS.updateActivity(idP, idA);
-			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
+			this.serviceS.delete(SiteActivity.getId());
+			return new ResponseEntity<SiteActivity>(HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
-		} catch (ActivityNotFound e) {
-			// TODO Auto-generated catch block
+
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -101,6 +101,55 @@ public class SiteRestController {
 			this.serviceS.delete(id);
 			return new ResponseEntity<SiteActivity>(HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
+
+			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@RequestMapping(value = "{id}/activities/", method = RequestMethod.POST)
+	ResponseEntity<SiteActivity> updateSiteActivity(@PathVariable("id") long id,
+			@RequestBody Set<AbstractActivity> activities) {
+		SiteActivity p1;
+		try {
+			p1 = this.serviceS.updateActivities(id, activities);
+			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
+		} catch (SiteActivityNotFound e) {
+
+			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
+		} catch (ActivityNotFound e) {
+
+			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@RequestMapping(value = "{id}/activities/{idA}", method = RequestMethod.PUT)
+	ResponseEntity<SiteActivity> updateSiteActivity(@PathVariable("id") long id, @PathVariable("idA") long idA) {
+		SiteActivity p1;
+		try {
+			p1 = this.serviceS.updateActivities(id, idA);
+			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
+		} catch (SiteActivityNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
+		} catch (ActivityNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@RequestMapping(value = "{id}/activities/{idA}", method = RequestMethod.DELETE)
+	ResponseEntity<SiteActivity> deleteSiteActivity(@PathVariable("id") long id, @PathVariable("idA") long idA) {
+		SiteActivity p1;
+		try {
+			p1 = this.serviceS.deleteActivities(id, idA);
+			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
+		} catch (SiteActivityNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
+		} catch (ActivityNotFound e) {
 			// TODO Auto-generated catch block
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}

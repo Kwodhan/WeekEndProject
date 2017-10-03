@@ -5,24 +5,35 @@ package fr.istic.taa.weekEndProject.model;
  *
  */
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
-
+/**
+ * a geographical site with activities 
+ * @author aferey
+ *
+ */
 @Entity
-@JsonPropertyOrder({ "id", "name", "location", "activity" })
+@Table(name = "Site")
+@JsonPropertyOrder({ "id", "name", "location", "activities" })
 public class SiteActivity {
 	private Long id;
-	//TODO : tranform to list
-	private AbstractActivity activity;
+	private Set<AbstractActivity> activities = new HashSet<AbstractActivity>();
 	private Location location;
 	private String name;
 
@@ -35,14 +46,15 @@ public class SiteActivity {
 
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "ACTIVITY_ID", referencedColumnName = "ID")
-	public AbstractActivity getActivity() {
-		return activity;
+	@ManyToMany
+	@JoinTable(name = "SITE_ACTIVITY", joinColumns = @JoinColumn(name = "SITE_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ACTIVITY_ID", referencedColumnName = "ID"))
+	@JsonIgnoreProperties("sites")
+	public Set<AbstractActivity> getActivities() {
+		return activities;
 	}
 
-	public void setActivity(AbstractActivity activity) {
-		this.activity = activity;
+	public void setActivities(Set<AbstractActivity> activities) {
+		this.activities = activities;
 	}
 
 	@ManyToOne

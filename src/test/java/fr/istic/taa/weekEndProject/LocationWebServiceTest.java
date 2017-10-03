@@ -35,7 +35,6 @@ public class LocationWebServiceTest {
 	@Autowired
 	private LocationService locationService;
 
-
 	private Location getLocation;
 
 	private Location updateLocation;
@@ -63,8 +62,10 @@ public class LocationWebServiceTest {
 		deleteLocation = new Location("cxw");
 		deleteLocation = locationService.create(deleteLocation);
 	}
+
 	/**
 	 * Create a Location
+	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -76,33 +77,36 @@ public class LocationWebServiceTest {
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-
 		Assert.assertTrue(jsonResponse.contains("\"city\":\"nameCreate\""));
 	}
+
 	/**
 	 * Get a Location
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testGetLocation() throws Exception {
-		
+
 		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI +  getLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + getLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-//		String expected = "{\"id\":" + getLocation.getId()
-//				+ ",\"city\":\"create\"}";
-		String expected = FactoryJSON.Location( getLocation.getId(),  getLocation.getCity());
+		// String expected = "{\"id\":" + getLocation.getId()
+		// + ",\"city\":\"create\"}";
+		String expected = FactoryJSON.Location(getLocation.getId(), getLocation.getCity());
 		Assert.assertEquals(expected, jsonResponse);
 	}
+
 	/**
 	 * Update the name of a Location
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testUpdateLocation() throws Exception {
-		//Assert.assertEquals(updateLocation.getName(),updateLocation.getId());
+		// Assert.assertEquals(updateLocation.getName(),updateLocation.getId());
 		String maj = "azerty";
 		String payload = "{\"id\":" + updateLocation.getId() + ",\"city\":\"" + maj + "\"}";
 		String jsonResponse = this.mockMvc
@@ -110,39 +114,59 @@ public class LocationWebServiceTest {
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-//		String expected = "{\"id\":" + updateLocation.getId()
-//				+ ",\"city\":\"azerty\"}";
-		String expected = FactoryJSON.Location( updateLocation.getId(),  maj);
+		// String expected = "{\"id\":" + updateLocation.getId()
+		// + ",\"city\":\"azerty\"}";
+		String expected = FactoryJSON.Location(updateLocation.getId(), maj);
 		Assert.assertEquals(expected, jsonResponse);
-		
+
 		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI +  updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		
+
 		Assert.assertEquals(expected, jsonResponse2);
 	}
-	
+
 	/**
-	 * Delete a Location
+	 * Delete a Location with json
+	 * 
 	 * @throws Exception
 	 */
 	@Test(expected = LocationNotFound.class)
 	public void testDeleteLocation() throws Exception {
-
+		String content = FactoryJSON.Location(deleteLocation.getId(), deleteLocation.getCity());
 		this.mockMvc
-				.perform(delete(SERVICE_URI + "/" + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
+				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		this.mockMvc
-				.perform(get(SERVICE_URI +  deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+				.perform(get(SERVICE_URI + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
 
 		locationService.findById(deleteLocation.getId());
 	}
-
 	
+	/**
+	 * Delete a Location with id
+	 * 
+	 * @throws Exception
+	 */
+	@Test(expected = LocationNotFound.class)
+	public void testDeleteLocationId() throws Exception {
+		
+		this.mockMvc
+				.perform(delete(SERVICE_URI+deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		this.mockMvc
+				.perform(get(SERVICE_URI + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+
+		locationService.findById(deleteLocation.getId());
+	}
 
 }

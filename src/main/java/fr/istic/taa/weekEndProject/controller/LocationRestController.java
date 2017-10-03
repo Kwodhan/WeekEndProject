@@ -40,7 +40,6 @@ public class LocationRestController {
 			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
 		}
 
-		
 	}
 
 	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
@@ -62,6 +61,33 @@ public class LocationRestController {
 		try {
 			l1 = this.serviceL.update(location);
 			return new ResponseEntity<Location>(l1, HttpStatus.OK);
+		} catch (LocationNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	ResponseEntity<Location> updateLocation(@PathVariable("id") long id, @RequestBody Location location) {
+		Location l1;
+		location.setId(id);
+		try {
+			l1 = this.serviceL.update(location);
+			return new ResponseEntity<Location>(l1, HttpStatus.OK);
+		} catch (LocationNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@RequestMapping(value = "", method = RequestMethod.DELETE)
+	ResponseEntity<Location> deleteLocation(@RequestBody Location location) {
+
+		try {
+			this.serviceL.delete(location.getId());
+			return new ResponseEntity<Location>(HttpStatus.OK);
 		} catch (LocationNotFound e) {
 			// TODO Auto-generated catch block
 			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);

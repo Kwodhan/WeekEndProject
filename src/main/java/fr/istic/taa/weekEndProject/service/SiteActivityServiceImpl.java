@@ -1,12 +1,15 @@
 package fr.istic.taa.weekEndProject.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.istic.taa.weekEndProject.model.Location;
+import fr.istic.taa.weekEndProject.model.Person;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.repository.ActivityRepository;
@@ -14,6 +17,7 @@ import fr.istic.taa.weekEndProject.repository.LocationRepository;
 import fr.istic.taa.weekEndProject.repository.SiteActivityRepository;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
+import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
 import fr.istic.taa.weekEndProject.service.exception.SiteActivityNotFound;
 
 @Service
@@ -46,34 +50,52 @@ public class SiteActivityServiceImpl implements SiteActivityService {
 			throw new SiteActivityNotFound();
 
 		deletedSiteActivity.setLocation(null);
-		deletedSiteActivity.setActivity(null);
+		deletedSiteActivity.getActivities().clear();
 		siteActivityRepository.delete(deletedSiteActivity);
 
 		return deletedSiteActivity;
 	}
 
 	public List<SiteActivity> findAll() {
-		// TODO Auto-generated method stub
+
 		return siteActivityRepository.findAll();
 	}
 
 	@Transactional
 	public SiteActivity update(SiteActivity siteActivity) throws SiteActivityNotFound {
-		// TODO Auto-generated method stub
+
 		SiteActivity updatedSiteActivity = siteActivityRepository.findById(siteActivity.getId());
 
 		if (updatedSiteActivity == null) {
 			throw new SiteActivityNotFound();
 		}
 		updatedSiteActivity.setName(siteActivity.getName());
-		updatedSiteActivity.setLocation(siteActivity.getLocation());
-		updatedSiteActivity.setActivity(siteActivity.getActivity());
 
+		// update activities
+		Set<AbstractActivity> updateActivities = new HashSet<AbstractActivity>();
+
+		for (AbstractActivity l : siteActivity.getActivities()) {
+			AbstractActivity up = activityRepository.findById(l.getId());
+			if (up != null) {
+				updateActivities.add(up);
+
+			}
+		}
+		updatedSiteActivity.setActivities(updateActivities);
+		// update location
+		if (siteActivity.getLocation() == null) {
+			updatedSiteActivity.setLocation(null);
+		} else {
+			Location l = locationRepository.findById(siteActivity.getLocation().getId());
+			if (l != null) {
+				updatedSiteActivity.setLocation(l);
+			}
+		}
 		return updatedSiteActivity;
 	}
 
 	public SiteActivity findById(Long id) throws SiteActivityNotFound {
-		// TODO Auto-generated method stub
+
 		SiteActivity getSiteActivity = siteActivityRepository.findById(id);
 
 		if (getSiteActivity == null) {
@@ -83,42 +105,67 @@ public class SiteActivityServiceImpl implements SiteActivityService {
 	}
 
 	public List<SiteActivity> findByName(String name) {
-		// TODO Auto-generated method stub
+
 		return siteActivityRepository.findByName(name);
 	}
 
 	@Transactional
-	public SiteActivity updateLocation(Long idSite, Long idLocation) throws SiteActivityNotFound, LocationNotFound {
-		SiteActivity updatedSiteActivity = siteActivityRepository.findById(idSite);
+	public SiteActivity updateActivities(Long id, Set<AbstractActivity> activities)
+			throws ActivityNotFound, SiteActivityNotFound {
 
-		if (updatedSiteActivity == null)
+		SiteActivity updatedSiteActivity = siteActivityRepository.findById(id);
+
+		if (updatedSiteActivity == null) {
 			throw new SiteActivityNotFound();
+		}
 
-		Location location = locationRepository.findById(idLocation);
+		// update activities
+		Set<AbstractActivity> updateActivities = new HashSet<AbstractActivity>();
 
-		if (location == null)
-			throw new LocationNotFound();
+		for (AbstractActivity l : activities) {
+			AbstractActivity up = activityRepository.findById(l.getId());
+			if (up != null) {
+				updateActivities.add(up);
 
-		updatedSiteActivity.setLocation(location);
+			}
+		}
+		updatedSiteActivity.setActivities(updateActivities);
 
 		return updatedSiteActivity;
 	}
 
 	@Transactional
-	public SiteActivity updateActivity(Long idSite, Long idActivity) throws SiteActivityNotFound, ActivityNotFound {
-		SiteActivity updatedSiteActivity = siteActivityRepository.findById(idSite);
+	public SiteActivity updateActivities(Long id, Long idAct) throws ActivityNotFound, SiteActivityNotFound {
+		SiteActivity updatedActivity = siteActivityRepository.findById(id);
 
-		if (updatedSiteActivity == null)
+		if (updatedActivity == null)
 			throw new SiteActivityNotFound();
 
-		AbstractActivity activity = activityRepository.findById(idActivity);
+		AbstractActivity addActivity = activityRepository.findById(idAct);
 
-		if (activity == null)
+		if (addActivity == null)
 			throw new ActivityNotFound();
 
-		updatedSiteActivity.setActivity(activity);
+		updatedActivity.getActivities().add(addActivity);
 
-		return updatedSiteActivity;
+		return updatedActivity;
+	}
+
+	@Transactional
+	public SiteActivity deleteActivities(Long idPerson, Long idAct) throws ActivityNotFound, SiteActivityNotFound {
+		SiteActivity updatedActivity = siteActivityRepository.findById(idPerson);
+
+		if (updatedActivity == null)
+			throw new SiteActivityNotFound();
+
+		AbstractActivity addActivity = activityRepository.findById(idAct);
+
+		if (addActivity == null)
+			throw new ActivityNotFound();
+
+		updatedActivity.getActivities().remove(addActivity);
+
+		return updatedActivity;
 	}
 
 }

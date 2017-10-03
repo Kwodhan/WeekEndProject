@@ -1,6 +1,8 @@
 package fr.istic.taa.weekEndProject.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,13 +48,14 @@ public class PersonServiceImpl implements PersonService {
 			throw new PersonNotFound();
 		}
 		deletedPerson.getHomes().clear();
+		deletedPerson.getActivities().clear();
 
 		personRepository.delete(deletedPerson);
 		return deletedPerson;
 	}
 
 	public List<Person> findAll() {
-		// TODO Auto-generated method stub
+
 		return personRepository.findAll();
 	}
 
@@ -67,6 +70,30 @@ public class PersonServiceImpl implements PersonService {
 		updatedPerson.setFirstName(person.getFirstName());
 		updatedPerson.setLastName(person.getLastName());
 		updatedPerson.setEmailAddress(person.getEmailAddress());
+
+		// update locations
+		Set<Location> updatelocations = new HashSet<Location>();
+		for (Location l : person.getHomes()) {
+			Location up = locationRepository.findById(l.getId());
+			if (up != null) {
+				updatelocations.add(up);
+
+			}
+		}
+		updatedPerson.setHomes(updatelocations);
+
+		// update activities
+		Set<AbstractActivity> updateActivities = new HashSet<AbstractActivity>();
+
+		for (AbstractActivity l : person.getActivities()) {
+			AbstractActivity up = activityRepository.findById(l.getId());
+			if (up != null) {
+				updateActivities.add(up);
+
+			}
+		}
+		updatedPerson.setActivities(updateActivities);
+
 		return updatedPerson;
 	}
 
@@ -76,7 +103,6 @@ public class PersonServiceImpl implements PersonService {
 	 * @throws PersonNotFound
 	 */
 	public Person findById(Long id) throws PersonNotFound {
-		// TODO Auto-generated method stub
 
 		Person createPerson = personRepository.findById(id);
 
@@ -88,51 +114,122 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	public List<Person> findByName(String name) {
-		// TODO Auto-generated method stub
+
 		return personRepository.findByName(name);
 	}
 
 	public List<Person> findByNameWithAll(String name) {
-		// TODO Auto-generated method stub
+
 		return personRepository.findByNameWithAll(name);
 	}
 
 	@Transactional
-	public Person updateLocation(Long idPerson, Long idLocation) throws PersonNotFound, LocationNotFound {
+	public Person updateLocation(Long idPerson, Set<Location> locations) throws LocationNotFound, PersonNotFound {
 
 		Person updatedPerson = personRepository.findById(idPerson);
 
 		if (updatedPerson == null)
 			throw new PersonNotFound();
+		Set<Location> updatelocations = new HashSet<Location>();
 
-		Location location = locationRepository.findById(idLocation);
+		for (Location l : locations) {
+			Location up = locationRepository.findById(l.getId());
+			if (up != null) {
+				updatelocations.add(up);
 
-		if (location == null)
-			throw new LocationNotFound();
-
-		if (!updatedPerson.getHomes().contains(location)) {
-			updatedPerson.getHomes().add(location);
+			}
 		}
+		updatedPerson.setHomes(updatelocations);
 
 		return updatedPerson;
 	}
 
 	@Transactional
-	public Person updateActivity(Long idPerson, Long idActivity) throws PersonNotFound, ActivityNotFound {
+	public Person updateActivities(Long id, Set<AbstractActivity> activities) throws ActivityNotFound, PersonNotFound {
 
+		Person updatedPerson = personRepository.findById(id);
+
+		if (updatedPerson == null)
+			throw new PersonNotFound();
+		Set<AbstractActivity> updateActivities = new HashSet<AbstractActivity>();
+
+		for (AbstractActivity l : activities) {
+			AbstractActivity up = activityRepository.findById(l.getId());
+			if (up != null) {
+				updateActivities.add(up);
+
+			}
+		}
+		updatedPerson.setActivities(updateActivities);
+
+		return updatedPerson;
+	}
+
+	@Transactional
+	public Person updateLocation(Long idPerson, Long idLoc) throws LocationNotFound, PersonNotFound {
 		Person updatedPerson = personRepository.findById(idPerson);
 
 		if (updatedPerson == null)
 			throw new PersonNotFound();
 
-		AbstractActivity activity = activityRepository.findById(idActivity);
+		Location addLocation = locationRepository.findById(idLoc);
 
-		if (activity == null)
+		if (addLocation == null)
+			throw new LocationNotFound();
+
+		updatedPerson.getHomes().add(addLocation);
+
+		return updatedPerson;
+
+	}
+
+	@Transactional
+	public Person updateActivities(Long id, Long idAct) throws ActivityNotFound, PersonNotFound {
+		Person updatedPerson = personRepository.findById(id);
+
+		if (updatedPerson == null)
+			throw new PersonNotFound();
+
+		AbstractActivity addActivity = activityRepository.findById(idAct);
+
+		if (addActivity == null)
 			throw new ActivityNotFound();
 
-		if (!updatedPerson.getActivities().contains(activity)) {
-			updatedPerson.getActivities().add(activity);
-		}
+		updatedPerson.getActivities().add(addActivity);
+
+		return updatedPerson;
+	}
+
+	@Transactional
+	public Person deleteLocation(Long idPerson, Long idLoc) throws LocationNotFound, PersonNotFound {
+		Person updatedPerson = personRepository.findById(idPerson);
+
+		if (updatedPerson == null)
+			throw new PersonNotFound();
+
+		Location addLocation = locationRepository.findById(idLoc);
+
+		if (addLocation == null)
+			throw new LocationNotFound();
+
+		updatedPerson.getHomes().remove(addLocation);
+
+		return updatedPerson;
+	}
+
+	@Transactional
+	public Person deleteActivities(Long id, Long idAct) throws ActivityNotFound, PersonNotFound {
+		Person updatedPerson = personRepository.findById(id);
+
+		if (updatedPerson == null)
+			throw new PersonNotFound();
+
+		AbstractActivity addActivity = activityRepository.findById(idAct);
+
+		if (addActivity == null)
+			throw new ActivityNotFound();
+
+		updatedPerson.getActivities().remove(addActivity);
 
 		return updatedPerson;
 	}

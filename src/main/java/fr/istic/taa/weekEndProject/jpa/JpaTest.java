@@ -20,8 +20,6 @@ public class JpaTest {
 	 */
 	public static void main(String[] args) {
 
-	
-
 		SpringApplication.run(JpaTest.class, args);
 
 	}
