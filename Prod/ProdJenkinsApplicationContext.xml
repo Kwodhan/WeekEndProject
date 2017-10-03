@@ -26,15 +26,9 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 			value="org.springframework.web.servlet.view.JstlView" />
 	</bean>
 
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-		<property name="url" value="jdbc:hsqldb:hsql://localhost/" />
-		<property name="username" value="sa" />
-		<property name="password" value="" />
-	</bean>
 
-	<bean id="VmdataSource"
+
+	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/prodWeekend" />
@@ -55,7 +49,7 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="VmdataSource" />
+		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
 		<property name="packagesToScan" value="fr.istic.taa.weekEndProject.model" />
 		<property name="jpaProperties">
