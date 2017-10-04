@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = { "fr.istic.taa.weekEndProject.controller", "fr.istic.taa.weekEndProject.service" })
 @EntityScan("fr.istic.taa.weekEndProject.model")
 @EnableJpaRepositories("fr.istic.taa.weekEndProject.repository")
-@ImportResource({"applicationContext.xml","spring-servlet.xml","spring-security.xml","config-cors.xml"})
+@ImportResource({"applicationContext.xml","spring-security.xml"})
 
 public class JpaTest {
 
