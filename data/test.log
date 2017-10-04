@@ -1879,3 +1879,25 @@ DISCONNECT
 DISCONNECT
 /*C209*/SET SCHEMA PUBLIC
 DISCONNECT
+/*C210*/SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(1,'dsqdqd@dsqd.com','hello','Sport')
+COMMIT
+DISCONNECT
+/*C211*/SET SCHEMA PUBLIC
+alter table ACTIVITY_METEO drop constraint FK3px8vlsvoqi8oqwvb8tk1c5s7
+alter table PERS_ACTIVITY drop constraint FKnm3p5lj4joynps6fsdrsj4kxc
+alter table PERS_ACTIVITY drop constraint FKjxr8711pfys95wi46n2maxnof
+alter table PERS_LOCATION drop constraint FKo08s1waocga5hod7vcmax6djy
+alter table PERS_LOCATION drop constraint FKg4t974wrct4drp6rtsbe5l2d8
+alter table Site drop constraint FK36lk2xfn6no8w6qsdxy5nuph9
+alter table SITE_ACTIVITY drop constraint FK2ack0aur9a0701vioix6upsau
+alter table SITE_ACTIVITY drop constraint FKcsoiesdhhlas9epm8556b3a7j
+drop table Activity if exists
+drop table ACTIVITY_METEO if exists
+drop table Location if exists
+drop table PERS_ACTIVITY if exists
+drop table PERS_LOCATION if exists
+drop table Person if exists
+drop table Site if exists
+drop table SITE_ACTIVITY if exists
+DISCONNECT
