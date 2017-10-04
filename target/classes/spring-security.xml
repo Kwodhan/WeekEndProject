@@ -19,7 +19,7 @@
 		<cors />
 	</http>
 
-<mvc:annotation-driven />
+
 
 	<mvc:cors>
 
