@@ -23,7 +23,7 @@
 
 	<mvc:cors>
 
-		<mvc:mapping path="/**" allowed-origins="http://176.190.252.61:9000" />
+		<mvc:mapping path="/**" allowed-origins="http://localhost:9000" />
 		
 
 	</mvc:cors>
