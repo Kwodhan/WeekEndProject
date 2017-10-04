@@ -223,7 +223,7 @@
 			<version>${springsecurity.version}</version>
 		</dependency>
 
-		<!-- Spring Security OAuth2 -->
+
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
