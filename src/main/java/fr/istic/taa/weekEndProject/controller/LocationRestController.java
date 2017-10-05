@@ -21,7 +21,7 @@ import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
  *
  */
 @RestController
-@RequestMapping(value = "/locations/")
+@RequestMapping(value = "/locations")
 public class LocationRestController {
 	/*
 	 * Par defaut : Nb requete == Nb association
@@ -29,7 +29,7 @@ public class LocationRestController {
 	@Autowired
 	LocationService serviceL;
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	ResponseEntity<Location> getLocationById(@PathVariable("id") long id) {
 		Location l1;
 		try {
@@ -42,7 +42,7 @@ public class LocationRestController {
 
 	}
 
-	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
 	ResponseEntity<List<Location>> getLocationByName(@PathVariable("name") String name) {
 		List<Location> listp = this.serviceL.findByNameWithPerson(name);
 
@@ -68,7 +68,7 @@ public class LocationRestController {
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	ResponseEntity<Location> updateLocation(@PathVariable("id") long id, @RequestBody Location location) {
 		Location l1;
 		location.setId(id);
@@ -95,7 +95,7 @@ public class LocationRestController {
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	ResponseEntity<Location> deleteLocation(@PathVariable("id") long id) {
 
 		try {

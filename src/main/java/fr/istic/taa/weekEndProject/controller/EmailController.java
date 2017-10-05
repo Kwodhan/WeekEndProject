@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import fr.istic.taa.weekEndProject.model.Person;
-import fr.istic.taa.weekEndProject.service.PersonService;
+import fr.istic.taa.weekEndProject.model.User;
+import fr.istic.taa.weekEndProject.service.UserService;
 import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
 
 @Controller
@@ -23,13 +23,13 @@ public class EmailController {
 	private JavaMailSender sender;
 
 	@Autowired
-	private PersonService service;
+	private UserService service;
 
 	@RequestMapping(value = "/registeremail/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	String register(@PathVariable("id") long id) {
 
-		Person person;
+		User person;
 		try {
 			person = service.findById(id);
 			sendEmailRegister(person);
@@ -48,7 +48,7 @@ public class EmailController {
 	@ResponseBody
 	String notify(@PathVariable("id") long id) {
 
-		Person person;
+		User person;
 		try {
 			person = service.findById(id);
 			sendEmailNotification(person);
@@ -63,7 +63,7 @@ public class EmailController {
 
 	}
 
-	private void sendEmailRegister(Person person) throws MessagingException {
+	private void sendEmailRegister(User person) throws MessagingException {
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -75,7 +75,7 @@ public class EmailController {
 		sender.send(message);
 	}
 
-	private void sendEmailNotification(Person person) throws MessagingException {
+	private void sendEmailNotification(User person) throws MessagingException {
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 

@@ -1,62 +1,66 @@
 package fr.istic.taa.weekEndProject;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.boot.SpringApplication;
-
-import fr.istic.taa.weekEndProject.jpa.JpaTest;
 import fr.istic.taa.weekEndProject.model.Location;
+import fr.istic.taa.weekEndProject.model.Role;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
-import fr.istic.taa.weekEndProject.model.activity.Sport;
 
 public class FactoryJSON {
 	// ===========Person===============//
-	public static String Person(Long id, String firstName, String lastName, String email) {
+	public static String Person(Long id, String pseudo, String password, String firstName, String lastName,
+			String email) {
 		firstName = addG(firstName);
 		lastName = addG(lastName);
 		email = addG(email);
-
-		String expected = "{\"id\":" + id + ",\"firstName\":" + firstName + "" + ",\"lastName\":" + lastName + ""
+		pseudo = addG(pseudo);
+		password = addG(password);
+		String expected = "{\"id\":" + id + ",\"pseudo\":" + pseudo +  ",\"firstName\":" + firstName + "" + ",\"lastName\":" + lastName + ""
 				+ ",\"emailAddress\":" + email + "" + ",\"homes\":[],\"activities\":[]}";
 		return expected;
 	}
 
-	public static String Person(Long id, String firstName, String lastName, String email, Set<Location> locations,
-			Set<AbstractActivity> activities) {
+	public static String Person(Long id, String pseudo, String password, String firstName, String lastName,
+			String email, Set<Location> locations, Set<AbstractActivity> activities) {
 		firstName = addG(firstName);
 		lastName = addG(lastName);
 		email = addG(email);
+		pseudo = addG(pseudo);
+		password = addG(password);
 		String strlocations = ArrayLocation(locations);
 		String stractivities = ArrayActivity(activities);
-		
-		String expected = "{\"id\":" + id + ",\"firstName\":" + firstName + "" + ",\"lastName\":" + lastName + ""
-				+ ",\"emailAddress\":" + email + "" + ",\"homes\":" + strlocations + ",\"activities\":" + stractivities
-				+ "}";
+
+		String expected = "{\"id\":" + id + ",\"pseudo\":" + pseudo +  ",\"firstName\":"
+				+ firstName + "" + ",\"lastName\":" + lastName + "" + ",\"emailAddress\":" + email + "" + ",\"homes\":"
+				+ strlocations + ",\"activities\":" + stractivities + "}";
 		return expected;
 	}
 
-	public static String PersonActivity(Long id, String firstName, String lastName, String email,
-			Set<AbstractActivity> activities) {
+	public static String PersonActivity(Long id, String pseudo, String password, String firstName, String lastName,
+			String email, Set<AbstractActivity> activities) {
 		firstName = addG(firstName);
 		lastName = addG(lastName);
 		email = addG(email);
+		pseudo = addG(pseudo);
+		password = addG(password);
 		String stractivities = ArrayActivity(activities);
-		String expected = "{\"id\":" + id + ",\"firstName\":" + firstName + "" + ",\"lastName\":" + lastName + ""
+		String expected = "{\"id\":" + id + ",\"pseudo\":" + pseudo + ",\"firstName\":" + firstName + "" + ",\"lastName\":" + lastName + ""
 				+ ",\"emailAddress\":" + email + "" + ",\"homes\":[],\"activities\":" + stractivities + "}";
 		return expected;
 	}
 
-	public static String PersonLocation(Long id, String firstName, String lastName, String email,
-			Set<Location> locations) {
+	public static String PersonLocation(Long id, String pseudo, String password, String firstName, String lastName,
+			String email, Set<Location> locations) {
 		firstName = addG(firstName);
 		lastName = addG(lastName);
 		email = addG(email);
+		pseudo = addG(pseudo);
+		password = addG(password);
 		String strlocations = "";
 		for (Location l : locations) {
 			strlocations = strlocations + Location(l.getId(), l.getCity());
 		}
-		String expected = "{\"id\":" + id + ",\"firstName\":" + firstName + "" + ",\"lastName\":" + lastName + ""
+		String expected = "{\"id\":" + id + ",\"pseudo\":" + pseudo +  ",\"firstName\":" + firstName + "" + ",\"lastName\":" + lastName + ""
 				+ ",\"emailAddress\":" + email + "" + ",\"homes\":[" + strlocations + "],\"activities\":[]}";
 		return expected;
 	}
@@ -150,14 +154,27 @@ public class FactoryJSON {
 
 		return "\"" + arg + "\"";
 	}
+	// ===========Role===============//
+	public static String Role(Set<Role> roles) {
+		String expected = "[";
+		for (Role r : roles) {
+			expected = expected +"\""+ r.name() + "\",";
+		}
+		expected = expected + "]";
+		expected = expected.replaceAll(",]", "]");
+		return expected;
+		
+	
 
+	}
+	// ===========EndRole===============//
 	
 	
-//	public static void main(String[] args) {
-//		Set<AbstractActivity> set = new HashSet<AbstractActivity>();
-//		set.add(new Sport("Merde"));
-//		String strActivity = FactoryJSON.ArrayActivity(set);
-//		System.out.println(strActivity);
-//
-//	}
+	// public static void main(String[] args) {
+	// Set<AbstractActivity> set = new HashSet<AbstractActivity>();
+	// set.add(new Sport("Merde"));
+	// String strActivity = FactoryJSON.ArrayActivity(set);
+	// System.out.println(strActivity);
+	//
+	// }
 }

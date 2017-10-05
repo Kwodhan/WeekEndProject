@@ -3,9 +3,13 @@ package fr.istic.taa.weekEndProject.controller;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.istic.taa.weekEndProject.model.Location;
-import fr.istic.taa.weekEndProject.model.Person;
+import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
-import fr.istic.taa.weekEndProject.service.PersonService;
+import fr.istic.taa.weekEndProject.service.UserService;
+import fr.istic.taa.weekEndProject.service.SecurityService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
 import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
@@ -26,188 +31,191 @@ import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
  *
  */
 @RestController
-@RequestMapping(value = "/persons/")
+@RequestMapping(value = "/users")
 public class PersonRestController {
 	/*
 	 * Par defaut : Nb requete == Nb association
 	 */
 	@Autowired
-	PersonService serviceP;
+	UserService serviceP;
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	ResponseEntity<Person> getPersonById(@PathVariable("id") long id) {
-		Person p1 = null;
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	ResponseEntity<User> getPersonById(@PathVariable("id") long id) {
+		User p1 = null;
 		try {
 			p1 = this.serviceP.findById(new Long(id));
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
-	ResponseEntity<List<Person>> getPersonByName(@PathVariable("name") String name) {
-		List<Person> listp = this.serviceP.findByNameWithAll(name);
+	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+	ResponseEntity<List<User>> getPersonByName(@PathVariable("name") String name) {
+		List<User> listp = this.serviceP.findByNameWithAll(name);
 
-		return new ResponseEntity<List<Person>>(listp, HttpStatus.OK);
+		return new ResponseEntity<List<User>>(listp, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	ResponseEntity<Person> createPerson(@RequestBody Person person) {
-		Person p1 = this.serviceP.create(person);
-		return new ResponseEntity<Person>(p1, HttpStatus.OK);
-	}
+//	@RequestMapping(value = "", method = RequestMethod.POST)
+//	ResponseEntity<User> createPerson(@RequestBody User person) {
+//		User p1 = this.serviceP.create(person);
+//		return new ResponseEntity<User>(p1, HttpStatus.OK);
+//	}
 
 	@RequestMapping(value = "", method = RequestMethod.PUT)
-	ResponseEntity<Person> updatePerson(@RequestBody Person person) {
-		Person p1;
+	ResponseEntity<User> updatePerson(@RequestBody User person) {
+		User p1;
 		try {
 			p1 = this.serviceP.update(person);
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	ResponseEntity<Person> updatePerson(@PathVariable("id") long id, @RequestBody Person person) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	ResponseEntity<User> updatePerson(@PathVariable("id") long id, @RequestBody User person) {
 		person.setId(id);
-		Person p1;
+		User p1;
 		try {
 			p1 = this.serviceP.update(person);
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{id}/homes/", method = RequestMethod.POST)
-	ResponseEntity<Person> updatePersonLocation(@PathVariable("id") long id, @RequestBody Set<Location> locations) {
-		Person p1;
+	@RequestMapping(value = "/{id}/homes", method = RequestMethod.POST)
+	ResponseEntity<User> updatePersonLocation(@PathVariable("id") long id, @RequestBody Set<Location> locations) {
+		User p1;
 		try {
 			p1 = this.serviceP.updateLocation(id, locations);
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{id}/activities/", method = RequestMethod.POST)
-	ResponseEntity<Person> updatePersonActivity(@PathVariable("id") long id,
+	@RequestMapping(value = "/{id}/activities", method = RequestMethod.POST)
+	ResponseEntity<User> updatePersonActivity(@PathVariable("id") long id,
 			@RequestBody Set<AbstractActivity> activities) {
-		Person p1;
+		User p1;
 		try {
 			p1 = this.serviceP.updateActivities(id, activities);
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{id}/homes/{idL}", method = RequestMethod.PUT)
-	ResponseEntity<Person> updatePersonLocation(@PathVariable("id") long id, @PathVariable("idL") long idL) {
-		Person p1;
+	@RequestMapping(value = "/{id}/homes/{idL}", method = RequestMethod.PUT)
+	ResponseEntity<User> updatePersonLocation(@PathVariable("id") long id, @PathVariable("idL") long idL) {
+		User p1;
 		try {
 			p1 = this.serviceP.updateLocation(id, idL);
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{id}/activities/{idA}", method = RequestMethod.PUT)
-	ResponseEntity<Person> updatePersonActivity(@PathVariable("id") long id, @PathVariable("idA") long idA) {
-		Person p1;
+	@RequestMapping(value = "/{id}/activities/{idA}", method = RequestMethod.PUT)
+	ResponseEntity<User> updatePersonActivity(@PathVariable("id") long id, @PathVariable("idA") long idA) {
+		User p1;
 		try {
 			p1 = this.serviceP.updateActivities(id, idA);
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
-	
-	@RequestMapping(value = "{id}/homes/{idL}", method = RequestMethod.DELETE)
-	ResponseEntity<Person> deletePersonLocation(@PathVariable("id") long id, @PathVariable("idL") long idL) {
-		Person p1;
+
+	@RequestMapping(value = "/{id}/homes/{idL}", method = RequestMethod.DELETE)
+	ResponseEntity<User> deletePersonLocation(@PathVariable("id") long id, @PathVariable("idL") long idL) {
+		User p1;
 		try {
 			p1 = this.serviceP.deleteLocation(id, idL);
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{id}/activities/{idA}", method = RequestMethod.DELETE)
-	ResponseEntity<Person> deletePersonActivity(@PathVariable("id") long id, @PathVariable("idA") long idA) {
-		Person p1;
+	@RequestMapping(value = "/{id}/activities/{idA}", method = RequestMethod.DELETE)
+	ResponseEntity<User> deletePersonActivity(@PathVariable("id") long id, @PathVariable("idA") long idA) {
+		User p1;
 		try {
 			p1 = this.serviceP.deleteActivities(id, idA);
-			return new ResponseEntity<Person>(p1, HttpStatus.OK);
+			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.DELETE)
-	ResponseEntity<Person> deletePerson(@RequestBody Person person) {
+	ResponseEntity<User> deletePerson(@RequestBody User person) {
 
 		try {
 			this.serviceP.delete(person.getId());
-			return new ResponseEntity<Person>(HttpStatus.OK);
+			return new ResponseEntity<User>(HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	ResponseEntity<Person> deletePerson(@PathVariable("id") long id) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	ResponseEntity<User> deletePerson(@PathVariable("id") long id) {
 
 		try {
 			this.serviceP.delete(id);
-			return new ResponseEntity<Person>(HttpStatus.OK);
+			return new ResponseEntity<User>(HttpStatus.OK);
 		} catch (PersonNotFound e) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
 	}
+
+
 
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.istic.taa.weekEndProject.model.Meteo;
-import fr.istic.taa.weekEndProject.model.Person;
+import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.repository.ActivityRepository;
@@ -38,10 +38,10 @@ public class ActivityServiceImpl implements ActivityService {
 
 		deletedActivity.getMeteos().clear();
 
-		for (Person p : deletedActivity.getPersons()) {
+		for (User p : deletedActivity.getUsers()) {
 			p.getActivities().remove(deletedActivity);
 		}
-		deletedActivity.getPersons().clear();
+		deletedActivity.getUsers().clear();
 		for (SiteActivity s : deletedActivity.getSites()) {
 			s.getActivities().remove(deletedActivity);
 		}

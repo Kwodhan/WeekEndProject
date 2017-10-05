@@ -24,13 +24,13 @@ import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
  *
  */
 @RestController
-@RequestMapping(value = "/activities/")
+@RequestMapping(value = "/activities")
 public class ActivityRestController {
 
 	@Autowired
 	ActivityService serviceA;
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	ResponseEntity<AbstractActivity> getActivityById(@PathVariable("id") long id) {
 		AbstractActivity l1;
 		try {
@@ -43,7 +43,7 @@ public class ActivityRestController {
 
 	}
 
-	@RequestMapping(value = "leisures/", method = RequestMethod.GET)
+	@RequestMapping(value = "/leisures", method = RequestMethod.GET)
 	ResponseEntity<List<AbstractActivity>> getLeisure() {
 		List<AbstractActivity> l1;
 
@@ -52,7 +52,7 @@ public class ActivityRestController {
 
 	}
 
-	@RequestMapping(value = "sports/", method = RequestMethod.GET)
+	@RequestMapping(value = "/sports", method = RequestMethod.GET)
 	ResponseEntity<List<AbstractActivity>> getSport() {
 		List<AbstractActivity> l1;
 
@@ -80,7 +80,7 @@ public class ActivityRestController {
 
 	}
 	
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	ResponseEntity<AbstractActivity> updateActivity(@PathVariable("id") long id,@RequestBody AbstractActivity activity) {
 		activity.setId(id);
 		AbstractActivity l1;
@@ -109,7 +109,7 @@ public class ActivityRestController {
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	ResponseEntity<AbstractActivity> deleteActivity(@PathVariable("id") long id) {
 
 		try {

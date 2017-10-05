@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import fr.istic.taa.weekEndProject.model.Meteo;
-import fr.istic.taa.weekEndProject.model.Person;
+import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
 
 /**
@@ -45,7 +45,7 @@ import fr.istic.taa.weekEndProject.model.SiteActivity;
 @Table(name = "Activity")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type")
 @JsonSubTypes({ @Type(value = Sport.class, name = "Sport"), @Type(value = Leisure.class, name = "Leisure") })
-@JsonPropertyOrder({ "id", "name", "type", "meteos", "persons", "sites" })
+@JsonPropertyOrder({ "id", "name", "type", "meteos", "users", "sites" })
 public abstract class AbstractActivity {
 	private Long id;
 
@@ -58,7 +58,7 @@ public abstract class AbstractActivity {
 
 	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
 
-	private Set<Person> persons = new HashSet<Person>();
+	private Set<User> users = new HashSet<User>();
 
 	public AbstractActivity(String name) {
 		super();
@@ -127,12 +127,12 @@ public abstract class AbstractActivity {
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIgnoreProperties("activities")
 	@JsonIgnore
-	public Set<Person> getPersons() {
-		return persons;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	public void setPersons(Set<Person> persons) {
-		this.persons = persons;
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 	@JsonIgnore

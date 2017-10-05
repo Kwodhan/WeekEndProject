@@ -17,7 +17,7 @@
 			allowed-methods="*" max-age="123" />
 	</mvc:cors>
 	<http auto-config='true'>
-		<intercept-url pattern="/users/**" access="hasRole('ROLE_EDITOR')" />
+		<intercept-url pattern="/locations/**" access="hasRole('ROLE_ADMIN')" />
 		<http-basic />
 		<csrf disabled="true" />
 		<cors />

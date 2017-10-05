@@ -27,7 +27,7 @@ import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = { "classpath:TestApplicationContext.xml" })
+@ContextConfiguration(locations = { "classpath:TestApplicationContext.xml","classpath:spring-security.xml" })
 public class ActivityWebServiceTest {
 
 	private MockMvc mockMvc;

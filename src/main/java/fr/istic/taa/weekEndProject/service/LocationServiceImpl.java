@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.istic.taa.weekEndProject.model.Location;
-import fr.istic.taa.weekEndProject.model.Person;
+import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.repository.LocationRepository;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
 
@@ -33,10 +33,10 @@ public class LocationServiceImpl implements LocationService {
 		if (deletedLocation == null)
 			throw new LocationNotFound();
 		
-		for (Person p : deletedLocation.getPersons()) {
+		for (User p : deletedLocation.getUsers()) {
 			p.getHomes().remove(deletedLocation);
 		}
-		deletedLocation.getPersons().clear();
+		deletedLocation.getUsers().clear();
 		locationRepository.delete(deletedLocation);
 		return deletedLocation;
 	}

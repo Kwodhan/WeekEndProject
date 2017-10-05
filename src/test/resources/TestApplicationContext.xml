@@ -78,5 +78,4 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
 
-
 </beans>

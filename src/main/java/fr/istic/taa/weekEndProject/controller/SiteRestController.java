@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.istic.taa.weekEndProject.model.Person;
+import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.service.SiteActivityService;
@@ -26,7 +26,7 @@ import fr.istic.taa.weekEndProject.service.exception.SiteActivityNotFound;
  *
  */
 @RestController
-@RequestMapping(value = "/sites/")
+@RequestMapping(value = "/sites")
 public class SiteRestController {
 	/*
 	 * Par defaut : Nb requete == Nb association
@@ -34,7 +34,7 @@ public class SiteRestController {
 	@Autowired
 	SiteActivityService serviceS;
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	ResponseEntity<SiteActivity> getSiteActivityById(@PathVariable("id") long id) {
 		SiteActivity p1 = null;
 		try {
@@ -66,7 +66,7 @@ public class SiteRestController {
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	ResponseEntity<SiteActivity> updateSiteActivity(@PathVariable("id") long id,
 			@RequestBody SiteActivity SiteActivity) {
 		SiteActivity.setId(id);
@@ -94,7 +94,7 @@ public class SiteRestController {
 
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	ResponseEntity<SiteActivity> deleteSiteActivity(@PathVariable("id") long id) {
 
 		try {
@@ -107,7 +107,7 @@ public class SiteRestController {
 
 	}
 
-	@RequestMapping(value = "{id}/activities/", method = RequestMethod.POST)
+	@RequestMapping(value = "/{id}/activities", method = RequestMethod.POST)
 	ResponseEntity<SiteActivity> updateSiteActivity(@PathVariable("id") long id,
 			@RequestBody Set<AbstractActivity> activities) {
 		SiteActivity p1;
@@ -124,7 +124,7 @@ public class SiteRestController {
 
 	}
 
-	@RequestMapping(value = "{id}/activities/{idA}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}/activities/{idA}", method = RequestMethod.PUT)
 	ResponseEntity<SiteActivity> updateSiteActivity(@PathVariable("id") long id, @PathVariable("idA") long idA) {
 		SiteActivity p1;
 		try {
@@ -140,7 +140,7 @@ public class SiteRestController {
 
 	}
 
-	@RequestMapping(value = "{id}/activities/{idA}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}/activities/{idA}", method = RequestMethod.DELETE)
 	ResponseEntity<SiteActivity> deleteSiteActivity(@PathVariable("id") long id, @PathVariable("idA") long idA) {
 		SiteActivity p1;
 		try {

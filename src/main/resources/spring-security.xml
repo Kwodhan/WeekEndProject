@@ -11,31 +11,38 @@
       http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
 
+	<mvc:cors>
 
+		<mvc:mapping path="/**" allowed-origins="*"
+			allowed-methods="*" max-age="123" />
+	</mvc:cors>
 	<http auto-config='true'>
-		<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/users/**" access="hasRole('ROLE_EDITOR')" />
 		<http-basic />
 		<csrf disabled="true" />
 		<cors />
 	</http>
 
 
+	<mvc:annotation-driven />
 
-	<mvc:cors>
 
-		<mvc:mapping path="/**" allowed-origins="http://localhost:9000" />
-		
-
-	</mvc:cors>
-	
+	<beans:bean id="userDetailsService"
+		class="fr.istic.taa.weekEndProject.service.UserDetailsServiceImpl" />
 
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider>
-			<user-service>
-				<user name="temporary" password="temporary" authorities="ROLE_ADMIN" />
-				<user name="user" password="user" authorities="ROLE_USER" />
-			</user-service>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder ref="encoder" />
+
+
 		</authentication-provider>
 	</authentication-manager>
+
+
+
+	<beans:bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+
+	</beans:bean>
 
 </beans:beans>

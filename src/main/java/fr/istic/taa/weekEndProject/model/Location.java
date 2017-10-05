@@ -25,13 +25,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  *
  */
 @Entity
-@JsonPropertyOrder({ "id", "city", "persons", "sites" })
+@JsonPropertyOrder({ "id", "city", "users", "sites" })
 public class Location {
 	private Long id;
 	
 	private String city;
 
-	private Set<Person> persons = new HashSet<Person>();
+	private Set<User> users = new HashSet<User>();
 	
 	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
 
@@ -66,12 +66,12 @@ public class Location {
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIgnoreProperties("homes")
 	@JsonIgnore
-	public Set<Person> getPersons() {
-		return persons;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	public void setPersons(Set<Person> persons) {
-		this.persons = persons;
+	public void setUsers(Set<User> Users) {
+		this.users = Users;
 	}
 
 	public String toString() {
