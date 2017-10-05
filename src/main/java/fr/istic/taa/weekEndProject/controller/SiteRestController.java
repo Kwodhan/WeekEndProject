@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.service.SiteActivityService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
-import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
-import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
 import fr.istic.taa.weekEndProject.service.exception.SiteActivityNotFound;
 
 /**
@@ -131,10 +128,10 @@ public class SiteRestController {
 			p1 = this.serviceS.updateActivities(id, idA);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -147,10 +144,10 @@ public class SiteRestController {
 			p1 = this.serviceS.deleteActivities(id, idA);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 

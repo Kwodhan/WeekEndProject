@@ -3,13 +3,9 @@ package fr.istic.taa.weekEndProject.controller;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +16,6 @@ import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.service.UserService;
-import fr.istic.taa.weekEndProject.service.SecurityService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
 import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;

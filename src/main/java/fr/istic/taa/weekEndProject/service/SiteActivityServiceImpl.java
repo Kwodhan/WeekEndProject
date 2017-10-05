@@ -9,15 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.istic.taa.weekEndProject.model.Location;
-import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.repository.ActivityRepository;
 import fr.istic.taa.weekEndProject.repository.LocationRepository;
 import fr.istic.taa.weekEndProject.repository.SiteActivityRepository;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
-import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
-import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
 import fr.istic.taa.weekEndProject.service.exception.SiteActivityNotFound;
 
 @Service

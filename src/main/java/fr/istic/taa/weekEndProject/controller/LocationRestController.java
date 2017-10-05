@@ -36,7 +36,7 @@ public class LocationRestController {
 			l1 = this.serviceL.findById(new Long(id));
 			return new ResponseEntity<Location>(l1, HttpStatus.OK);
 		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
 		}
 
@@ -62,7 +62,7 @@ public class LocationRestController {
 			l1 = this.serviceL.update(location);
 			return new ResponseEntity<Location>(l1, HttpStatus.OK);
 		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
 		}
 
@@ -76,7 +76,7 @@ public class LocationRestController {
 			l1 = this.serviceL.update(location);
 			return new ResponseEntity<Location>(l1, HttpStatus.OK);
 		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
 		}
 
@@ -89,7 +89,7 @@ public class LocationRestController {
 			this.serviceL.delete(location.getId());
 			return new ResponseEntity<Location>(HttpStatus.OK);
 		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
 		}
 
@@ -102,7 +102,7 @@ public class LocationRestController {
 			this.serviceL.delete(id);
 			return new ResponseEntity<Location>(HttpStatus.OK);
 		} catch (LocationNotFound e) {
-			// TODO Auto-generated catch block
+			
 			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
 		}
 

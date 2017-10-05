@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.istic.taa.weekEndProject.model.Meteo;
 import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
-import fr.istic.taa.weekEndProject.model.activity.Leisure;
-import fr.istic.taa.weekEndProject.model.activity.Sport;
 import fr.istic.taa.weekEndProject.service.ActivityService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 
