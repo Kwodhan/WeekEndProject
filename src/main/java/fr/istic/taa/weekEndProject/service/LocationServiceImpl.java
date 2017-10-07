@@ -1,5 +1,6 @@
 package fr.istic.taa.weekEndProject.service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,12 @@ public class LocationServiceImpl implements LocationService {
 
 	@Transactional
 	public Location create(Location Location) {
-		Location createdLocation = Location;
-		return locationRepository.save(createdLocation);
+		List<Location> listLocation = locationRepository.findByName(Location.getCity(), Location.getRegion());
+		if (listLocation.size() != 0) {
+			return listLocation.get(0);
+		}
+
+		return locationRepository.save(Location);
 	}
 
 	@Transactional
@@ -32,7 +37,7 @@ public class LocationServiceImpl implements LocationService {
 
 		if (deletedLocation == null)
 			throw new LocationNotFound();
-		
+
 		for (User p : deletedLocation.getUsers()) {
 			p.getHomes().remove(deletedLocation);
 		}
@@ -69,14 +74,20 @@ public class LocationServiceImpl implements LocationService {
 
 	}
 
-	public List<Location> findByName(String name) {
+	public List<Location> findByName(String name,String city) {
 		// TODO Auto-generated method stub
-		return locationRepository.findByName(name);
+		return locationRepository.findByName(name,city);
 	}
 
 	public List<Location> findByNameWithPerson(String name) {
 		// TODO Auto-generated method stub
 		return locationRepository.findByNameWithPerson(name);
+	}
+
+	@Override
+	public List<Location> findByRegion(String region) {
+		// TODO Auto-generated method stub
+		return locationRepository.findByRegion(region);
 	}
 
 }

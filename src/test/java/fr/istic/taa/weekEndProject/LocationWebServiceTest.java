@@ -96,6 +96,7 @@ public class LocationWebServiceTest {
 		// String expected = "{\"id\":" + getLocation.getId()
 		// + ",\"city\":\"create\"}";
 		String expected = FactoryJSON.Location(getLocation.getId(), getLocation.getCity());
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse);
 	}
 
@@ -123,7 +124,7 @@ public class LocationWebServiceTest {
 				.perform(get(SERVICE_URI + updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse2);
 	}
 

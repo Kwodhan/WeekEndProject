@@ -21,21 +21,21 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 /**
  * a geographical site with activities 
  * @author aferey
- *
+ *TODO : horaire en fonction du jour
  */
 @Entity
 @Table(name = "Site")
 @JsonPropertyOrder({ "id", "name", "location", "activities" })
-public class SiteActivity {
+public class SiteActivity implements InterfaceEntity {
 	private Long id;
-	private Set<AbstractActivity> activities = new HashSet<AbstractActivity>();
+	private Set<Activity> activities = new HashSet<Activity>();
 	private Location location;
 	private String name;
+	
+
 
 	public SiteActivity(String name) {
 		super();
@@ -49,16 +49,16 @@ public class SiteActivity {
 	@ManyToMany
 	@JoinTable(name = "SITE_ACTIVITY", joinColumns = @JoinColumn(name = "SITE_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ACTIVITY_ID", referencedColumnName = "ID"))
 	@JsonIgnoreProperties("sites")
-	public Set<AbstractActivity> getActivities() {
+	public Set<Activity> getActivities() {
 		return activities;
 	}
 
-	public void setActivities(Set<AbstractActivity> activities) {
+	public void setActivities(Set<Activity> activities) {
 		this.activities = activities;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "SITE_ID", referencedColumnName = "ID")
+	@JoinColumn(name = "location", referencedColumnName = "ID")
 	public Location getLocation() {
 		return location;
 	}

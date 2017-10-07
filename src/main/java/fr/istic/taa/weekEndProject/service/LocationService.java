@@ -16,7 +16,9 @@ public interface LocationService {
 	
 	public Location findById(Long id) throws LocationNotFound;
 	
-	public List<Location> findByName(String name);
+	public List<Location> findByName(String name,String region);
 	
 	public List<Location> findByNameWithPerson(String name);
+
+	public List<Location> findByRegion(String region);
 }

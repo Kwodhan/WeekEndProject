@@ -15,9 +15,12 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 	@Query("select l from Location l left join l.users p left join l.sites s where l.id = :id")
 	public Location findById(@Param("id") Long id);
 
-	@Query("select l from Location l where l.city = :city")
-	public List<Location> findByName(@Param("city") String city);
+	@Query("select l from Location l where l.city = :city and l.region =:region")
+	public List<Location> findByName(@Param("city") String city,@Param("region") String region);
 
 	@Query("select l from Location l left join l.users p where l.city = :city")
 	public List<Location> findByNameWithPerson(@Param("city") String city);
+
+	@Query("select l from Location l where l.region = :region")
+	public List<Location> findByRegion(String region);
 }

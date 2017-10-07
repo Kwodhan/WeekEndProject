@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,12 +27,19 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  *
  */
 @Entity
-@JsonPropertyOrder({ "id", "city", "users", "sites" })
-public class Location {
+@JsonPropertyOrder({ "id", "city","region","latitude","longitude", "users", "sites" })
+
+public class Location implements InterfaceEntity{
 	private Long id;
 	
 	private String city;
 
+	private String region;
+	
+	private Float latitude;
+
+	private Float longitude;
+	
 	private Set<User> users = new HashSet<User>();
 	
 	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
@@ -87,6 +96,30 @@ public class Location {
 
 	public void setSites(Set<SiteActivity> sites) {
 		this.sites = sites;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
 	}
 
 	

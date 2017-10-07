@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Meteo;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.repository.ActivityRepository;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 
@@ -20,8 +20,8 @@ public class ActivityServiceImpl implements ActivityService {
 	private ActivityRepository activityRepository;
 
 	@Transactional
-	public AbstractActivity create(AbstractActivity activity) {
-
+	public Activity create(Activity activity) {
+		System.out.println(activity.getType());
 		return activityRepository.save(activity);
 	}
 
@@ -30,8 +30,8 @@ public class ActivityServiceImpl implements ActivityService {
 	}
 
 	@Transactional
-	public AbstractActivity delete(Long id) throws ActivityNotFound {
-		AbstractActivity deletedActivity = activityRepository.findById(id);
+	public Activity delete(Long id) throws ActivityNotFound {
+		Activity deletedActivity = activityRepository.findById(id);
 
 		if (deletedActivity == null)
 			throw new ActivityNotFound();
@@ -51,27 +51,28 @@ public class ActivityServiceImpl implements ActivityService {
 		return deletedActivity;
 	}
 
-	public List<AbstractActivity> findAll() {
+	public List<Activity> findAll() {
 		// TODO Auto-generated method stub
 		return activityRepository.findAll();
 	}
 
 	@Transactional
-	public AbstractActivity update(AbstractActivity activity) throws ActivityNotFound {
+	public Activity update(Activity activity) throws ActivityNotFound {
 		// TODO Auto-generated method stub
-		AbstractActivity updatedActivity = activityRepository.findById(activity.getId());
+		Activity updatedActivity = activityRepository.findById(activity.getId());
 
 		if (updatedActivity == null) {
 			throw new ActivityNotFound();
 		}
 		updatedActivity.setName(activity.getName());
+		updatedActivity.setType(activity.getType());
 
 		return updatedActivity;
 	}
 
-	public AbstractActivity findById(Long id) throws ActivityNotFound {
+	public Activity findById(Long id) throws ActivityNotFound {
 		// TODO Auto-generated method stub
-		AbstractActivity getActivity = activityRepository.findById(id);
+		Activity getActivity = activityRepository.findById(id);
 
 		if (getActivity == null) {
 			throw new ActivityNotFound();
@@ -79,14 +80,14 @@ public class ActivityServiceImpl implements ActivityService {
 		return getActivity;
 	}
 
-	public List<AbstractActivity> findByName(String name) {
+	public List<Activity> findByName(String name) {
 		// TODO Auto-generated method stub
 		return activityRepository.findByName(name);
 	}
 
 	@Transactional
-	public AbstractActivity updateLocation(Long idActivity, Meteo meteo) throws ActivityNotFound {
-		AbstractActivity updatedActivity = activityRepository.findById(idActivity);
+	public Activity updateLocation(Long idActivity, Meteo meteo) throws ActivityNotFound {
+		Activity updatedActivity = activityRepository.findById(idActivity);
 
 		if (updatedActivity == null)
 			throw new ActivityNotFound();
@@ -98,12 +99,12 @@ public class ActivityServiceImpl implements ActivityService {
 		return updatedActivity;
 	}
 
-	public List<AbstractActivity> findAllSport() {
+	public List<Activity> findAllSport() {
 		// TODO Auto-generated method stub
 		return activityRepository.findAllSport();
 	}
 
-	public List<AbstractActivity> findAllLeisure() {
+	public List<Activity> findAllLeisure() {
 		// TODO Auto-generated method stub
 		return activityRepository.findAllLeisure();
 	}

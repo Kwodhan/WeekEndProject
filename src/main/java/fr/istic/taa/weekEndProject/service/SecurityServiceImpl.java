@@ -19,12 +19,12 @@ public class SecurityServiceImpl implements SecurityService {
 //	private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
 	public void autologin(String username, String password) {
+
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-		
+
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				userDetails, password, userDetails.getAuthorities());
-		System.out.println(username);
-		System.out.println(password);
+
 		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 	
 		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
@@ -32,5 +32,6 @@ public class SecurityServiceImpl implements SecurityService {
 
 			
 		}
+
 	}
 }

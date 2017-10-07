@@ -26,9 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String pseudo) throws UsernameNotFoundException {
-		System.out.println(pseudo);
 		List<User> users = userRepository.findByPseudo(pseudo);
-		
 
 		if (users.size() == 0) {
 			throw new UsernameNotFoundException(pseudo);

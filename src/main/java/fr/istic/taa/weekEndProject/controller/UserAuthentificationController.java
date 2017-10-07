@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.service.SecurityService;
 import fr.istic.taa.weekEndProject.service.UserService;
+import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
 
 @RestController
 @RequestMapping(value = "/auth/")
@@ -27,22 +28,46 @@ public class UserAuthentificationController {
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	ResponseEntity<User> registration(@RequestBody User userForm, BindingResult bindingResult, Model model) {
-		if (serviceP.findByName(userForm.getPseudo()).size() == 1) {
-			new ResponseEntity<>(HttpStatus.CONFLICT);
-		}
-		
-		User u = serviceP.create(userForm);
-		securityService.autologin(userForm.getPseudo(), userForm.getPassword());
+		try {
+			serviceP.findByPseudo(userForm.getPseudo());
+		} catch (PersonNotFound e) {
+			User u = serviceP.createUser(userForm);
 
-		return new ResponseEntity<User>(u,HttpStatus.OK);
+			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
+
+			return new ResponseEntity<User>(u, HttpStatus.OK);
+		}
+		return new ResponseEntity<User>(HttpStatus.CONFLICT);
+
+	}
+	
+	@RequestMapping(value = "/jonshnownestpasmort", method = RequestMethod.POST)
+	ResponseEntity<User> registrationGerant(@RequestBody User userForm, BindingResult bindingResult, Model model) {
+		try {
+			serviceP.findByPseudo(userForm.getPseudo());
+		} catch (PersonNotFound e) {
+			User u = serviceP.createGerant(userForm);
+
+			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
+
+			return new ResponseEntity<User>(u, HttpStatus.OK);
+		}
+		return new ResponseEntity<User>(HttpStatus.CONFLICT);
+
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	ResponseEntity<?> login(@RequestBody User userForm, HttpSession session) {
+	ResponseEntity<User> login(@RequestBody User userForm, HttpSession session) {
+		try {
+			User u = serviceP.findByPseudo(userForm.getPseudo());
+			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
 
-		securityService.autologin(userForm.getPseudo(), userForm.getPassword());
+			return new ResponseEntity<User>(u, HttpStatus.OK);
+		} catch (PersonNotFound e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<User>(HttpStatus.CONFLICT);
+		}
 
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

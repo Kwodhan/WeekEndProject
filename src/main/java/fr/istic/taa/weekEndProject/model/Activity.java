@@ -1,4 +1,4 @@
-package fr.istic.taa.weekEndProject.model.activity;
+package fr.istic.taa.weekEndProject.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +18,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,10 +31,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import fr.istic.taa.weekEndProject.model.Meteo;
-import fr.istic.taa.weekEndProject.model.User;
-import fr.istic.taa.weekEndProject.model.SiteActivity;
-
 /**
  * Une activity
  * 
@@ -41,12 +38,8 @@ import fr.istic.taa.weekEndProject.model.SiteActivity;
  *
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name = "Activity")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type")
-@JsonSubTypes({ @Type(value = Sport.class, name = "Sport"), @Type(value = Leisure.class, name = "Leisure") })
-@JsonPropertyOrder({ "id", "name", "type", "meteos", "users", "sites" })
-public abstract class AbstractActivity {
+@JsonPropertyOrder({ "type", "id", "name", "meteos", "users", "sites" })
+public class Activity implements InterfaceEntity {
 	private Long id;
 
 	/**
@@ -56,13 +49,20 @@ public abstract class AbstractActivity {
 
 	private String name;
 
+	private String type;
+
 	private Set<SiteActivity> sites = new HashSet<SiteActivity>();
 
 	private Set<User> users = new HashSet<User>();
 
-	public AbstractActivity(String name) {
+	public Activity(String name, String type) {
 		super();
 		this.name = name;
+		this.type=type;
+	}
+
+	public Activity() {
+		
 	}
 
 	@Id
@@ -135,11 +135,12 @@ public abstract class AbstractActivity {
 		this.users = users;
 	}
 
-	@JsonIgnore
-	public abstract String getType();
+	public String getType() {
+		return this.type;
+	}
 
 	public void setType(String type) {
-
+		this.type=type;
 	}
 
 }

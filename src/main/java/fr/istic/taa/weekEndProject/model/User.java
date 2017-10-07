@@ -22,11 +22,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
-
 @Entity
 @JsonPropertyOrder({ "id", "pseudo", "password", "firstName", "lastName", "emailAddress", "homes", "activities" })
-public class User {
+public class User implements InterfaceEntity{
 	private Long id;
 
 	private String pseudo;
@@ -37,7 +35,7 @@ public class User {
 
 	private Set<Location> homes = new HashSet<Location>();
 
-	private Set<AbstractActivity> activities = new HashSet<AbstractActivity>();
+	private Set<Activity> activities = new HashSet<Activity>();
 
 	private Set<Role> roles = new HashSet<Role>();
 
@@ -116,11 +114,11 @@ public class User {
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "PERS_ACTIVITY", joinColumns = @JoinColumn(name = "PERS_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ACTIVITY_ID", referencedColumnName = "ID"))
 	@JsonIgnoreProperties("persons")
-	public Set<AbstractActivity> getActivities() {
+	public Set<Activity> getActivities() {
 		return activities;
 	}
 
-	public void setActivities(Set<AbstractActivity> activities) {
+	public void setActivities(Set<Activity> activities) {
 		this.activities = activities;
 	}
 

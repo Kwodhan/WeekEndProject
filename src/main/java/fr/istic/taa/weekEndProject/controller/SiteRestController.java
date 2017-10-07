@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.istic.taa.weekEndProject.model.Activity;
+import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.service.SiteActivityService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.SiteActivityNotFound;
@@ -32,14 +33,15 @@ public class SiteRestController {
 	SiteActivityService serviceS;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	ResponseEntity<SiteActivity> getSiteActivityById(@PathVariable("id") long id) {
+	ResponseEntity<ResponseJson> getSiteActivityById(@PathVariable("id") long id) {
 		SiteActivity p1 = null;
 		try {
 			p1 = this.serviceS.findById(new Long(id));
-			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
+			ResponseJson json = new ResponseJson(p1);
+			return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
 
-			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ResponseJson>(HttpStatus.NOT_FOUND);
 		}
 
 	}
@@ -106,7 +108,7 @@ public class SiteRestController {
 
 	@RequestMapping(value = "/{id}/activities", method = RequestMethod.POST)
 	ResponseEntity<SiteActivity> updateSiteActivity(@PathVariable("id") long id,
-			@RequestBody Set<AbstractActivity> activities) {
+			@RequestBody Set<Activity> activities) {
 		SiteActivity p1;
 		try {
 			p1 = this.serviceS.updateActivities(id, activities);
@@ -128,10 +130,10 @@ public class SiteRestController {
 			p1 = this.serviceS.updateActivities(id, idA);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-			
+
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			
+
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -144,10 +146,10 @@ public class SiteRestController {
 			p1 = this.serviceS.deleteActivities(id, idA);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-			
+
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			
+
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 

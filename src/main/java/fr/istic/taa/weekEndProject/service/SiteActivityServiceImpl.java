@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.repository.ActivityRepository;
 import fr.istic.taa.weekEndProject.repository.LocationRepository;
 import fr.istic.taa.weekEndProject.repository.SiteActivityRepository;
@@ -69,10 +69,10 @@ public class SiteActivityServiceImpl implements SiteActivityService {
 		updatedSiteActivity.setName(siteActivity.getName());
 
 		// update activities
-		Set<AbstractActivity> updateActivities = new HashSet<AbstractActivity>();
+		Set<Activity> updateActivities = new HashSet<Activity>();
 
-		for (AbstractActivity l : siteActivity.getActivities()) {
-			AbstractActivity up = activityRepository.findById(l.getId());
+		for (Activity l : siteActivity.getActivities()) {
+			Activity up = activityRepository.findById(l.getId());
 			if (up != null) {
 				updateActivities.add(up);
 
@@ -107,7 +107,7 @@ public class SiteActivityServiceImpl implements SiteActivityService {
 	}
 
 	@Transactional
-	public SiteActivity updateActivities(Long id, Set<AbstractActivity> activities)
+	public SiteActivity updateActivities(Long id, Set<Activity> activities)
 			throws ActivityNotFound, SiteActivityNotFound {
 
 		SiteActivity updatedSiteActivity = siteActivityRepository.findById(id);
@@ -117,10 +117,10 @@ public class SiteActivityServiceImpl implements SiteActivityService {
 		}
 
 		// update activities
-		Set<AbstractActivity> updateActivities = new HashSet<AbstractActivity>();
+		Set<Activity> updateActivities = new HashSet<Activity>();
 
-		for (AbstractActivity l : activities) {
-			AbstractActivity up = activityRepository.findById(l.getId());
+		for (Activity l : activities) {
+			Activity up = activityRepository.findById(l.getId());
 			if (up != null) {
 				updateActivities.add(up);
 
@@ -138,7 +138,7 @@ public class SiteActivityServiceImpl implements SiteActivityService {
 		if (updatedActivity == null)
 			throw new SiteActivityNotFound();
 
-		AbstractActivity addActivity = activityRepository.findById(idAct);
+		Activity addActivity = activityRepository.findById(idAct);
 
 		if (addActivity == null)
 			throw new ActivityNotFound();
@@ -155,7 +155,7 @@ public class SiteActivityServiceImpl implements SiteActivityService {
 		if (updatedActivity == null)
 			throw new SiteActivityNotFound();
 
-		AbstractActivity addActivity = activityRepository.findById(idAct);
+		Activity addActivity = activityRepository.findById(idAct);
 
 		if (addActivity == null)
 			throw new ActivityNotFound();

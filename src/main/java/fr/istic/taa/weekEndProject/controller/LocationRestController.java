@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
+import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.service.LocationService;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
 
@@ -30,24 +32,37 @@ public class LocationRestController {
 	LocationService serviceL;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	ResponseEntity<Location> getLocationById(@PathVariable("id") long id) {
+	ResponseEntity<ResponseJson> getLocationById(@PathVariable("id") long id) {
 		Location l1;
 		try {
 			l1 = this.serviceL.findById(new Long(id));
-			return new ResponseEntity<Location>(l1, HttpStatus.OK);
+			ResponseJson json = new ResponseJson(l1);
+			return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
 		} catch (LocationNotFound e) {
 			
-			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ResponseJson>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
-	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
-	ResponseEntity<List<Location>> getLocationByName(@PathVariable("name") String name) {
-		List<Location> listp = this.serviceL.findByNameWithPerson(name);
-
-		return new ResponseEntity<List<Location>>(listp, HttpStatus.OK);
+	@RequestMapping(value = "/region/{region}", method = RequestMethod.GET)
+	ResponseEntity<ResponseJson> getLocationsByRegion(@PathVariable("region") String region) {
+		List<Location> listp = this.serviceL.findByRegion( region);
+		ResponseJson json = new ResponseJson(listp);
+		return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	ResponseEntity<ResponseJson> getLocations() {
+		List<Location> l1;
+
+		l1 = this.serviceL.findAll();
+		ResponseJson json = new ResponseJson(l1);
+		return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
+
+	}
+	
+	
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	ResponseEntity<Location> createPerson(@RequestBody Location location) {

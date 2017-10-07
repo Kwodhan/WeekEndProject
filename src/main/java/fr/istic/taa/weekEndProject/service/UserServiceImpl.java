@@ -9,10 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.Role;
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.repository.ActivityRepository;
 import fr.istic.taa.weekEndProject.repository.LocationRepository;
 import fr.istic.taa.weekEndProject.repository.UserRepository;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public User create(User person) {
+	public User createAdmin(User person) {
 		User createdPerson = new User();
 		createdPerson.setFirstName(person.getFirstName());
 		createdPerson.setLastName(person.getLastName());
@@ -48,10 +48,39 @@ public class UserServiceImpl implements UserService {
 		createdPerson.setPassword(encoder.encode(person.getPassword()));
 		createdPerson.setPseudo(person.getPseudo());
 		Set<Role> roles = new HashSet<Role>();
-		roles.add(Role.ROLE_EDITOR);
+		roles.add(Role.ROLE_ADMIN);
 		createdPerson.setRoles(roles);
 		return personRepository.save(createdPerson);
 	}
+
+	@Transactional
+	public User createUser(User person) {
+		User createdPerson = new User();
+		createdPerson.setFirstName(person.getFirstName());
+		createdPerson.setLastName(person.getLastName());
+		createdPerson.setEmailAddress(person.getEmailAddress());
+		createdPerson.setPassword(encoder.encode(person.getPassword()));
+		createdPerson.setPseudo(person.getPseudo());
+		Set<Role> roles = new HashSet<Role>();
+		roles.add(Role.ROLE_USER);
+		createdPerson.setRoles(roles);
+		return personRepository.save(createdPerson);
+	}
+	
+	@Transactional
+	public User createGerant(User person) {
+		User createdPerson = new User();
+		createdPerson.setFirstName(person.getFirstName());
+		createdPerson.setLastName(person.getLastName());
+		createdPerson.setEmailAddress(person.getEmailAddress());
+		createdPerson.setPassword(encoder.encode(person.getPassword()));
+		createdPerson.setPseudo(person.getPseudo());
+		Set<Role> roles = new HashSet<Role>();
+		roles.add(Role.ROLE_GERANT);
+		createdPerson.setRoles(roles);
+		return personRepository.save(createdPerson);
+	}
+
 
 	@Transactional
 	public User delete(Long id) throws PersonNotFound {
@@ -96,10 +125,10 @@ public class UserServiceImpl implements UserService {
 		updatedPerson.setHomes(updatelocations);
 
 		// update activities
-		Set<AbstractActivity> updateActivities = new HashSet<AbstractActivity>();
+		Set<Activity> updateActivities = new HashSet<Activity>();
 
-		for (AbstractActivity l : person.getActivities()) {
-			AbstractActivity up = activityRepository.findById(l.getId());
+		for (Activity l : person.getActivities()) {
+			Activity up = activityRepository.findById(l.getId());
 			if (up != null) {
 				updateActivities.add(up);
 
@@ -158,16 +187,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public User updateActivities(Long id, Set<AbstractActivity> activities) throws ActivityNotFound, PersonNotFound {
+	public User updateActivities(Long id, Set<Activity> activities) throws ActivityNotFound, PersonNotFound {
 
 		User updatedPerson = personRepository.findById(id);
 
 		if (updatedPerson == null)
 			throw new PersonNotFound();
-		Set<AbstractActivity> updateActivities = new HashSet<AbstractActivity>();
+		Set<Activity> updateActivities = new HashSet<Activity>();
 
-		for (AbstractActivity l : activities) {
-			AbstractActivity up = activityRepository.findById(l.getId());
+		for (Activity l : activities) {
+			Activity up = activityRepository.findById(l.getId());
 			if (up != null) {
 				updateActivities.add(up);
 
@@ -203,7 +232,7 @@ public class UserServiceImpl implements UserService {
 		if (updatedPerson == null)
 			throw new PersonNotFound();
 
-		AbstractActivity addActivity = activityRepository.findById(idAct);
+		Activity addActivity = activityRepository.findById(idAct);
 
 		if (addActivity == null)
 			throw new ActivityNotFound();
@@ -237,7 +266,7 @@ public class UserServiceImpl implements UserService {
 		if (updatedPerson == null)
 			throw new PersonNotFound();
 
-		AbstractActivity addActivity = activityRepository.findById(idAct);
+		Activity addActivity = activityRepository.findById(idAct);
 
 		if (addActivity == null)
 			throw new ActivityNotFound();
@@ -247,4 +276,15 @@ public class UserServiceImpl implements UserService {
 		return updatedPerson;
 	}
 
+	@Override
+	public User findByPseudo(String pseudo)  throws  PersonNotFound{
+		List<User> createPerson = personRepository.findByPseudo(pseudo);
+
+		if ( createPerson.size() == 0)
+			throw new PersonNotFound();
+
+		return createPerson.get(0);
+	}
+
+	
 }

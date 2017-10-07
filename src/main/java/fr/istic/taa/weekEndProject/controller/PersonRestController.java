@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
+import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.model.User;
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
 import fr.istic.taa.weekEndProject.service.UserService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
@@ -36,23 +37,24 @@ public class PersonRestController {
 
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	ResponseEntity<User> getPersonById(@PathVariable("id") long id) {
+	ResponseEntity<ResponseJson> getPersonById(@PathVariable("id") long id) {
 		User p1 = null;
 		try {
 			p1 = this.serviceP.findById(new Long(id));
-			return new ResponseEntity<User>(p1, HttpStatus.OK);
+			ResponseJson json = new ResponseJson(p1);
+			return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
 		} catch (PersonNotFound e) {
 			
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ResponseJson>(HttpStatus.NOT_FOUND);
 		}
 
 	}
 
 	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
-	ResponseEntity<List<User>> getPersonByName(@PathVariable("name") String name) {
+	ResponseEntity<ResponseJson> getPersonByName(@PathVariable("name") String name) {
 		List<User> listp = this.serviceP.findByNameWithAll(name);
-
-		return new ResponseEntity<List<User>>(listp, HttpStatus.OK);
+		ResponseJson json = new ResponseJson(listp);
+		return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
 	}
 
 //	@RequestMapping(value = "", method = RequestMethod.POST)
@@ -106,7 +108,7 @@ public class PersonRestController {
 
 	@RequestMapping(value = "/{id}/activities", method = RequestMethod.POST)
 	ResponseEntity<User> updatePersonActivity(@PathVariable("id") long id,
-			@RequestBody Set<AbstractActivity> activities) {
+			@RequestBody Set<Activity> activities) {
 		User p1;
 		try {
 			p1 = this.serviceP.updateActivities(id, activities);

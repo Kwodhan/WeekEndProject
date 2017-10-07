@@ -16,11 +16,9 @@ import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
-
 @Entity
 @JsonPropertyOrder({ "id", "firstName", "lastName", "emailAddress", "homes", "activities" })
-public class Person {
+public class Person implements InterfaceEntity{
 	private Long id;
 
 	private String firstName;
@@ -29,7 +27,7 @@ public class Person {
 
 	private Set<Location> homes = new HashSet<Location>();
 
-	private Set<AbstractActivity> activities = new HashSet<AbstractActivity>();
+	private Set<Activity> activities = new HashSet<Activity>();
 
 	
 
@@ -92,11 +90,11 @@ public class Person {
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "PERS_ACTIVITY", joinColumns = @JoinColumn(name = "PERS_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ACTIVITY_ID", referencedColumnName = "ID"))
 	@JsonIgnoreProperties("persons")
-	public Set<AbstractActivity> getActivities() {
+	public Set<Activity> getActivities() {
 		return activities;
 	}
 
-	public void setActivities(Set<AbstractActivity> activities) {
+	public void setActivities(Set<Activity> activities) {
 		this.activities = activities;
 	}
 

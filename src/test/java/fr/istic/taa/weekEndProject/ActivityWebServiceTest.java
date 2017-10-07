@@ -19,9 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
-import fr.istic.taa.weekEndProject.model.activity.Leisure;
-import fr.istic.taa.weekEndProject.model.activity.Sport;
+import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.service.ActivityService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 
@@ -37,21 +35,21 @@ public class ActivityWebServiceTest {
 	@Autowired
 	private ActivityService activityService;
 
-	private AbstractActivity getSport;
+	private Activity getSport;
 
-	private AbstractActivity updateSport;
+	private Activity updateSport;
 
-	private AbstractActivity deleteSport;
+	private Activity deleteSport;
 
-	private AbstractActivity createSport;
+	private Activity createSport;
 
-	private AbstractActivity getLeisure;
+	private Activity getLeisure;
 
-	private AbstractActivity updateLeisure;
+	private Activity updateLeisure;
 
-	private AbstractActivity deleteLeisure;
+	private Activity deleteLeisure;
 
-	private AbstractActivity createLeisure;
+	private Activity createLeisure;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -61,29 +59,29 @@ public class ActivityWebServiceTest {
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		// Sport
-		getSport = new Sport("Name");
+		getSport = new Activity("Name","Sport");
 		getSport = activityService.create(getSport);
 
-		updateSport = new Sport("dsq");
+		updateSport = new Activity("dsq","Sport");
 		updateSport = activityService.create(updateSport);
 
-		createSport = new Sport("qds");
+		createSport = new Activity("qds","Sport");
 		createSport = activityService.create(createSport);
 
-		deleteSport = new Sport("cxw");
+		deleteSport = new Activity("cxw","Sport");
 		deleteSport = activityService.create(deleteSport);
 
 		// Leisure
-		getLeisure = new Leisure("Name");
+		getLeisure = new Activity("Name","Leisure");
 		getLeisure = activityService.create(getLeisure);
 
-		updateLeisure = new Leisure("Loisir");
+		updateLeisure = new Activity("Loisir","Leisure");
 		updateLeisure = activityService.create(updateLeisure);
 
-		createLeisure = new Leisure("qds");
+		createLeisure = new Activity("qds","Leisure");
 		createLeisure = activityService.create(createLeisure);
 
-		deleteLeisure = new Leisure("cxw");
+		deleteLeisure = new Activity("cxw","Leisure");
 		deleteLeisure = activityService.create(deleteLeisure);
 	}
 
@@ -120,6 +118,7 @@ public class ActivityWebServiceTest {
 
 		Assert.assertTrue(jsonResponse.contains("\"name\":\"" + createLeisure.getName() + "\""));
 		Assert.assertTrue(jsonResponse.contains("\"type\":\"Leisure\""));
+		
 	}
 
 	/**
@@ -138,6 +137,7 @@ public class ActivityWebServiceTest {
 		// String expected = "{\"id\":" + getSport.getId()
 		// + ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Sport\"}";
 		String expected = FactoryJSON.Activity(getSport.getId(), getSport.getName(), getSport.getType());
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse);
 	}
 
@@ -198,7 +198,7 @@ public class ActivityWebServiceTest {
 				.perform(get(SERVICE_URI + updateSport.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse2);
 	}
 
@@ -260,6 +260,7 @@ public class ActivityWebServiceTest {
 		// String expected = "{\"id\":" + getLeisure.getId()
 		// + ",\"meteos\":[],\"name\":\"Name\",\"type\":\"Leisure\"}";
 		String expected = FactoryJSON.Activity(getLeisure.getId(), getLeisure.getName(), getLeisure.getType());
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse);
 	}
 
@@ -283,7 +284,7 @@ public class ActivityWebServiceTest {
 				.perform(get(SERVICE_URI + updateLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse2);
 	}
 

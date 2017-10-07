@@ -22,11 +22,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.User;
-import fr.istic.taa.weekEndProject.model.activity.AbstractActivity;
-import fr.istic.taa.weekEndProject.model.activity.Leisure;
-import fr.istic.taa.weekEndProject.model.activity.Sport;
 import fr.istic.taa.weekEndProject.service.ActivityService;
 import fr.istic.taa.weekEndProject.service.LocationService;
 import fr.istic.taa.weekEndProject.service.UserService;
@@ -66,11 +64,11 @@ public class PersonWebServiceTest {
 
 	private User updateLocationPerson;
 
-	private AbstractActivity createActivity;
+	private Activity createActivity;
 
-	private AbstractActivity updateActivity;
+	private Activity updateActivity;
 
-	private AbstractActivity updateActivity2;
+	private Activity updateActivity2;
 
 	private User updateActivityPerson;
 
@@ -82,10 +80,10 @@ public class PersonWebServiceTest {
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		getPerson = new User("pseudo","hello","create", "last");
-		getPerson = personService.create(getPerson);
+		getPerson = personService.createUser(getPerson);
 
 		updatePerson = new User("pseudo","hello","update", "last");
-		updatePerson = personService.create(updatePerson);
+		updatePerson = personService.createUser(updatePerson);
 
 		createLocation = new Location("Location");
 		createLocation = locationService.create(createLocation);
@@ -97,22 +95,22 @@ public class PersonWebServiceTest {
 		updateLocation2 = locationService.create(updateLocation2);
 
 		updateLocationPerson = new User("pseudo","hello","updateLocation", "last");
-		updateLocationPerson = personService.create(updateLocationPerson);
+		updateLocationPerson = personService.createUser(updateLocationPerson);
 
-		createActivity = new Leisure("Activity");
+		createActivity = new Activity("Activity","Leisure");
 		createActivity = activityService.create(createActivity);
 
-		updateActivity = new Sport("sport");
+		updateActivity = new Activity("sport","Sport");
 		updateActivity = activityService.create(updateActivity);
 
-		updateActivity2 = new Leisure("leisure");
+		updateActivity2 = new Activity("leisure","Leisure");
 		updateActivity2 = activityService.create(updateActivity2);
 
 		updateActivityPerson = new User("pseudo","hello","updateActivity", "last");
-		updateActivityPerson = personService.create(updateActivityPerson);
+		updateActivityPerson = personService.createUser(updateActivityPerson);
 
 		deletePerson = new User("pseudo","hello","delete", "last");
-		deletePerson = personService.create(deletePerson);
+		deletePerson = personService.createUser(deletePerson);
 	}
 
 	/**
@@ -152,7 +150,8 @@ public class PersonWebServiceTest {
 		// String expected = "{\"id\":" + getPerson.getId()
 		// + ",\"name\":\"create\",\"homes\":[],\"activities\":[]}";
 		String expected = FactoryJSON.Person(getPerson.getId(),getPerson.getPseudo(),getPerson.getPassword(), getPerson.getFirstName(), getPerson.getLastName(),
-				getPerson.getEmailAddress());
+				getPerson.getEmailAddress(),"ROLE_USER");
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse);
 
 	}
@@ -167,21 +166,21 @@ public class PersonWebServiceTest {
 		String maj1 = "new1";
 		String maj2 = "new2";
 		String maj3 = "new3";
-		String payload = FactoryJSON.Person(updatePerson.getId(),null,null, maj1, maj2, maj3);
+		String payload = FactoryJSON.Person(updatePerson.getId(),null,null, maj1, maj2, maj3,"ROLE_USER");
 		String jsonResponse = this.mockMvc
 				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		// String expected = FactoryJSON.Person(updatePerson.getId(), maj1, maj2, maj3);
-		String expected = FactoryJSON.Person(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), maj1, maj2, maj3);
+		String expected = FactoryJSON.Person(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), maj1, maj2, maj3,"ROLE_USER");
 		Assert.assertEquals(expected, jsonResponse);
 
 		String jsonResponse2 = this.mockMvc
 				.perform(get(SERVICE_URI + updatePerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse2);
 	}
 
@@ -202,14 +201,14 @@ public class PersonWebServiceTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		String expected = FactoryJSON.PersonLocation(updateLocationPerson.getId(),updateLocationPerson.getPseudo(),updateLocationPerson.getPassword(), updateLocationPerson.getFirstName(),
-				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations);
+				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations,"ROLE_USER");
 		Assert.assertEquals(expected, jsonResponse);
 
 		String jsonResponse2 = this.mockMvc
 				.perform(get(SERVICE_URI + updateLocationPerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse2);
 	}
 
@@ -220,7 +219,7 @@ public class PersonWebServiceTest {
 	 */
 	@Test
 	public void testUpdatePersonWithActivity() throws Exception {
-		HashSet<AbstractActivity> activities = new HashSet<AbstractActivity>();
+		HashSet<Activity> activities = new HashSet<Activity>();
 		activities.add(createActivity);
 		String content = FactoryJSON.ArrayActivity(activities);
 
@@ -229,14 +228,14 @@ public class PersonWebServiceTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		String expected = FactoryJSON.PersonActivity(updateActivityPerson.getId(),updateActivityPerson.getPseudo(),updateActivityPerson.getPassword(), updateActivityPerson.getFirstName(),
-				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities);
+				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities,"ROLE_USER");
 		Assert.assertEquals(expected, jsonResponse);
 
 		String jsonResponse2 = this.mockMvc
 				.perform(get(SERVICE_URI + updateActivityPerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
+		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse2);
 
 	}
@@ -250,7 +249,7 @@ public class PersonWebServiceTest {
 	 */
 	@Test
 	public void testDeleteActivityPersonExist() throws Exception {
-		HashSet<AbstractActivity> activities = new HashSet<AbstractActivity>();
+		HashSet<Activity> activities = new HashSet<Activity>();
 		activities.add(createActivity);
 		String payload = FactoryJSON.ArrayActivity(activities);
 		String jsonResponse = this.mockMvc.perform(post(SERVICE_URI + updateActivityPerson.getId() + "/activities/")
@@ -258,7 +257,7 @@ public class PersonWebServiceTest {
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		String expected = FactoryJSON.PersonActivity(updateActivityPerson.getId(),updateActivityPerson.getPseudo(),updateActivityPerson.getPassword(), updateActivityPerson.getFirstName(),
-				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities);
+				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities,"ROLE_USER");
 		Assert.assertEquals(expected, jsonResponse);
 		String content = FactoryJSON.Activity(createActivity.getId(), createActivity.getName(),
 				createActivity.getType());
@@ -280,12 +279,12 @@ public class PersonWebServiceTest {
 		}
 
 		String expected2 = FactoryJSON.Person(updateActivityPerson.getId(),updateActivityPerson.getPseudo(),updateActivityPerson.getPassword(), updateActivityPerson.getFirstName(),
-				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress());
+				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(),"ROLE_USER");
 		String jsonResponse2 = this.mockMvc
 				.perform(get(SERVICE_URI + updateActivityPerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
+		expected2 = FactoryJSON.Get(expected2);
 		Assert.assertEquals(expected2, jsonResponse2);
 
 	}
@@ -312,7 +311,7 @@ public class PersonWebServiceTest {
 		// + ",\"city\":\"" + createLocation.getCity() + "\"}],\"activities\":[]}";
 
 		String expected = FactoryJSON.PersonLocation(updateLocationPerson.getId(),updateLocationPerson.getPseudo(),updateLocationPerson.getPassword(), updateLocationPerson.getFirstName(),
-				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations);
+				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations,"ROLE_USER");
 		Assert.assertEquals(expected, jsonResponse);
 
 		String content = FactoryJSON.Location(createLocation.getId(), createLocation.getCity());
@@ -335,12 +334,12 @@ public class PersonWebServiceTest {
 		}
 
 		String expected2 = FactoryJSON.Person(updateLocationPerson.getId(),updateLocationPerson.getPseudo(),updateLocationPerson.getPassword(), updateLocationPerson.getFirstName(),
-				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress());
+				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(),"ROLE_USER");
 		String jsonResponse2 = this.mockMvc
 				.perform(get(SERVICE_URI + updateLocationPerson.getId()).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
+		expected2 = FactoryJSON.Get(expected2);
 		Assert.assertEquals(expected2, jsonResponse2);
 
 	}
@@ -352,7 +351,7 @@ public class PersonWebServiceTest {
 	 */
 	@Test(expected = PersonNotFound.class)
 	public void testDeletePerson() throws Exception {
-		String content = FactoryJSON.Person(deletePerson.getId(),null,null, "we don't", "care", null);
+		String content = FactoryJSON.Person(deletePerson.getId(),null,null, "we don't", "care", null,"ROLE_USER");
 		this.mockMvc
 				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
@@ -394,14 +393,14 @@ public class PersonWebServiceTest {
 	 */
 	@Test
 	public void testAddActivities() throws Exception {
-		Set<AbstractActivity> set = new HashSet<AbstractActivity>();
+		Set<Activity> set = new HashSet<Activity>();
 		set.add(updateActivity);
 		String jsonResponse = this.mockMvc
 				.perform(put(SERVICE_URI + updatePerson.getId() + "/activities/" + updateActivity.getId())
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		String expected = FactoryJSON.PersonActivity(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), updatePerson.getFirstName(),
-				updatePerson.getLastName(), updatePerson.getEmailAddress(), set);
+				updatePerson.getLastName(), updatePerson.getEmailAddress(), set,"ROLE_USER");
 		Assert.assertEquals(jsonResponse, expected);
 
 		set.add(updateActivity2);
@@ -422,14 +421,14 @@ public class PersonWebServiceTest {
 	 */
 	@Test
 	public void testDeleteActivities() throws Exception {
-		Set<AbstractActivity> set = new HashSet<AbstractActivity>();
+		Set<Activity> set = new HashSet<Activity>();
 		set.add(updateActivity);
 		String jsonResponse = this.mockMvc
 				.perform(put(SERVICE_URI + updatePerson.getId() + "/activities/" + updateActivity.getId())
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		String expected = FactoryJSON.PersonActivity(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), updatePerson.getFirstName(),
-				updatePerson.getLastName(), updatePerson.getEmailAddress(), set);
+				updatePerson.getLastName(), updatePerson.getEmailAddress(), set,"ROLE_USER");
 		Assert.assertEquals(jsonResponse, expected);
 
 		set.add(updateActivity2);
@@ -450,7 +449,7 @@ public class PersonWebServiceTest {
 
 		set.remove(updateActivity2);
 		String expected3 = FactoryJSON.PersonActivity(updatePerson.getId(), updatePerson.getPseudo(),updatePerson.getPassword(),updatePerson.getFirstName(),
-				updatePerson.getLastName(), updatePerson.getEmailAddress(), set);
+				updatePerson.getLastName(), updatePerson.getEmailAddress(), set,"ROLE_USER");
 		Assert.assertEquals(jsonResponse3, expected3);
 	}
 
@@ -468,7 +467,7 @@ public class PersonWebServiceTest {
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		String expected = FactoryJSON.PersonLocation(updatePerson.getId(),updatePerson.getPseudo(),null, updatePerson.getFirstName(),
-				updatePerson.getLastName(), updatePerson.getEmailAddress(), set);
+				updatePerson.getLastName(), updatePerson.getEmailAddress(), set,"ROLE_USER");
 		Assert.assertEquals(jsonResponse, expected);
 
 		set.add(updateLocation2);
@@ -496,7 +495,7 @@ public class PersonWebServiceTest {
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		String expected = FactoryJSON.PersonLocation(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), updatePerson.getFirstName(),
-				updatePerson.getLastName(), updatePerson.getEmailAddress(), set);
+				updatePerson.getLastName(), updatePerson.getEmailAddress(), set,"ROLE_USER");
 		Assert.assertEquals(jsonResponse, expected);
 
 		set.add(updateLocation2);
@@ -516,7 +515,7 @@ public class PersonWebServiceTest {
 
 		set.remove(updateLocation2);
 		String expected3 = FactoryJSON.PersonLocation(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), updatePerson.getFirstName(),
-				updatePerson.getLastName(), updatePerson.getEmailAddress(), set);
+				updatePerson.getLastName(), updatePerson.getEmailAddress(), set,"ROLE_USER");
 		Assert.assertEquals(jsonResponse3, expected3);
 
 		String jsonResponse4 = this.mockMvc
@@ -526,7 +525,7 @@ public class PersonWebServiceTest {
 
 		set.remove(updateLocation);
 		String expected4 = FactoryJSON.PersonLocation(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), updatePerson.getFirstName(),
-				updatePerson.getLastName(), updatePerson.getEmailAddress(), set);
+				updatePerson.getLastName(), updatePerson.getEmailAddress(), set,"ROLE_USER");
 		Assert.assertEquals(jsonResponse4, expected4);
 	}
 
