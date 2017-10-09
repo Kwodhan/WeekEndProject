@@ -1,5 +1,6 @@
 package fr.istic.taa.weekEndProject.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,17 @@ public class SiteRestController {
 
 			return new ResponseEntity<ResponseJson>(HttpStatus.NOT_FOUND);
 		}
+
+	}
+	
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	ResponseEntity<ResponseJson> getActivities() {
+		List<SiteActivity> l1;
+
+		l1 = this.serviceS.findAll();
+		ResponseJson json = new ResponseJson(l1);
+
+		return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
 
 	}
 

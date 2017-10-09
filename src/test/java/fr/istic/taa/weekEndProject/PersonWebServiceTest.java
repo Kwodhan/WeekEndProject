@@ -314,7 +314,7 @@ public class PersonWebServiceTest {
 				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations,"ROLE_USER");
 		Assert.assertEquals(expected, jsonResponse);
 
-		String content = FactoryJSON.Location(createLocation.getId(), createLocation.getCity());
+		String content = FactoryJSON.Location(createLocation.getId(), createLocation.getCity(),null,null,null);
 		this.mockMvc
 				.perform(delete("/locations/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
@@ -476,9 +476,9 @@ public class PersonWebServiceTest {
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		Assert.assertTrue(
-				jsonResponse2.contains(FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity())));
+				jsonResponse2.contains(FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity(),null,null,null)));
 		Assert.assertTrue(
-				jsonResponse2.contains(FactoryJSON.Location(updateLocation2.getId(), updateLocation2.getCity())));
+				jsonResponse2.contains(FactoryJSON.Location(updateLocation2.getId(), updateLocation2.getCity(),null,null,null)));
 	}
 
 	/**
@@ -504,9 +504,9 @@ public class PersonWebServiceTest {
 						.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		Assert.assertTrue(
-				jsonResponse2.contains(FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity())));
+				jsonResponse2.contains(FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity(),null,null,null)));
 		Assert.assertTrue(
-				jsonResponse2.contains(FactoryJSON.Location(updateLocation2.getId(), updateLocation2.getCity())));
+				jsonResponse2.contains(FactoryJSON.Location(updateLocation2.getId(), updateLocation2.getCity(),null,null,null)));
 
 		String jsonResponse3 = this.mockMvc
 				.perform(delete(SERVICE_URI + updatePerson.getId() + "/homes/" + updateLocation2.getId())

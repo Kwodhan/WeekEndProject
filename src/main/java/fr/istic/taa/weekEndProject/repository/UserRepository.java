@@ -12,17 +12,17 @@ import fr.istic.taa.weekEndProject.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	@Query("select p from User p where p.firstName = :firstName")
+	@Query("select distinct p from User p where p.firstName = :firstName")
 	public List<User> findByName(@Param("firstName") String firstName);
 
-	@Query("select p from User p left join fetch p.homes h  where p.firstName = :firstName")
-	public List<User> findByNameWithAll(@Param("firstName") String firstName);
-
-	@Query("select p from User p left join fetch p.roles left join fetch p.homes h left join fetch p.activities a where p.id = :id")
+	@Query("select distinct p from User p left join fetch p.roles left join fetch p.homes h left join fetch p.activities a where p.id = :id")
 	public User findById(@Param("id") Long id);
 	
-	@Query("select p from User p left join fetch p.roles r left join fetch p.homes h left join fetch p.activities a where p.pseudo = :pseudo")
+	@Query("select distinct p from User p left join fetch p.roles r left join fetch p.homes h left join fetch p.activities a where p.pseudo = :pseudo")
 	public List<User> findByPseudo(@Param("pseudo") String pseudo);
+	
+	@Query("select distinct p from User p left join fetch p.roles left join fetch p.homes h left join fetch p.activities a")
+	public List<User> findAll();
 	
 	
 	

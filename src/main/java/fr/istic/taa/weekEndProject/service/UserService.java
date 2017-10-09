@@ -41,8 +41,6 @@ public interface UserService {
 
 	public User findByPseudo(String pseudo) throws PersonNotFound;
 
-	public List<User> findByNameWithAll(String name);
-
 
 	
 	

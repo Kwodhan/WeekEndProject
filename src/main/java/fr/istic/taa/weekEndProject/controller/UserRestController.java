@@ -1,6 +1,5 @@
 package fr.istic.taa.weekEndProject.controller;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,18 +49,6 @@ public class PersonRestController {
 
 	}
 
-	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
-	ResponseEntity<ResponseJson> getPersonByName(@PathVariable("name") String name) {
-		List<User> listp = this.serviceP.findByNameWithAll(name);
-		ResponseJson json = new ResponseJson(listp);
-		return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
-	}
-
-//	@RequestMapping(value = "", method = RequestMethod.POST)
-//	ResponseEntity<User> createPerson(@RequestBody User person) {
-//		User p1 = this.serviceP.create(person);
-//		return new ResponseEntity<User>(p1, HttpStatus.OK);
-//	}
 
 	@RequestMapping(value = "", method = RequestMethod.PUT)
 	ResponseEntity<User> updatePerson(@RequestBody User person) {

@@ -32,7 +32,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class SiteActivity implements InterfaceEntity {
 	private Long id;
 	private Set<Activity> activities = new HashSet<Activity>();
+	
 	private Location location;
+	
 	private String name;
 	
 

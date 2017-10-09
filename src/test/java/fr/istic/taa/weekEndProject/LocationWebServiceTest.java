@@ -95,7 +95,7 @@ public class LocationWebServiceTest {
 
 		// String expected = "{\"id\":" + getLocation.getId()
 		// + ",\"city\":\"create\"}";
-		String expected = FactoryJSON.Location(getLocation.getId(), getLocation.getCity());
+		String expected = FactoryJSON.Location(getLocation.getId(), getLocation.getCity(),null,null,null);
 		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse);
 	}
@@ -117,7 +117,7 @@ public class LocationWebServiceTest {
 
 		// String expected = "{\"id\":" + updateLocation.getId()
 		// + ",\"city\":\"azerty\"}";
-		String expected = FactoryJSON.Location(updateLocation.getId(), maj);
+		String expected = FactoryJSON.Location(updateLocation.getId(), maj,null,null,null);
 		Assert.assertEquals(expected, jsonResponse);
 
 		String jsonResponse2 = this.mockMvc
@@ -135,7 +135,7 @@ public class LocationWebServiceTest {
 	 */
 	@Test(expected = LocationNotFound.class)
 	public void testDeleteLocation() throws Exception {
-		String content = FactoryJSON.Location(deleteLocation.getId(), deleteLocation.getCity());
+		String content = FactoryJSON.Location(deleteLocation.getId(), deleteLocation.getCity(),null,null,null);
 		this.mockMvc
 				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))

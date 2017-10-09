@@ -58,11 +58,11 @@ public class Activity implements InterfaceEntity {
 	public Activity(String name, String type) {
 		super();
 		this.name = name;
-		this.type=type;
+		this.type = type;
 	}
 
 	public Activity() {
-		
+
 	}
 
 	@Id
@@ -140,7 +140,38 @@ public class Activity implements InterfaceEntity {
 	}
 
 	public void setType(String type) {
-		this.type=type;
+		this.type = type;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (!Activity.class.isAssignableFrom(obj.getClass())) {
+			return false;
+		}
+		final Activity other = (Activity) obj;
+		if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId())) {
+			return false;
+		}
+		if (this.getName() != other.getName()) {
+			return false;
+		}
+		if (this.getType() != other.getType()) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 53 * hash + (this.getName() != null ? this.getName().hashCode() : 0);
+		hash = 52 * hash + (this.getType() != null ? this.getType().hashCode() : 0);
+	
+
+		return hash;
 	}
 
 }

@@ -261,7 +261,7 @@ public class SiteWebServiceTest {
 						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String expectedLoc = FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity());
+		String expectedLoc = FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity(),null,null,null);
 		expectedLoc = FactoryJSON.Get(expectedLoc);
 		Assert.assertEquals(expectedLoc, jsonResponseVerifLoc);
 
@@ -349,7 +349,7 @@ public class SiteWebServiceTest {
 		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponseGet);
 
-		String contentLocation = FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity());
+		String contentLocation = FactoryJSON.Location(updateLocation.getId(), updateLocation.getCity(),null,null,null);
 		this.mockMvc
 				.perform(delete("/locations/").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON_UTF8).content(contentLocation))

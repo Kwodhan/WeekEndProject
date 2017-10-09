@@ -1,4 +1,4 @@
-
+insert into USER(PSEUDO,FIRSTNAME,LASTNAME,EMAILADDRESS) values ('azerty','azerty','azerty','kwodhan@gmail.com');
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Aïkido');
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Alpinisme');
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Athlétisme');

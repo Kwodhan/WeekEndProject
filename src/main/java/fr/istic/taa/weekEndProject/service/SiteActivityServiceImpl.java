@@ -165,4 +165,10 @@ public class SiteActivityServiceImpl implements SiteActivityService {
 		return updatedActivity;
 	}
 
+	@Override
+	public List<SiteActivity> findByLocationAndActivity(Long idl, Long ida) {
+
+		return siteActivityRepository.findByLocationAndActivity(idl, ida);
+	}
+
 }

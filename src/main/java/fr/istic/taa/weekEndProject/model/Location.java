@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -122,6 +120,36 @@ public class Location implements InterfaceEntity{
 		this.longitude = longitude;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (!Location.class.isAssignableFrom(obj.getClass())) {
+			return false;
+		}
+		final Location other = (Location) obj;
+		if ((this.getId() == null) ? (other.getId() != null) : !this.getId().equals(other.getId())) {
+			return false;
+		}
+		if (this.getCity() != other.getCity()) {
+			return false;
+		}
+		if (this.getRegion() != other.getRegion()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 53 * hash + (this.getCity() != null ? this.getCity().hashCode() : 0);
+		hash = 52 * hash + (this.getRegion() != null ? this.getRegion().hashCode() : 0);
 	
+
+		return hash;
+	}
 
 }

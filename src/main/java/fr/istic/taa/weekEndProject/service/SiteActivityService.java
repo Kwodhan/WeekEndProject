@@ -3,6 +3,8 @@ package fr.istic.taa.weekEndProject.service;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.repository.query.Param;
+
 import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
@@ -26,4 +28,6 @@ public interface SiteActivityService {
 	public SiteActivity findById(Long id) throws SiteActivityNotFound;
 
 	public List<SiteActivity> findByName(String name);
+	
+	public List<SiteActivity> findByLocationAndActivity(@Param("ild") Long idl,@Param("ida") Long ida);
 }

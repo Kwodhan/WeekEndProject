@@ -64,7 +64,7 @@ public class FactoryJSON {
 		role = addG(role);
 		String strlocations = "";
 		for (Location l : locations) {
-			strlocations = strlocations + Location(l.getId(), l.getCity());
+			strlocations = strlocations + Location(l.getId(), l.getCity(),null,null,null);
 		}
 		String expected = "{\"id\":" + id + ",\"pseudo\":" + pseudo + ",\"firstName\":" + firstName + ""
 				+ ",\"lastName\":" + lastName + "" + ",\"emailAddress\":" + email + "" + ",\"homes\":[" + strlocations
@@ -74,17 +74,20 @@ public class FactoryJSON {
 
 	// ===========EndPerson===============//
 	// ===========Location===============//
-	public static String Location(Long id, String city) {
+	public static String Location(Long id, String city,String region, String latitude,String longitude) {
 		city = addG(city);
-
-		String expected = "{\"id\":" + id + ",\"city\":" + city + "}";
+		region = addG(region);
+		latitude = addG(latitude);
+		longitude = addG(longitude);
+		
+		String expected = "{\"id\":" + id + ",\"city\":" + city +",\"region\":" + region+",\"latitude\":" + latitude+",\"longitude\":" + longitude+ "}";
 		return expected;
 	}
 
 	public static String ArrayLocation(Set<Location> locations) {
 		String expected = "[";
 		for (Location l : locations) {
-			expected = expected + Location(l.getId(), l.getCity()) + ",";
+			expected = expected + Location(l.getId(), l.getCity(),null,null,null) + ",";
 		}
 		expected = expected + "]";
 		expected = expected.replaceAll(",]", "]");
@@ -123,7 +126,7 @@ public class FactoryJSON {
 	public static String Site(Long id, String name, Location location, Set<Activity> activities) {
 		name = addG(name);
 
-		String strlocation = Location(location.getId(), location.getCity());
+		String strlocation = Location(location.getId(), location.getCity(),null,null,null);
 		String stractivities = ArrayActivity(activities);
 
 		String expected = "{\"id\":" + id + ",\"name\":" + name + ",\"location\":" + strlocation + ",\"activities\":"
@@ -134,7 +137,7 @@ public class FactoryJSON {
 	public static String Site(Long id, String name, Location location) {
 		name = addG(name);
 
-		String strlocation = Location(location.getId(), location.getCity());
+		String strlocation = Location(location.getId(), location.getCity(),null,null,null);
 
 		String expected = "{\"id\":" + id + ",\"name\":" + name + ",\"location\":" + strlocation
 				+ ",\"activities\":[]}";

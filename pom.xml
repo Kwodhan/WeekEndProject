@@ -258,5 +258,18 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<version>1.5.6.RELEASE</version>
 		</dependency>
+		<!-- API call -->
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>1.19</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160810</version>
+		</dependency>
 	</dependencies>
 </project>

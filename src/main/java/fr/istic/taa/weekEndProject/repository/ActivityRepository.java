@@ -12,19 +12,19 @@ import fr.istic.taa.weekEndProject.model.Activity;
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
 
-	@Query("select a from Activity a left join fetch a.meteos m left join fetch a.sites s where a.id = :id")
+	@Query("select a from Activity a left join fetch a.meteos m where a.id = :id")
 	public Activity findById(@Param("id") Long id);
 
-	@Query("select a from Activity a where a.name = :name")
+	@Query("select distinct a from Activity a where a.name = :name")
 	public List<Activity> findByName(@Param("name") String name);
 	
-	@Query("select a from Activity a left join fetch a.meteos m left join fetch a.sites s where a.type = 'Sport'")
+	@Query("select distinct a from Activity a left join fetch a.meteos m  where a.type = 'Sport'")
 	public List<Activity> findAllSport();
 	
-	@Query("select a from Activity a left join fetch a.meteos m left join fetch a.sites s where a.type = 'Leisure'")
+	@Query("select distinct a from Activity a left join fetch a.meteos m where a.type = 'Leisure'")
 	public List<Activity> findAllLeisure();
 	
-	@Query("select a from Activity a left join fetch a.meteos m left join fetch a.sites s")
+	@Query("select distinct a from Activity a left join fetch a.meteos m")
 	public List<Activity> findAll();
 
 }

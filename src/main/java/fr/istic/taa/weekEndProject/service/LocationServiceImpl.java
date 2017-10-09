@@ -1,6 +1,5 @@
 package fr.istic.taa.weekEndProject.service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,7 @@ public class LocationServiceImpl implements LocationService {
 	}
 
 	public Location findById(Long id) throws LocationNotFound {
-		// TODO Auto-generated method stub
+
 		Location createdLocation = locationRepository.findById(id);
 
 		if (createdLocation == null) {

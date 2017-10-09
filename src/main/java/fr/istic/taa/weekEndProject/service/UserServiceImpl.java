@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
-import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.model.Role;
+import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.repository.ActivityRepository;
 import fr.istic.taa.weekEndProject.repository.LocationRepository;
 import fr.istic.taa.weekEndProject.repository.UserRepository;
@@ -160,10 +160,6 @@ public class UserServiceImpl implements UserService {
 		return personRepository.findByPseudo(name);
 	}
 
-	public List<User> findByNameWithAll(String name) {
-
-		return personRepository.findByNameWithAll(name);
-	}
 
 	@Transactional
 	public User updateLocation(Long idPerson, Set<Location> locations) throws LocationNotFound, PersonNotFound {
