@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @Entity
 @Table(name = "Site")
-@JsonPropertyOrder({ "id", "name", "location", "activities" })
+@JsonPropertyOrder({ "id", "name", "location", "activities","siteWeb" })
 public class SiteActivity implements InterfaceEntity {
 	private Long id;
 	private Set<Activity> activities = new HashSet<Activity>();
@@ -37,7 +37,7 @@ public class SiteActivity implements InterfaceEntity {
 	
 	private String name;
 	
-
+	private String siteWeb;
 
 	public SiteActivity(String name) {
 		super();
@@ -86,6 +86,14 @@ public class SiteActivity implements InterfaceEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	@Column(length = 150)
+	public String getSiteWeb() {
+		return siteWeb;
+	}
+
+	public void setSiteWeb(String siteWeb) {
+		this.siteWeb = siteWeb;
 	}
 
 }

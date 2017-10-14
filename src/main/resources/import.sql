@@ -1,4 +1,4 @@
-insert into USER(PSEUDO,FIRSTNAME,LASTNAME,EMAILADDRESS) values ('azerty','azerty','azerty','kwodhan@gmail.com');
+
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Aïkido');
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Alpinisme');
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Athlétisme');
@@ -192,3 +192,13 @@ insert into USER(PSEUDO,FIRSTNAME,LASTNAME,EMAILADDRESS) values ('azerty','azert
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Wakeboard');
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Water polo');
   insert into ACTIVITY (TYPE,NAME) values ('Sport','Wing Chun');
+-- Leisure
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Plage');
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Parc d''attraction');
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Coder');
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Cinéma');
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Théâtre');
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Concert');
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Poterie');
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Musée');
+  insert into ACTIVITY (TYPE,NAME) values ('Leisure','Exposition');

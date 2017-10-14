@@ -18,7 +18,7 @@ import fr.istic.taa.weekEndProject.repository.LocationRepository;
 import fr.istic.taa.weekEndProject.repository.UserRepository;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
-import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
+import fr.istic.taa.weekEndProject.service.exception.UserNotFound;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -83,11 +83,11 @@ public class UserServiceImpl implements UserService {
 
 
 	@Transactional
-	public User delete(Long id) throws PersonNotFound {
+	public User delete(Long id) throws UserNotFound {
 		User deletedPerson = personRepository.findById(id);
 
 		if (deletedPerson == null) {
-			throw new PersonNotFound();
+			throw new UserNotFound();
 		}
 		deletedPerson.getHomes().clear();
 		deletedPerson.getActivities().clear();
@@ -102,12 +102,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public User update(User person) throws PersonNotFound {
+	public User update(User person) throws UserNotFound {
 
 		User updatedPerson = personRepository.findById(person.getId());
 
 		if (updatedPerson == null)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 
 		updatedPerson.setFirstName(person.getFirstName());
 		updatedPerson.setLastName(person.getLastName());
@@ -142,14 +142,14 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * fetch = eager
 	 * 
-	 * @throws PersonNotFound
+	 * @throws UserNotFound
 	 */
-	public User findById(Long id) throws PersonNotFound {
+	public User findById(Long id) throws UserNotFound {
 
 		User createPerson = personRepository.findById(id);
 
 		if (createPerson == null)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 
 		return createPerson;
 
@@ -162,12 +162,12 @@ public class UserServiceImpl implements UserService {
 
 
 	@Transactional
-	public User updateLocation(Long idPerson, Set<Location> locations) throws LocationNotFound, PersonNotFound {
+	public User updateLocation(Long idPerson, Set<Location> locations) throws LocationNotFound, UserNotFound {
 
 		User updatedPerson = personRepository.findById(idPerson);
 
 		if (updatedPerson == null)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 		Set<Location> updatelocations = new HashSet<Location>();
 
 		for (Location l : locations) {
@@ -183,12 +183,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public User updateActivities(Long id, Set<Activity> activities) throws ActivityNotFound, PersonNotFound {
+	public User updateActivities(Long id, Set<Activity> activities) throws ActivityNotFound, UserNotFound {
 
 		User updatedPerson = personRepository.findById(id);
 
 		if (updatedPerson == null)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 		Set<Activity> updateActivities = new HashSet<Activity>();
 
 		for (Activity l : activities) {
@@ -204,11 +204,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public User updateLocation(Long idPerson, Long idLoc) throws LocationNotFound, PersonNotFound {
+	public User updateLocation(Long idPerson, Long idLoc) throws LocationNotFound, UserNotFound {
 		User updatedPerson = personRepository.findById(idPerson);
 
 		if (updatedPerson == null)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 
 		Location addLocation = locationRepository.findById(idLoc);
 
@@ -222,11 +222,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public User updateActivities(Long id, Long idAct) throws ActivityNotFound, PersonNotFound {
+	public User updateActivities(Long id, Long idAct) throws ActivityNotFound, UserNotFound {
 		User updatedPerson = personRepository.findById(id);
 
 		if (updatedPerson == null)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 
 		Activity addActivity = activityRepository.findById(idAct);
 
@@ -239,11 +239,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public User deleteLocation(Long idPerson, Long idLoc) throws LocationNotFound, PersonNotFound {
+	public User deleteLocation(Long idPerson, Long idLoc) throws LocationNotFound, UserNotFound {
 		User updatedPerson = personRepository.findById(idPerson);
 
 		if (updatedPerson == null)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 
 		Location addLocation = locationRepository.findById(idLoc);
 
@@ -256,11 +256,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public User deleteActivities(Long id, Long idAct) throws ActivityNotFound, PersonNotFound {
+	public User deleteActivities(Long id, Long idAct) throws ActivityNotFound, UserNotFound {
 		User updatedPerson = personRepository.findById(id);
 
 		if (updatedPerson == null)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 
 		Activity addActivity = activityRepository.findById(idAct);
 
@@ -273,11 +273,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByPseudo(String pseudo)  throws  PersonNotFound{
+	public User findByPseudo(String pseudo)  throws  UserNotFound{
 		List<User> createPerson = personRepository.findByPseudo(pseudo);
 
 		if ( createPerson.size() == 0)
-			throw new PersonNotFound();
+			throw new UserNotFound();
 
 		return createPerson.get(0);
 	}

@@ -8,7 +8,7 @@ import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
-import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
+import fr.istic.taa.weekEndProject.service.exception.UserNotFound;
 
 public interface UserService {
 
@@ -19,27 +19,27 @@ public interface UserService {
 	
 	public User createGerant(User person);
 
-	public User delete(Long id) throws PersonNotFound;
+	public User delete(Long id) throws UserNotFound;
 
 	public List<User> findAll();
 
-	public User update(User person) throws PersonNotFound;
+	public User update(User person) throws UserNotFound;
 
-	public User updateLocation(Long idPerson, Set<Location> location) throws LocationNotFound, PersonNotFound;
+	public User updateLocation(Long idPerson, Set<Location> location) throws LocationNotFound, UserNotFound;
 
-	public User updateActivities(Long id, Set<Activity> activities) throws ActivityNotFound, PersonNotFound;
+	public User updateActivities(Long id, Set<Activity> activities) throws ActivityNotFound, UserNotFound;
 
-	public User updateLocation(Long idPerson, Long idLoc) throws LocationNotFound, PersonNotFound;
+	public User updateLocation(Long idPerson, Long idLoc) throws LocationNotFound, UserNotFound;
 
-	public User updateActivities(Long id, Long idAct) throws ActivityNotFound, PersonNotFound;
+	public User updateActivities(Long id, Long idAct) throws ActivityNotFound, UserNotFound;
 
-	public User deleteLocation(Long idPerson, Long idLoc) throws LocationNotFound, PersonNotFound;
+	public User deleteLocation(Long idPerson, Long idLoc) throws LocationNotFound, UserNotFound;
 
-	public User deleteActivities(Long id, Long idAct) throws ActivityNotFound, PersonNotFound;
+	public User deleteActivities(Long id, Long idAct) throws ActivityNotFound, UserNotFound;
 
-	public User findById(Long id) throws PersonNotFound;
+	public User findById(Long id) throws UserNotFound;
 
-	public User findByPseudo(String pseudo) throws PersonNotFound;
+	public User findByPseudo(String pseudo) throws UserNotFound;
 
 
 	

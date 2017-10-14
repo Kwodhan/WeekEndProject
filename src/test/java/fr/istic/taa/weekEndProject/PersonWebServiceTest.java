@@ -30,7 +30,7 @@ import fr.istic.taa.weekEndProject.service.LocationService;
 import fr.istic.taa.weekEndProject.service.UserService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
-import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
+import fr.istic.taa.weekEndProject.service.exception.UserNotFound;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -349,7 +349,7 @@ public class PersonWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = PersonNotFound.class)
+	@Test(expected = UserNotFound.class)
 	public void testDeletePerson() throws Exception {
 		String content = FactoryJSON.Person(deletePerson.getId(),null,null, "we don't", "care", null,"ROLE_USER");
 		this.mockMvc
@@ -370,7 +370,7 @@ public class PersonWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = PersonNotFound.class)
+	@Test(expected = UserNotFound.class)
 	public void testDeletePersonId() throws Exception {
 
 		this.mockMvc

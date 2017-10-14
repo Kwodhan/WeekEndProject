@@ -101,7 +101,7 @@ public class User implements InterfaceEntity{
 	}
 
 	@ManyToMany(cascade = { CascadeType.MERGE })
-	@JoinTable(name = "PERS_LOCATION", joinColumns = @JoinColumn(name = "PERS_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "LOCATION_ID", referencedColumnName = "ID"))
+	@JoinTable(name = "USER_LOCATION", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "LOCATION_ID", referencedColumnName = "ID"))
 	@JsonIgnoreProperties("persons")
 	public Set<Location> getHomes() {
 		return homes;
@@ -112,7 +112,7 @@ public class User implements InterfaceEntity{
 	}
 
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinTable(name = "PERS_ACTIVITY", joinColumns = @JoinColumn(name = "PERS_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ACTIVITY_ID", referencedColumnName = "ID"))
+	@JoinTable(name = "USER_ACTIVITY", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ACTIVITY_ID", referencedColumnName = "ID"))
 	@JsonIgnoreProperties("persons")
 	public Set<Activity> getActivities() {
 		return activities;

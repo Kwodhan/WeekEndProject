@@ -18,7 +18,7 @@ import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.service.UserService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
-import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
+import fr.istic.taa.weekEndProject.service.exception.UserNotFound;
 
 /**
  * 
@@ -27,7 +27,7 @@ import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
  */
 @RestController
 @RequestMapping(value = "/users")
-public class PersonRestController {
+public class UserRestController {
 	/*
 	 * Par defaut : Nb requete == Nb association
 	 */
@@ -42,7 +42,7 @@ public class PersonRestController {
 			p1 = this.serviceP.findById(new Long(id));
 			ResponseJson json = new ResponseJson(p1);
 			return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			
 			return new ResponseEntity<ResponseJson>(HttpStatus.NOT_FOUND);
 		}
@@ -50,32 +50,32 @@ public class PersonRestController {
 	}
 
 
-	@RequestMapping(value = "", method = RequestMethod.PUT)
-	ResponseEntity<User> updatePerson(@RequestBody User person) {
-		User p1;
-		try {
-			p1 = this.serviceP.update(person);
-			return new ResponseEntity<User>(p1, HttpStatus.OK);
-		} catch (PersonNotFound e) {
-			
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	ResponseEntity<User> updatePerson(@PathVariable("id") long id, @RequestBody User person) {
-		person.setId(id);
-		User p1;
-		try {
-			p1 = this.serviceP.update(person);
-			return new ResponseEntity<User>(p1, HttpStatus.OK);
-		} catch (PersonNotFound e) {
-			
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-
-	}
+//	@RequestMapping(value = "", method = RequestMethod.PUT)
+//	ResponseEntity<User> updatePerson(@RequestBody User person) {
+//		User p1;
+//		try {
+//			p1 = this.serviceP.update(person);
+//			return new ResponseEntity<User>(p1, HttpStatus.OK);
+//		} catch (UserNotFound e) {
+//			
+//			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
+//
+//	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+//	ResponseEntity<User> updatePerson(@PathVariable("id") long id, @RequestBody User person) {
+//		person.setId(id);
+//		User p1;
+//		try {
+//			p1 = this.serviceP.update(person);
+//			return new ResponseEntity<User>(p1, HttpStatus.OK);
+//		} catch (UserNotFound e) {
+//			
+//			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
 
 	@RequestMapping(value = "/{id}/homes", method = RequestMethod.POST)
 	ResponseEntity<User> updatePersonLocation(@PathVariable("id") long id, @RequestBody Set<Location> locations) {
@@ -83,7 +83,7 @@ public class PersonRestController {
 		try {
 			p1 = this.serviceP.updateLocation(id, locations);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
@@ -100,7 +100,7 @@ public class PersonRestController {
 		try {
 			p1 = this.serviceP.updateActivities(id, activities);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
@@ -116,7 +116,7 @@ public class PersonRestController {
 		try {
 			p1 = this.serviceP.updateLocation(id, idL);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
@@ -132,7 +132,7 @@ public class PersonRestController {
 		try {
 			p1 = this.serviceP.updateActivities(id, idA);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
@@ -148,7 +148,7 @@ public class PersonRestController {
 		try {
 			p1 = this.serviceP.deleteLocation(id, idL);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
@@ -164,7 +164,7 @@ public class PersonRestController {
 		try {
 			p1 = this.serviceP.deleteActivities(id, idA);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
@@ -174,31 +174,31 @@ public class PersonRestController {
 
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.DELETE)
-	ResponseEntity<User> deletePerson(@RequestBody User person) {
-
-		try {
-			this.serviceP.delete(person.getId());
-			return new ResponseEntity<User>(HttpStatus.OK);
-		} catch (PersonNotFound e) {
-			
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	ResponseEntity<User> deletePerson(@PathVariable("id") long id) {
-
-		try {
-			this.serviceP.delete(id);
-			return new ResponseEntity<User>(HttpStatus.OK);
-		} catch (PersonNotFound e) {
-			
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-
-	}
+//	@RequestMapping(value = "", method = RequestMethod.DELETE)
+//	ResponseEntity<User> deletePerson(@RequestBody User person) {
+//
+//		try {
+//			this.serviceP.delete(person.getId());
+//			return new ResponseEntity<User>(HttpStatus.OK);
+//		} catch (UserNotFound e) {
+//			
+//			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
+//
+//	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+//	ResponseEntity<User> deletePerson(@PathVariable("id") long id) {
+//
+//		try {
+//			this.serviceP.delete(id);
+//			return new ResponseEntity<User>(HttpStatus.OK);
+//		} catch (UserNotFound e) {
+//			
+//			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
 
 
 

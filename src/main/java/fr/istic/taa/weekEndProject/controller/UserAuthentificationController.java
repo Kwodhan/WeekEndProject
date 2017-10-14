@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.service.SecurityService;
 import fr.istic.taa.weekEndProject.service.UserService;
-import fr.istic.taa.weekEndProject.service.exception.PersonNotFound;
+import fr.istic.taa.weekEndProject.service.exception.UserNotFound;
 
 @RestController
 @RequestMapping(value = "/auth/")
@@ -30,7 +30,7 @@ public class UserAuthentificationController {
 	ResponseEntity<User> registration(@RequestBody User userForm, BindingResult bindingResult, Model model) {
 		try {
 			serviceP.findByPseudo(userForm.getPseudo());
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			User u = serviceP.createUser(userForm);
 
 			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
@@ -45,7 +45,7 @@ public class UserAuthentificationController {
 	ResponseEntity<User> registrationGerant(@RequestBody User userForm, BindingResult bindingResult, Model model) {
 		try {
 			serviceP.findByPseudo(userForm.getPseudo());
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			User u = serviceP.createGerant(userForm);
 
 			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
@@ -63,9 +63,9 @@ public class UserAuthentificationController {
 			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
 
 			return new ResponseEntity<User>(u, HttpStatus.OK);
-		} catch (PersonNotFound e) {
+		} catch (UserNotFound e) {
 			// TODO Auto-generated catch block
-			return new ResponseEntity<User>(HttpStatus.CONFLICT);
+			return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 		}
 
 	}

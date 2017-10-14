@@ -17,12 +17,26 @@
 			allowed-methods="*" max-age="123" />
 	</mvc:cors>
 	<http auto-config='true'>
-		<!-- <intercept-url pattern="/users/**" access="hasRole('ROLE_EDITOR')" /> -->
+
+        <intercept-url pattern="/sites/**" access="hasRole('ROLE_GERANT')"/>
+        
 		<http-basic />
 		<csrf disabled="true" />
 		<cors />
 	</http>
 
+<!--     <security:http
+            entry-point-ref="unauthorizedEntryPoint"
+            authentication-manager-ref="authenticationManager"
+            create-session="stateless">
+        <security:csrf disabled="true"/>
+        <security:custom-filter ref="authenticationTokenProcessingFilter" position="PRE_AUTH_FILTER"/>
+        <security:intercept-url pattern="/rest/user/authenticate" access="permitAll"/>
+        <security:intercept-url method="GET" pattern="/rest/blogposts/**" access="hasRole('USER')"/>
+        <security:intercept-url method="PUT" pattern="/rest/blogposts/**" access="hasRole('ADMIN')"/>
+        <security:intercept-url method="POST" pattern="/rest/blogposts/**" access="hasRole('ADMIN')"/>
+        <security:intercept-url method="DELETE" pattern="/rest/blogposts/**" access="hasRole('ADMIN')"/>
+    </security:http> -->
 
 	<mvc:annotation-driven />
 

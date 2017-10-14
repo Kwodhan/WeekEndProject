@@ -22,8 +22,8 @@ public class ScheduledTasks {
 	@Autowired
 	UserService userservice;
 
-	// @Scheduled(cron ="0 0 12 ? * THU *")
-	@Scheduled(fixedRate = 60000)
+	@Scheduled(cron ="0 0 12 ? * THU")
+	//@Scheduled(fixedRate = 60000)
 	public void sendMailToUsers() {
 		List<User> users = userservice.findAll();
 		for (User user : users) {

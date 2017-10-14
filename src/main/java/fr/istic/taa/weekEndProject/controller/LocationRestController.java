@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.service.LocationService;
@@ -70,57 +69,57 @@ public class LocationRestController {
 		return new ResponseEntity<Location>(l1, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.PUT)
-	ResponseEntity<Location> updateLocation(@RequestBody Location location) {
-		Location l1;
-		try {
-			l1 = this.serviceL.update(location);
-			return new ResponseEntity<Location>(l1, HttpStatus.OK);
-		} catch (LocationNotFound e) {
-			
-			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
-		}
-
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	ResponseEntity<Location> updateLocation(@PathVariable("id") long id, @RequestBody Location location) {
-		Location l1;
-		location.setId(id);
-		try {
-			l1 = this.serviceL.update(location);
-			return new ResponseEntity<Location>(l1, HttpStatus.OK);
-		} catch (LocationNotFound e) {
-			
-			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
-		}
-
-	}
-
-	@RequestMapping(value = "", method = RequestMethod.DELETE)
-	ResponseEntity<Location> deleteLocation(@RequestBody Location location) {
-
-		try {
-			this.serviceL.delete(location.getId());
-			return new ResponseEntity<Location>(HttpStatus.OK);
-		} catch (LocationNotFound e) {
-			
-			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
-		}
-
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	ResponseEntity<Location> deleteLocation(@PathVariable("id") long id) {
-
-		try {
-			this.serviceL.delete(id);
-			return new ResponseEntity<Location>(HttpStatus.OK);
-		} catch (LocationNotFound e) {
-			
-			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
-		}
-
-	}
+//	@RequestMapping(value = "", method = RequestMethod.PUT)
+//	ResponseEntity<Location> updateLocation(@RequestBody Location location) {
+//		Location l1;
+//		try {
+//			l1 = this.serviceL.update(location);
+//			return new ResponseEntity<Location>(l1, HttpStatus.OK);
+//		} catch (LocationNotFound e) {
+//			
+//			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
+//
+//	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+//	ResponseEntity<Location> updateLocation(@PathVariable("id") long id, @RequestBody Location location) {
+//		Location l1;
+//		location.setId(id);
+//		try {
+//			l1 = this.serviceL.update(location);
+//			return new ResponseEntity<Location>(l1, HttpStatus.OK);
+//		} catch (LocationNotFound e) {
+//			
+//			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
+//
+//	@RequestMapping(value = "", method = RequestMethod.DELETE)
+//	ResponseEntity<Location> deleteLocation(@RequestBody Location location) {
+//
+//		try {
+//			this.serviceL.delete(location.getId());
+//			return new ResponseEntity<Location>(HttpStatus.OK);
+//		} catch (LocationNotFound e) {
+//			
+//			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
+//
+//	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+//	ResponseEntity<Location> deleteLocation(@PathVariable("id") long id) {
+//
+//		try {
+//			this.serviceL.delete(id);
+//			return new ResponseEntity<Location>(HttpStatus.OK);
+//		} catch (LocationNotFound e) {
+//			
+//			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
 
 }
