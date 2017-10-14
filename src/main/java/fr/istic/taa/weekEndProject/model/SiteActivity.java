@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  *TODO : horaire en fonction du jour
  */
 @Entity
-@Table(name = "Site")
+@Table(name = "SITE")
 @JsonPropertyOrder({ "id", "name", "location", "activities","siteWeb" })
 public class SiteActivity implements InterfaceEntity {
 	private Long id;

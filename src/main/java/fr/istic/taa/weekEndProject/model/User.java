@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Entity
 @JsonPropertyOrder({ "id", "pseudo", "password", "firstName", "lastName", "emailAddress", "homes", "activities" })
+@Table(name="USER")
 public class User implements InterfaceEntity{
 	private Long id;
 
@@ -139,6 +142,7 @@ public class User implements InterfaceEntity{
 
 	@Enumerated(EnumType.STRING)
 	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "USER_ROLE")
 	public Set<Role> getRoles() {
 		return roles;
 	}
