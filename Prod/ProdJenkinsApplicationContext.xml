@@ -36,7 +36,7 @@
 	<bean id="mainDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/Prodweekend" />
+		<property name="url" value="jdbc:mysql://172.17.0.2:3306/Prodweekend" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 	</bean>

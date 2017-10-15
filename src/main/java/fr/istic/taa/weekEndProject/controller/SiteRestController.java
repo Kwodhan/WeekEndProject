@@ -3,6 +3,8 @@ package fr.istic.taa.weekEndProject.controller;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.istic.taa.weekEndProject.jpa.JpaTest;
 import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
@@ -32,7 +35,7 @@ public class SiteRestController {
 	 */
 	@Autowired
 	SiteActivityService serviceS;
-
+	private static final Logger logger = LogManager.getLogger(JpaTest.class);
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	ResponseEntity<ResponseJson> getSiteActivityById(@PathVariable("id") long id) {
 		SiteActivity p1 = null;
@@ -61,6 +64,7 @@ public class SiteRestController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	ResponseEntity<SiteActivity> createSiteActivity(@RequestBody SiteActivity SiteActivity) {
 		SiteActivity p1 = this.serviceS.create(SiteActivity);
+		logger.info("create Site "+p1.getId());
 		return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 	}
 
@@ -69,9 +73,10 @@ public class SiteRestController {
 		SiteActivity p1;
 		try {
 			p1 = this.serviceS.update(SiteActivity);
+			logger.info("update Site. id: "+p1.getId());
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-
+			logger.info("Not Found Site for update. id: "+SiteActivity.getId());
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -84,9 +89,10 @@ public class SiteRestController {
 		SiteActivity p1;
 		try {
 			p1 = this.serviceS.update(SiteActivity);
+			logger.info("update Site. id: "+p1.getId());
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-
+			logger.info("Not Found Site "+SiteActivity.getId());
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -97,9 +103,10 @@ public class SiteRestController {
 
 		try {
 			this.serviceS.delete(SiteActivity.getId());
+			logger.info("delete Site. id: "+SiteActivity.getId());
 			return new ResponseEntity<SiteActivity>(HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-
+			logger.info("Not Found Site for delete. id: "+SiteActivity.getId());
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -110,9 +117,10 @@ public class SiteRestController {
 
 		try {
 			this.serviceS.delete(id);
+			logger.info("delete Site. id: "+id);
 			return new ResponseEntity<SiteActivity>(HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-
+			logger.info("Not Found Site for delete. id: "+id);
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -124,12 +132,13 @@ public class SiteRestController {
 		SiteActivity p1;
 		try {
 			p1 = this.serviceS.updateActivities(id, activities);
+			logger.info("update activities of Site. id: "+id);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-
+			logger.info("Not Found Site for update activities of Site. id: "+id);
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-
+			logger.info("Not Found Activity for update activities of Site. id: "+id);
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -140,12 +149,13 @@ public class SiteRestController {
 		SiteActivity p1;
 		try {
 			p1 = this.serviceS.updateActivities(id, idA);
+			logger.info("add activity "+idA+" on Site"+id);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-
+			logger.info("Not Found Site "+ id +"for add activity"+idA);
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-
+			logger.info("Not Found activity "+ idA +"for add on Site"+id);
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 
@@ -156,12 +166,13 @@ public class SiteRestController {
 		SiteActivity p1;
 		try {
 			p1 = this.serviceS.deleteActivities(id, idA);
+			logger.info("remove activity "+idA+" on Site"+id);
 			return new ResponseEntity<SiteActivity>(p1, HttpStatus.OK);
 		} catch (SiteActivityNotFound e) {
-
+			logger.info("Not Found Site "+ id +"for remove activity"+idA);
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-
+			logger.info("Not Found activity "+ idA +"for remove on Site"+id);
 			return new ResponseEntity<SiteActivity>(HttpStatus.NOT_FOUND);
 		}
 

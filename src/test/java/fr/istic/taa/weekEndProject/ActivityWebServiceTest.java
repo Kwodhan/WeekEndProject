@@ -1,9 +1,6 @@
 package fr.istic.taa.weekEndProject;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Assert;
@@ -21,7 +18,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.service.ActivityService;
-import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -90,36 +86,36 @@ public class ActivityWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testCreateSport() throws Exception {
-		String payload = FactoryJSON.Activity(createSport.getId(), createSport.getName(), createSport.getType());
-		String jsonResponse = this.mockMvc
-				.perform(post(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		Assert.assertTrue(jsonResponse.contains("\"name\":\"" + createSport.getName() + "\""));
-		Assert.assertTrue(jsonResponse.contains("\"type\":\"Sport\""));
-	}
+//	@Test
+//	public void testCreateSport() throws Exception {
+//		String payload = FactoryJSON.Activity(createSport.getId(), createSport.getName(), createSport.getType());
+//		String jsonResponse = this.mockMvc
+//				.perform(post(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		Assert.assertTrue(jsonResponse.contains("\"name\":\"" + createSport.getName() + "\""));
+//		Assert.assertTrue(jsonResponse.contains("\"type\":\"Sport\""));
+//	}
 
 	/**
 	 * Create a Sport
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testCreateLeisure() throws Exception {
-
-		String payload = FactoryJSON.Activity(createLeisure.getId(), createLeisure.getName(), createLeisure.getType());
-		String jsonResponse = this.mockMvc
-				.perform(post(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		Assert.assertTrue(jsonResponse.contains("\"name\":\"" + createLeisure.getName() + "\""));
-		Assert.assertTrue(jsonResponse.contains("\"type\":\"Leisure\""));
-		
-	}
+//	@Test
+//	public void testCreateLeisure() throws Exception {
+//
+//		String payload = FactoryJSON.Activity(createLeisure.getId(), createLeisure.getName(), createLeisure.getType());
+//		String jsonResponse = this.mockMvc
+//				.perform(post(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		Assert.assertTrue(jsonResponse.contains("\"name\":\"" + createLeisure.getName() + "\""));
+//		Assert.assertTrue(jsonResponse.contains("\"type\":\"Leisure\""));
+//		
+//	}
 
 	/**
 	 * Get a Sport
@@ -180,69 +176,69 @@ public class ActivityWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testUpdateSport() throws Exception {
-		String maj = "new";
-		String payload = FactoryJSON.Activity(updateSport.getId(), maj, updateSport.getType());
-		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		// String expected = "{\"id\":" + updateSport.getId()
-		// + ",\"meteos\":[],\"name\":\"new\",\"type\":\"Sport\"}";
-		String expected = FactoryJSON.Activity(updateSport.getId(), maj, updateSport.getType());
-		Assert.assertEquals(expected, jsonResponse);
-
-		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + updateSport.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		expected = FactoryJSON.Get(expected);
-		Assert.assertEquals(expected, jsonResponse2);
-	}
+//	@Test
+//	public void testUpdateSport() throws Exception {
+//		String maj = "new";
+//		String payload = FactoryJSON.Activity(updateSport.getId(), maj, updateSport.getType());
+//		String jsonResponse = this.mockMvc
+//				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		// String expected = "{\"id\":" + updateSport.getId()
+//		// + ",\"meteos\":[],\"name\":\"new\",\"type\":\"Sport\"}";
+//		String expected = FactoryJSON.Activity(updateSport.getId(), maj, updateSport.getType());
+//		Assert.assertEquals(expected, jsonResponse);
+//
+//		String jsonResponse2 = this.mockMvc
+//				.perform(get(SERVICE_URI + updateSport.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//		expected = FactoryJSON.Get(expected);
+//		Assert.assertEquals(expected, jsonResponse2);
+//	}
 
 	/**
 	 * Delete a sport
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = ActivityNotFound.class)
-	public void testDeleteSport() throws Exception {
-		String content = FactoryJSON.Activity(deleteSport.getId(), deleteSport.getName(), deleteSport.getType());
-		this.mockMvc
-				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get(SERVICE_URI + deleteSport.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		activityService.findById(deleteSport.getId());
-	}
+//	@Test(expected = ActivityNotFound.class)
+//	public void testDeleteSport() throws Exception {
+//		String content = FactoryJSON.Activity(deleteSport.getId(), deleteSport.getName(), deleteSport.getType());
+//		this.mockMvc
+//				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		this.mockMvc
+//				.perform(get(SERVICE_URI + deleteSport.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+//
+//		activityService.findById(deleteSport.getId());
+//	}
 
 	/**
 	 * Delete a Leisure with id
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = ActivityNotFound.class)
-	public void testDeleteLeisureId() throws Exception {
-
-		this.mockMvc
-				.perform(delete(SERVICE_URI + deleteLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get(SERVICE_URI + deleteLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		activityService.findById(deleteLeisure.getId());
-	}
+//	@Test(expected = ActivityNotFound.class)
+//	public void testDeleteLeisureId() throws Exception {
+//
+//		this.mockMvc
+//				.perform(delete(SERVICE_URI + deleteLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		this.mockMvc
+//				.perform(get(SERVICE_URI + deleteLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+//
+//		activityService.findById(deleteLeisure.getId());
+//	}
 
 	/**
 	 * Get a Leisure
@@ -269,23 +265,23 @@ public class ActivityWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testUpdateLeisure() throws Exception {
-		String maj = "new";
-		String expected = FactoryJSON.Activity(updateLeisure.getId(), maj, updateLeisure.getType());
-		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(expected))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		Assert.assertEquals(expected, jsonResponse);
-
-		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + updateLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		expected = FactoryJSON.Get(expected);
-		Assert.assertEquals(expected, jsonResponse2);
-	}
+//	@Test
+//	public void testUpdateLeisure() throws Exception {
+//		String maj = "new";
+//		String expected = FactoryJSON.Activity(updateLeisure.getId(), maj, updateLeisure.getType());
+//		String jsonResponse = this.mockMvc
+//				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(expected))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		Assert.assertEquals(expected, jsonResponse);
+//
+//		String jsonResponse2 = this.mockMvc
+//				.perform(get(SERVICE_URI + updateLeisure.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//		expected = FactoryJSON.Get(expected);
+//		Assert.assertEquals(expected, jsonResponse2);
+//	}
 
 }

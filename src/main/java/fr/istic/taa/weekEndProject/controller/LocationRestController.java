@@ -2,6 +2,8 @@ package fr.istic.taa.weekEndProject.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.istic.taa.weekEndProject.jpa.JpaTest;
 import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.service.LocationService;
@@ -24,9 +27,7 @@ import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
 @RestController
 @RequestMapping(value = "/locations")
 public class LocationRestController {
-	/*
-	 * Par defaut : Nb requete == Nb association
-	 */
+	private static final Logger logger = LogManager.getLogger(JpaTest.class);
 	@Autowired
 	LocationService serviceL;
 
@@ -64,8 +65,10 @@ public class LocationRestController {
 	
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	ResponseEntity<Location> createPerson(@RequestBody Location location) {
+	ResponseEntity<Location> createLocation(@RequestBody Location location) {
+		
 		Location l1 = this.serviceL.create(location);
+		logger.info("create Location "+l1.getId());
 		return new ResponseEntity<Location>(l1, HttpStatus.OK);
 	}
 

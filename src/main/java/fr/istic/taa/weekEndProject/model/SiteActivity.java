@@ -43,6 +43,11 @@ public class SiteActivity implements InterfaceEntity {
 		super();
 		this.name = name;
 	}
+	public SiteActivity(String name,String siteWeb) {
+		super();
+		this.name = name;
+		this.siteWeb=siteWeb;
+	}
 
 	public SiteActivity() {
 

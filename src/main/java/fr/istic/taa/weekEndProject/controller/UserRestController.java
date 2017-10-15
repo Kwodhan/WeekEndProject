@@ -2,6 +2,8 @@ package fr.istic.taa.weekEndProject.controller;
 
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.istic.taa.weekEndProject.jpa.JpaTest;
 import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.ResponseJson;
@@ -34,7 +37,7 @@ public class UserRestController {
 	@Autowired
 	UserService serviceP;
 
-
+	private static final Logger logger = LogManager.getLogger(JpaTest.class);
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	ResponseEntity<ResponseJson> getPersonById(@PathVariable("id") long id) {
 		User p1 = null;
@@ -82,12 +85,13 @@ public class UserRestController {
 		User p1;
 		try {
 			p1 = this.serviceP.updateLocation(id, locations);
+			logger.info("update homes of user. id: "+id);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (UserNotFound e) {
-			
+			logger.info("Not Found User for update homes of User. id: "+id);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
-			
+			logger.info("Not Found homes for update homes of User. id: "+id);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
@@ -99,12 +103,13 @@ public class UserRestController {
 		User p1;
 		try {
 			p1 = this.serviceP.updateActivities(id, activities);
+			logger.info("update activities of user. id: "+id);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (UserNotFound e) {
-			
+			logger.info("Not Found User for update activities of User. id: "+id);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			
+			logger.info("Not Found activities for update activities of User. id: "+id);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
@@ -115,12 +120,13 @@ public class UserRestController {
 		User p1;
 		try {
 			p1 = this.serviceP.updateLocation(id, idL);
+			logger.info("add home "+idL+" on User"+id);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (UserNotFound e) {
-			
+			logger.info("Not Found User "+ id +"for add home"+idL);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
-			
+			logger.info("Not Found home "+ idL +"for add on User"+id);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
@@ -131,12 +137,13 @@ public class UserRestController {
 		User p1;
 		try {
 			p1 = this.serviceP.updateActivities(id, idA);
+			logger.info("add activity "+idA+" on User"+id);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (UserNotFound e) {
-			
+			logger.info("Not Found User "+ id +"for add activity"+idA);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			
+			logger.info("Not Found activity "+ idA +"for add on User"+id);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
@@ -147,12 +154,13 @@ public class UserRestController {
 		User p1;
 		try {
 			p1 = this.serviceP.deleteLocation(id, idL);
+			logger.info("remove home "+idL+" on User"+id);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (UserNotFound e) {
-			
+			logger.info("Not Found User "+ id +"for remove home"+idL);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (LocationNotFound e) {
-			
+			logger.info("Not Found home "+ idL +"for remove on User"+id);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 
@@ -163,12 +171,13 @@ public class UserRestController {
 		User p1;
 		try {
 			p1 = this.serviceP.deleteActivities(id, idA);
+			logger.info("remove activity "+idA+" on User"+id);
 			return new ResponseEntity<User>(p1, HttpStatus.OK);
 		} catch (UserNotFound e) {
-			
+			logger.info("Not Found User "+ id +"for remove activity"+idA);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} catch (ActivityNotFound e) {
-			
+			logger.info("Not Found activity "+ idA +"for remove on User"+id);
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
 

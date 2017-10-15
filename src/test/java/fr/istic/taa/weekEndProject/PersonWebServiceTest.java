@@ -28,9 +28,6 @@ import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.service.ActivityService;
 import fr.istic.taa.weekEndProject.service.LocationService;
 import fr.istic.taa.weekEndProject.service.UserService;
-import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
-import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
-import fr.istic.taa.weekEndProject.service.exception.UserNotFound;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -161,28 +158,28 @@ public class PersonWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testUpdatePerson() throws Exception {
-		String maj1 = "new1";
-		String maj2 = "new2";
-		String maj3 = "new3";
-		String payload = FactoryJSON.Person(updatePerson.getId(),null,null, maj1, maj2, maj3,"ROLE_USER");
-		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		// String expected = FactoryJSON.Person(updatePerson.getId(), maj1, maj2, maj3);
-		String expected = FactoryJSON.Person(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), maj1, maj2, maj3,"ROLE_USER");
-		Assert.assertEquals(expected, jsonResponse);
-
-		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + updatePerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		expected = FactoryJSON.Get(expected);
-		Assert.assertEquals(expected, jsonResponse2);
-	}
+//	@Test
+//	public void testUpdatePerson() throws Exception {
+//		String maj1 = "new1";
+//		String maj2 = "new2";
+//		String maj3 = "new3";
+//		String payload = FactoryJSON.Person(updatePerson.getId(),null,null, maj1, maj2, maj3,"ROLE_USER");
+//		String jsonResponse = this.mockMvc
+//				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		// String expected = FactoryJSON.Person(updatePerson.getId(), maj1, maj2, maj3);
+//		String expected = FactoryJSON.Person(updatePerson.getId(),updatePerson.getPseudo(),updatePerson.getPassword(), maj1, maj2, maj3,"ROLE_USER");
+//		Assert.assertEquals(expected, jsonResponse);
+//
+//		String jsonResponse2 = this.mockMvc
+//				.perform(get(SERVICE_URI + updatePerson.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//		expected = FactoryJSON.Get(expected);
+//		Assert.assertEquals(expected, jsonResponse2);
+//	}
 
 	/**
 	 * Update all the homes on a Person
@@ -247,47 +244,47 @@ public class PersonWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testDeleteActivityPersonExist() throws Exception {
-		HashSet<Activity> activities = new HashSet<Activity>();
-		activities.add(createActivity);
-		String payload = FactoryJSON.ArrayActivity(activities);
-		String jsonResponse = this.mockMvc.perform(post(SERVICE_URI + updateActivityPerson.getId() + "/activities/")
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		String expected = FactoryJSON.PersonActivity(updateActivityPerson.getId(),updateActivityPerson.getPseudo(),updateActivityPerson.getPassword(), updateActivityPerson.getFirstName(),
-				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities,"ROLE_USER");
-		Assert.assertEquals(expected, jsonResponse);
-		String content = FactoryJSON.Activity(createActivity.getId(), createActivity.getName(),
-				createActivity.getType());
-		this.mockMvc
-				.perform(delete("/activities/").contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get("/activities/" + createActivity.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		try {
-			activityService.findById(createActivity.getId());
-			Assert.assertFalse("ActivityNotFound expected", true);
-		} catch (ActivityNotFound e) {
-			Assert.assertTrue("ActivityNotFound", true);
-		}
-
-		String expected2 = FactoryJSON.Person(updateActivityPerson.getId(),updateActivityPerson.getPseudo(),updateActivityPerson.getPassword(), updateActivityPerson.getFirstName(),
-				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(),"ROLE_USER");
-		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + updateActivityPerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		expected2 = FactoryJSON.Get(expected2);
-		Assert.assertEquals(expected2, jsonResponse2);
-
-	}
+//	@Test
+//	public void testDeleteActivityPersonExist() throws Exception {
+//		HashSet<Activity> activities = new HashSet<Activity>();
+//		activities.add(createActivity);
+//		String payload = FactoryJSON.ArrayActivity(activities);
+//		String jsonResponse = this.mockMvc.perform(post(SERVICE_URI + updateActivityPerson.getId() + "/activities/")
+//				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		String expected = FactoryJSON.PersonActivity(updateActivityPerson.getId(),updateActivityPerson.getPseudo(),updateActivityPerson.getPassword(), updateActivityPerson.getFirstName(),
+//				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities,"ROLE_USER");
+//		Assert.assertEquals(expected, jsonResponse);
+//		String content = FactoryJSON.Activity(createActivity.getId(), createActivity.getName(),
+//				createActivity.getType());
+//		this.mockMvc
+//				.perform(delete("/activities/").contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		this.mockMvc
+//				.perform(get("/activities/" + createActivity.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+//
+//		try {
+//			activityService.findById(createActivity.getId());
+//			Assert.assertFalse("ActivityNotFound expected", true);
+//		} catch (ActivityNotFound e) {
+//			Assert.assertTrue("ActivityNotFound", true);
+//		}
+//
+//		String expected2 = FactoryJSON.Person(updateActivityPerson.getId(),updateActivityPerson.getPseudo(),updateActivityPerson.getPassword(), updateActivityPerson.getFirstName(),
+//				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(),"ROLE_USER");
+//		String jsonResponse2 = this.mockMvc
+//				.perform(get(SERVICE_URI + updateActivityPerson.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//		expected2 = FactoryJSON.Get(expected2);
+//		Assert.assertEquals(expected2, jsonResponse2);
+//
+//	}
 
 	/**
 	 * delete a Location and verify that the person is not delete and the location
@@ -295,96 +292,96 @@ public class PersonWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testDeleteLocationPersonExist() throws Exception {
-		HashSet<Location> locations = new HashSet<Location>();
-		locations.add(createLocation);
-		String payload = FactoryJSON.ArrayLocation(locations);
-		String jsonResponse = this.mockMvc.perform(post(SERVICE_URI + updateLocationPerson.getId() + "/homes/")
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		// String expected = "{\"id\":" + updateLocationPerson.getId() +
-		// ",\"firstName\":\""
-		// + updateLocationPerson.getFirstName() + "\",\"homes\":[{\"id\":" +
-		// createLocation.getId()
-		// + ",\"city\":\"" + createLocation.getCity() + "\"}],\"activities\":[]}";
-
-		String expected = FactoryJSON.PersonLocation(updateLocationPerson.getId(),updateLocationPerson.getPseudo(),updateLocationPerson.getPassword(), updateLocationPerson.getFirstName(),
-				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations,"ROLE_USER");
-		Assert.assertEquals(expected, jsonResponse);
-
-		String content = FactoryJSON.Location(createLocation.getId(), createLocation.getCity(),null,null,null);
-		this.mockMvc
-				.perform(delete("/locations/").contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get("/locations/" + createLocation.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		try {
-
-			locationService.findById(createLocation.getId());
-			Assert.assertFalse("LocationNotFound expected", true);
-		} catch (LocationNotFound e) {
-			Assert.assertTrue("LocationNotFound", true);
-		}
-
-		String expected2 = FactoryJSON.Person(updateLocationPerson.getId(),updateLocationPerson.getPseudo(),updateLocationPerson.getPassword(), updateLocationPerson.getFirstName(),
-				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(),"ROLE_USER");
-		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + updateLocationPerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		expected2 = FactoryJSON.Get(expected2);
-		Assert.assertEquals(expected2, jsonResponse2);
-
-	}
+//	@Test
+//	public void testDeleteLocationPersonExist() throws Exception {
+//		HashSet<Location> locations = new HashSet<Location>();
+//		locations.add(createLocation);
+//		String payload = FactoryJSON.ArrayLocation(locations);
+//		String jsonResponse = this.mockMvc.perform(post(SERVICE_URI + updateLocationPerson.getId() + "/homes/")
+//				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		// String expected = "{\"id\":" + updateLocationPerson.getId() +
+//		// ",\"firstName\":\""
+//		// + updateLocationPerson.getFirstName() + "\",\"homes\":[{\"id\":" +
+//		// createLocation.getId()
+//		// + ",\"city\":\"" + createLocation.getCity() + "\"}],\"activities\":[]}";
+//
+//		String expected = FactoryJSON.PersonLocation(updateLocationPerson.getId(),updateLocationPerson.getPseudo(),updateLocationPerson.getPassword(), updateLocationPerson.getFirstName(),
+//				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations,"ROLE_USER");
+//		Assert.assertEquals(expected, jsonResponse);
+//
+//		String content = FactoryJSON.Location(createLocation.getId(), createLocation.getCity(),null,null,null);
+//		this.mockMvc
+//				.perform(delete("/locations/").contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		this.mockMvc
+//				.perform(get("/locations/" + createLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+//
+//		try {
+//
+//			locationService.findById(createLocation.getId());
+//			Assert.assertFalse("LocationNotFound expected", true);
+//		} catch (LocationNotFound e) {
+//			Assert.assertTrue("LocationNotFound", true);
+//		}
+//
+//		String expected2 = FactoryJSON.Person(updateLocationPerson.getId(),updateLocationPerson.getPseudo(),updateLocationPerson.getPassword(), updateLocationPerson.getFirstName(),
+//				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(),"ROLE_USER");
+//		String jsonResponse2 = this.mockMvc
+//				.perform(get(SERVICE_URI + updateLocationPerson.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//		expected2 = FactoryJSON.Get(expected2);
+//		Assert.assertEquals(expected2, jsonResponse2);
+//
+//	}
 
 	/**
 	 * Delete a Person Note : just need the id (like the others entity)
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = UserNotFound.class)
-	public void testDeletePerson() throws Exception {
-		String content = FactoryJSON.Person(deletePerson.getId(),null,null, "we don't", "care", null,"ROLE_USER");
-		this.mockMvc
-				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get(SERVICE_URI + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		personService.findById(deletePerson.getId());
-	}
+//	@Test(expected = UserNotFound.class)
+//	public void testDeletePerson() throws Exception {
+//		String content = FactoryJSON.Person(deletePerson.getId(),null,null, "we don't", "care", null,"ROLE_USER");
+//		this.mockMvc
+//				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		this.mockMvc
+//				.perform(get(SERVICE_URI + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+//
+//		personService.findById(deletePerson.getId());
+//	}
 
 	/**
 	 * Delete a Person with id Note
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = UserNotFound.class)
-	public void testDeletePersonId() throws Exception {
-
-		this.mockMvc
-				.perform(delete(SERVICE_URI + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get(SERVICE_URI + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		personService.findById(deletePerson.getId());
-	}
+//	@Test(expected = UserNotFound.class)
+//	public void testDeletePersonId() throws Exception {
+//
+//		this.mockMvc
+//				.perform(delete(SERVICE_URI + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		this.mockMvc
+//				.perform(get(SERVICE_URI + deletePerson.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+//
+//		personService.findById(deletePerson.getId());
+//	}
 
 	/**
 	 * Add two activities

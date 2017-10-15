@@ -119,7 +119,7 @@ public class FactoryJSON {
 	public static String Site(Long id, String name) {
 		name = addG(name);
 
-		String expected = "{\"id\":" + id + ",\"name\":" + name + ",\"location\":null,\"activities\":[]}";
+		String expected = "{\"id\":" + id + ",\"name\":" + name + ",\"location\":null,\"activities\":[],\"siteWeb\":null}";
 		return expected;
 	}
 
@@ -130,7 +130,7 @@ public class FactoryJSON {
 		String stractivities = ArrayActivity(activities);
 
 		String expected = "{\"id\":" + id + ",\"name\":" + name + ",\"location\":" + strlocation + ",\"activities\":"
-				+ stractivities + "}";
+				+ stractivities + ",\"siteWeb\":null}";
 		return expected;
 	}
 
@@ -140,7 +140,7 @@ public class FactoryJSON {
 		String strlocation = Location(location.getId(), location.getCity(),null,null,null);
 
 		String expected = "{\"id\":" + id + ",\"name\":" + name + ",\"location\":" + strlocation
-				+ ",\"activities\":[]}";
+				+ ",\"activities\":[],\"siteWeb\":null}";
 		return expected;
 	}
 
@@ -150,7 +150,7 @@ public class FactoryJSON {
 		String stractivities = ArrayActivity(activities);
 
 		String expected = "{\"id\":" + id + ",\"name\":" + name + ",\"location\":null,\"activities\":" + stractivities
-				+ "}";
+				+ ",\"siteWeb\":null}";
 		return expected;
 	}
 

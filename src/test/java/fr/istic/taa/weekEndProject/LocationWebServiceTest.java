@@ -1,9 +1,7 @@
 package fr.istic.taa.weekEndProject;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Assert;
@@ -21,7 +19,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.service.LocationService;
-import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -105,69 +102,69 @@ public class LocationWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testUpdateLocation() throws Exception {
-		// Assert.assertEquals(updateLocation.getName(),updateLocation.getId());
-		String maj = "azerty";
-		String payload = "{\"id\":" + updateLocation.getId() + ",\"city\":\"" + maj + "\"}";
-		String jsonResponse = this.mockMvc
-				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		// String expected = "{\"id\":" + updateLocation.getId()
-		// + ",\"city\":\"azerty\"}";
-		String expected = FactoryJSON.Location(updateLocation.getId(), maj,null,null,null);
-		Assert.assertEquals(expected, jsonResponse);
-
-		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		expected = FactoryJSON.Get(expected);
-		Assert.assertEquals(expected, jsonResponse2);
-	}
+//	@Test
+//	public void testUpdateLocation() throws Exception {
+//		// Assert.assertEquals(updateLocation.getName(),updateLocation.getId());
+//		String maj = "azerty";
+//		String payload = "{\"id\":" + updateLocation.getId() + ",\"city\":\"" + maj + "\"}";
+//		String jsonResponse = this.mockMvc
+//				.perform(put(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(payload))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		// String expected = "{\"id\":" + updateLocation.getId()
+//		// + ",\"city\":\"azerty\"}";
+//		String expected = FactoryJSON.Location(updateLocation.getId(), maj,null,null,null);
+//		Assert.assertEquals(expected, jsonResponse);
+//
+//		String jsonResponse2 = this.mockMvc
+//				.perform(get(SERVICE_URI + updateLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//		expected = FactoryJSON.Get(expected);
+//		Assert.assertEquals(expected, jsonResponse2);
+//	}
 
 	/**
 	 * Delete a Location with json
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = LocationNotFound.class)
-	public void testDeleteLocation() throws Exception {
-		String content = FactoryJSON.Location(deleteLocation.getId(), deleteLocation.getCity(),null,null,null);
-		this.mockMvc
-				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get(SERVICE_URI + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		locationService.findById(deleteLocation.getId());
-	}
+//	@Test(expected = LocationNotFound.class)
+//	public void testDeleteLocation() throws Exception {
+//		String content = FactoryJSON.Location(deleteLocation.getId(), deleteLocation.getCity(),null,null,null);
+//		this.mockMvc
+//				.perform(delete(SERVICE_URI).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8).content(content))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		this.mockMvc
+//				.perform(get(SERVICE_URI + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+//
+//		locationService.findById(deleteLocation.getId());
+//	}
 	
 	/**
 	 * Delete a Location with id
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = LocationNotFound.class)
-	public void testDeleteLocationId() throws Exception {
-		
-		this.mockMvc
-				.perform(delete(SERVICE_URI+deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		this.mockMvc
-				.perform(get(SERVICE_URI + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
-
-		locationService.findById(deleteLocation.getId());
-	}
+//	@Test(expected = LocationNotFound.class)
+//	public void testDeleteLocationId() throws Exception {
+//		
+//		this.mockMvc
+//				.perform(delete(SERVICE_URI+deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		this.mockMvc
+//				.perform(get(SERVICE_URI + deleteLocation.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isNotFound()).andReturn().getResponse().getContentAsString();
+//
+//		locationService.findById(deleteLocation.getId());
+//	}
 
 }

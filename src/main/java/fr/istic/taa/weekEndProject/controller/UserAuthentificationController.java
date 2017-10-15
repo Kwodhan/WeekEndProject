@@ -2,6 +2,8 @@ package fr.istic.taa.weekEndProject.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.istic.taa.weekEndProject.jpa.JpaTest;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.service.SecurityService;
 import fr.istic.taa.weekEndProject.service.UserService;
@@ -25,7 +28,9 @@ public class UserAuthentificationController {
 
 	@Autowired
 	private SecurityService securityService;
-
+	
+	private static final Logger logger = LogManager.getLogger(JpaTest.class);
+	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	ResponseEntity<User> registration(@RequestBody User userForm, BindingResult bindingResult, Model model) {
 		try {
@@ -34,7 +39,7 @@ public class UserAuthentificationController {
 			User u = serviceP.createUser(userForm);
 
 			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
-
+			logger.info("user registration id: "+u.getId()+" Pseudo "+u.getPseudo());
 			return new ResponseEntity<User>(u, HttpStatus.OK);
 		}
 		return new ResponseEntity<User>(HttpStatus.CONFLICT);
@@ -43,13 +48,14 @@ public class UserAuthentificationController {
 	
 	@RequestMapping(value = "/jonshnownestpasmort", method = RequestMethod.POST)
 	ResponseEntity<User> registrationGerant(@RequestBody User userForm, BindingResult bindingResult, Model model) {
+		
 		try {
 			serviceP.findByPseudo(userForm.getPseudo());
 		} catch (UserNotFound e) {
 			User u = serviceP.createGerant(userForm);
 
 			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
-
+			logger.info("gerant registration id: "+u.getId()+" Pseudo "+u.getPseudo());
 			return new ResponseEntity<User>(u, HttpStatus.OK);
 		}
 		return new ResponseEntity<User>(HttpStatus.CONFLICT);
@@ -61,7 +67,7 @@ public class UserAuthentificationController {
 		try {
 			User u = serviceP.findByPseudo(userForm.getPseudo());
 			securityService.autologin(userForm.getPseudo(), userForm.getPassword());
-
+			logger.info("login id: "+u.getId()+" Pseudo "+u.getPseudo());
 			return new ResponseEntity<User>(u, HttpStatus.OK);
 		} catch (UserNotFound e) {
 			// TODO Auto-generated catch block
@@ -73,6 +79,7 @@ public class UserAuthentificationController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	ResponseEntity<?> logoutPage(HttpSession session) {
 		session.invalidate();
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
