@@ -1,6 +1,23 @@
 # WeekEndProject
-Une API Rest de gestion des Week Ends
+Une API Rest de gestion des Week-Ends
 
+## Usage with WeekEndFront
+link front app : https://github.com/Kwodhan/WeekEndProject   
+
+#### 1. Build back
+cd WeekEndProject/   
+mvn package -DskipTests     
+docker build --tag "weekend" .  
+
+#### 2. Build front
+cd WeekEndFront/   
+docker build --tag "front" .     
+
+#### 3. Build All
+cd WeekEndFront/  
+or   
+cd WeekEndProject/ 
+docker-composer up    
 
 ## User 
 Représente un utilisateur
@@ -74,13 +91,6 @@ Représente un club de sport, une association, une plage, etc...
 |/WeekEndProject/api/sites/{id}| supprime un site|
 |/WeekEndProject/api/sites/{id}/activities/{idA}|supprime l'activité {idA} de la liste du site {id}|
 
-
-## Usage
-
-Argument :
- 1. path du fichier log
- 
-
 ## Spring Security
 Authenfication : avec Spring security en mode  _Basic_
 
@@ -89,6 +99,12 @@ Authenfication : avec Spring security en mode  _Basic_
 | -------------------------------------------- | --------- |--------- |
 |ROLE_USER| Choisie ses activités et ses localisations| |
 |ROLE_GERANT}| Ajoute des sites| /sites/ |
+
+
+
+ 
+
+
 
 
 
