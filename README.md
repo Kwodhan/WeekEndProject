@@ -2,7 +2,7 @@
 Une API Rest de gestion des Week-Ends
 
 ## Usage with WeekEndFront
-link front app : https://github.com/Kwodhan/WeekEndProject   
+front app : https://github.com/Kwodhan/WeekEndFront
 
 #### 1. Build back
 cd WeekEndProject/   
