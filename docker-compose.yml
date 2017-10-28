@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+   db:
+     image: mysql:5.7
+     container_name: mysql
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: Prodweekend
+       MYSQL_USER: sa
+       MYSQL_PASSWORD: sa
+     networks:
+       app_net:
+         ipv4_address: 172.16.238.10
+   api:
+     image: weekend:latest
+     container_name: weekend
+     ports:
+       - 8080:8080
+     networks:
+       app_net:
+         ipv4_address: 172.16.238.11
+     depends_on: [db]
+
+   front:
+     image: front:latest
+     container_name: front
+     ports:
+       - 9000:9000
+       - 35729:35729
+     networks:
+       app_net:
+         ipv4_address: 172.16.238.12
+     depends_on: [api]
+    
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.16.238.0/24
+volumes:
+    db_data:
