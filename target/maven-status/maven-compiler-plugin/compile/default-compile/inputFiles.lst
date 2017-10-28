@@ -5,7 +5,6 @@
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/EmailService.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/exception/MeteoNotFound.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/controller/UserRestController.java
-/home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/jpa/JpaTest.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/exception/SiteActivityNotFound.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/SecurityService.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/scheduled/ScheduledTasks.java
@@ -28,7 +27,7 @@
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/controller/UserAuthentificationController.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/repository/UserRepository.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/controller/SiteRestController.java
-/home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/model/Wind.java
+/home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/jpa/Application.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/service/SiteActivityServiceImpl.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/model/InterfaceEntity.java
 /home/aferey/workspace/WeekEndProject/src/main/java/fr/istic/taa/weekEndProject/repository/LocationRepository.java

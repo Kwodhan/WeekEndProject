@@ -6,8 +6,6 @@ fr/istic/taa/weekEndProject/service/exception/LocationNotFound.class
 fr/istic/taa/weekEndProject/repository/ActivityRepository.class
 fr/istic/taa/weekEndProject/repository/LocationRepository.class
 fr/istic/taa/weekEndProject/controller/SiteRestController.class
-fr/istic/taa/weekEndProject/jpa/JpaTest.class
-fr/istic/taa/weekEndProject/model/Wind.class
 fr/istic/taa/weekEndProject/controller/LocationRestController.class
 fr/istic/taa/weekEndProject/controller/ActivityRestController.class
 fr/istic/taa/weekEndProject/service/exception/ActivityNotFound.class
