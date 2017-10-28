@@ -1,8 +1,8 @@
 # WeekEndProject
-Une API Rest de gestion des Week-Ends
+Une API Rest de gestion de Week-End
 
 ## Usage with WeekEndFront
-front app : https://github.com/Kwodhan/WeekEndFront
+Front app : https://github.com/Kwodhan/WeekEndFront
 
 #### 1. Build back
 cd WeekEndProject/   
@@ -98,7 +98,7 @@ Authenfication : avec Spring security en mode  _Basic_
 | Role                                   |  Description| Authorisation|
 | -------------------------------------------- | --------- |--------- |
 |ROLE_USER| Choisie ses activités et ses localisations| |
-|ROLE_GERANT}| Ajoute des sites| /sites/ |
+|ROLE_GERANT| Ajoute des sites| /sites/ |
 
 
 
