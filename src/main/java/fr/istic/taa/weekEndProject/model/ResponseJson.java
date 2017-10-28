@@ -2,7 +2,11 @@ package fr.istic.taa.weekEndProject.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * represente une reponse Get 
+ * @author aferey
+ *
+ */
 public class ResponseJson {
 
 	List<? extends InterfaceEntity> data;

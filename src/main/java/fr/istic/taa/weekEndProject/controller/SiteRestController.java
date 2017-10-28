@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.istic.taa.weekEndProject.jpa.JpaTest;
+import fr.istic.taa.weekEndProject.jpa.Application;
 import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.model.SiteActivity;
@@ -30,12 +30,10 @@ import fr.istic.taa.weekEndProject.service.exception.SiteActivityNotFound;
 @RestController
 @RequestMapping(value = "/sites")
 public class SiteRestController {
-	/*
-	 * Par defaut : Nb requete == Nb association
-	 */
+
 	@Autowired
 	SiteActivityService serviceS;
-	private static final Logger logger = LogManager.getLogger(JpaTest.class);
+	private static final Logger logger = LogManager.getLogger(Application.class);
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	ResponseEntity<ResponseJson> getSiteActivityById(@PathVariable("id") long id) {
 		SiteActivity p1 = null;

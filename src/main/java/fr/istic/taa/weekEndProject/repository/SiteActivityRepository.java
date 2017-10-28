@@ -21,7 +21,6 @@ public interface SiteActivityRepository extends JpaRepository<SiteActivity, Long
 	@Query("select distinct s from SiteActivity s left join fetch s.location l left join fetch s.activities a ")
 	public List<SiteActivity> findAll();
 	
-	//TODO list locations and activities
 	@Query("select distinct s from SiteActivity s left join fetch s.location l left join fetch s.activities a where l.id = :idl and a.id = :ida ")
 	public List<SiteActivity> findByLocationAndActivity(@Param("idl") Long idl,@Param("ida") Long ida);
 	

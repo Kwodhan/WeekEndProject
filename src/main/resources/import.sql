@@ -202,3 +202,8 @@
   insert into ACTIVITY (TYPE,NAME) values ('Leisure','Poterie');
   insert into ACTIVITY (TYPE,NAME) values ('Leisure','Musée');
   insert into ACTIVITY (TYPE,NAME) values ('Leisure','Exposition');
+
+-- good meteo exemple
+  insert into ACTIVITY_METEO values (1,'nuit_claire'); 
+  insert into ACTIVITY_METEO values (1,'couvert_avec_averses'); 
+

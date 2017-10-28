@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.istic.taa.weekEndProject.jpa.JpaTest;
+import fr.istic.taa.weekEndProject.jpa.Application;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.service.SecurityService;
 import fr.istic.taa.weekEndProject.service.UserService;
@@ -29,7 +29,7 @@ public class UserAuthentificationController {
 	@Autowired
 	private SecurityService securityService;
 	
-	private static final Logger logger = LogManager.getLogger(JpaTest.class);
+	private static final Logger logger = LogManager.getLogger(Application.class);
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	ResponseEntity<User> registration(@RequestBody User userForm, BindingResult bindingResult, Model model) {

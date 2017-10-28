@@ -36,7 +36,11 @@ public class EmailService {
 
 	@Autowired
 	private SiteActivityService siteService;
-
+	/**
+	 * Not use
+	 * @param person
+	 * @throws MessagingException
+	 */
 	public void sendEmailRegister(User person) throws MessagingException {
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -48,12 +52,16 @@ public class EmailService {
 
 		sender.send(message);
 	}
-
-	public void sendEmailNotification(User person) throws MessagingException {
+	/**
+	 * envoi mail pour notifier les users
+	 * @param user 
+	 * @throws MessagingException
+	 */
+	public void sendEmailNotification(User user) throws MessagingException {
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 		List<SiteActivity> sites = siteService.findAll();
-		helper.setTo(person.getEmailAddress());
+		helper.setTo(user.getEmailAddress());
 		Date dt = new Date();
 		Calendar c = Calendar.getInstance();
 		c.setTime(dt);
@@ -62,7 +70,7 @@ public class EmailService {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM");
 		dateFormat.format(dt);
 		helper.setSubject("Notification pour le Week end du " + dateFormat.format(dt));
-		String begin = "Bonjour, " + person.getFirstName() + "\nVoici les activitées disponible pour le week-end du "
+		String begin = "Bonjour, " + user.getFirstName() + "\nVoici les activitées disponible pour le week-end du "
 				+ dateFormat.format(dt) + " .\n";
 		String corp = "";
 		String corpSamedi = "Samedi : \n";
@@ -71,7 +79,7 @@ public class EmailService {
 		for (SiteActivity site : sites) {
 
 			for (Activity activity : site.getActivities()) {
-				if (person.getActivities().contains(activity) && person.getHomes().contains(site.getLocation())) {
+				if (user.getActivities().contains(activity) && user.getHomes().contains(site.getLocation())) {
 					send = true;
 					try {
 						Meteo sam = Meteo.valueOf(callMeteoSaturday(site.getLocation().getCity()).replaceAll("-", "_"));
@@ -117,10 +125,11 @@ public class EmailService {
 	}
 
 	/**
+	 * appel API pour le samedi
 	 * 
 	 * @param city
 	 *            La ville ou l'on veut regarder la meteo
-	 * @return
+	 * @return la meteo de la journee
 	 */
 	private String callMeteoSaturday(String city) throws MeteoNotFound {
 		try {
@@ -145,7 +154,13 @@ public class EmailService {
 			throw new MeteoNotFound();
 		}
 	}
-
+	/**
+	 * appel API pour le dimanche
+	 * 
+	 * @param city
+	 *            La ville ou l'on veut regarder la meteo
+	 * @return la meteo de la journee
+	 */
 	private String callMeteoSunday(String city) throws MeteoNotFound {
 
 		try {

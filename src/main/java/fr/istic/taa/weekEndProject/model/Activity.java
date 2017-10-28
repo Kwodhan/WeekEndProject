@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
- * Une activity
+ * an activity like beach, football, etc.. 
  * 
  * @author aferey
  *

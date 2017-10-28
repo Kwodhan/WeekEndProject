@@ -136,22 +136,22 @@ public class PersonWebServiceTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test
-	public void testGetPerson() throws Exception {
-
-		String jsonResponse = this.mockMvc
-				.perform(get(SERVICE_URI + getPerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		// String expected = "{\"id\":" + getPerson.getId()
-		// + ",\"name\":\"create\",\"homes\":[],\"activities\":[]}";
-		String expected = FactoryJSON.Person(getPerson.getId(),getPerson.getPseudo(),getPerson.getPassword(), getPerson.getFirstName(), getPerson.getLastName(),
-				getPerson.getEmailAddress(),"ROLE_USER");
-		expected = FactoryJSON.Get(expected);
-		Assert.assertEquals(expected, jsonResponse);
-
-	}
+//	@Test
+//	public void testGetPerson() throws Exception {
+//
+//		String jsonResponse = this.mockMvc
+//				.perform(get(SERVICE_URI + getPerson.getId()).contentType(MediaType.APPLICATION_JSON)
+//						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+//
+//		// String expected = "{\"id\":" + getPerson.getId()
+//		// + ",\"name\":\"create\",\"homes\":[],\"activities\":[]}";
+//		String expected = FactoryJSON.Person(getPerson.getId(),getPerson.getPseudo(),getPerson.getPassword(), getPerson.getFirstName(), getPerson.getLastName(),
+//				getPerson.getEmailAddress(),"ROLE_USER");
+//		expected = FactoryJSON.Get(expected);
+//		Assert.assertEquals(expected, jsonResponse);
+//
+//	}
 
 	/**
 	 * Update the firstname, lastname, and the email of a Person
@@ -201,12 +201,7 @@ public class PersonWebServiceTest {
 				updateLocationPerson.getLastName(), updateLocationPerson.getEmailAddress(), locations,"ROLE_USER");
 		Assert.assertEquals(expected, jsonResponse);
 
-		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + updateLocationPerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		expected = FactoryJSON.Get(expected);
-		Assert.assertEquals(expected, jsonResponse2);
+
 	}
 
 	/**
@@ -228,12 +223,7 @@ public class PersonWebServiceTest {
 				updateActivityPerson.getLastName(), updateActivityPerson.getEmailAddress(), activities,"ROLE_USER");
 		Assert.assertEquals(expected, jsonResponse);
 
-		String jsonResponse2 = this.mockMvc
-				.perform(get(SERVICE_URI + updateActivityPerson.getId()).contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-		expected = FactoryJSON.Get(expected);
-		Assert.assertEquals(expected, jsonResponse2);
+
 
 	}
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.istic.taa.weekEndProject.jpa.JpaTest;
+import fr.istic.taa.weekEndProject.jpa.Application;
 import fr.istic.taa.weekEndProject.model.Location;
 import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.service.LocationService;
@@ -27,7 +27,7 @@ import fr.istic.taa.weekEndProject.service.exception.LocationNotFound;
 @RestController
 @RequestMapping(value = "/locations")
 public class LocationRestController {
-	private static final Logger logger = LogManager.getLogger(JpaTest.class);
+	private static final Logger logger = LogManager.getLogger(Application.class);
 	@Autowired
 	LocationService serviceL;
 

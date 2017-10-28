@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.istic.taa.weekEndProject.jpa.JpaTest;
+import fr.istic.taa.weekEndProject.jpa.Application;
 import fr.istic.taa.weekEndProject.model.Activity;
 import fr.istic.taa.weekEndProject.model.Location;
-import fr.istic.taa.weekEndProject.model.ResponseJson;
 import fr.istic.taa.weekEndProject.model.User;
 import fr.istic.taa.weekEndProject.service.UserService;
 import fr.istic.taa.weekEndProject.service.exception.ActivityNotFound;
@@ -37,20 +36,20 @@ public class UserRestController {
 	@Autowired
 	UserService serviceP;
 
-	private static final Logger logger = LogManager.getLogger(JpaTest.class);
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	ResponseEntity<ResponseJson> getPersonById(@PathVariable("id") long id) {
-		User p1 = null;
-		try {
-			p1 = this.serviceP.findById(new Long(id));
-			ResponseJson json = new ResponseJson(p1);
-			return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
-		} catch (UserNotFound e) {
-			
-			return new ResponseEntity<ResponseJson>(HttpStatus.NOT_FOUND);
-		}
-
-	}
+	private static final Logger logger = LogManager.getLogger(Application.class);
+//	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+//	ResponseEntity<ResponseJson> getPersonById(@PathVariable("id") long id) {
+//		User p1 = null;
+//		try {
+//			p1 = this.serviceP.findById(new Long(id));
+//			ResponseJson json = new ResponseJson(p1);
+//			return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
+//		} catch (UserNotFound e) {
+//			
+//			return new ResponseEntity<ResponseJson>(HttpStatus.NOT_FOUND);
+//		}
+//
+//	}
 
 
 //	@RequestMapping(value = "", method = RequestMethod.PUT)
@@ -79,7 +78,7 @@ public class UserRestController {
 //		}
 //
 //	}
-
+	
 	@RequestMapping(value = "/{id}/homes", method = RequestMethod.POST)
 	ResponseEntity<User> updatePersonLocation(@PathVariable("id") long id, @RequestBody Set<Location> locations) {
 		User p1;
@@ -114,7 +113,7 @@ public class UserRestController {
 		}
 
 	}
-
+	
 	@RequestMapping(value = "/{id}/homes/{idL}", method = RequestMethod.PUT)
 	ResponseEntity<User> updatePersonLocation(@PathVariable("id") long id, @PathVariable("idL") long idL) {
 		User p1;

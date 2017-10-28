@@ -27,6 +27,7 @@ public class ActivityRestController {
 	@Autowired
 	ActivityService serviceA;
 
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	ResponseEntity<ResponseJson> getActivityById(@PathVariable("id") long id) {
 
@@ -71,6 +72,9 @@ public class ActivityRestController {
 		return new ResponseEntity<ResponseJson>(json, HttpStatus.OK);
 
 	}
+	
+
+
 
 //	@RequestMapping(value = "", method = RequestMethod.POST)
 //	ResponseEntity<Activity> create(@RequestBody Activity activity) {

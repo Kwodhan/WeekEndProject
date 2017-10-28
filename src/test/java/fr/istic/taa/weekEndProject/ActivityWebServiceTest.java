@@ -258,6 +258,7 @@ public class ActivityWebServiceTest {
 		String expected = FactoryJSON.Activity(getLeisure.getId(), getLeisure.getName(), getLeisure.getType());
 		expected = FactoryJSON.Get(expected);
 		Assert.assertEquals(expected, jsonResponse);
+		
 	}
 
 	/**

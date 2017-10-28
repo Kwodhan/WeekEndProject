@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
  * a geographical site with activities 
  * @author aferey
- *TODO : horaire en fonction du jour
+ *
  */
 @Entity
 @Table(name = "SITE")
