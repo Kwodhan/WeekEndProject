@@ -75,16 +75,23 @@ Représente un club de sport, une association, une plage, etc...
 |/WeekEndProject/api/sites/{id}/activities/{idA}|supprime l'activité {idA} de la liste du site {id}|
 
 
+## Usage
+
+Argument :
+ 1. path du fichier log
+ 
 
 ## Spring Security
+Authenfication : avec Spring security en mode  _Basic_
+
+
 | Role                                   |  Description| Authorisation|
-| -------------------------------------------- | --------- |
-|ROLE_USER| Chosie ses activités et ses localisations| /sites/
-|ROLE_GERANT}| Ajoute des sites|
+| -------------------------------------------- | --------- |--------- |
+|ROLE_USER| Choisie ses activités et ses localisations| |
+|ROLE_GERANT}| Ajoute des sites| /sites/ |
 
-Authenfication : _Basic_
 
-## Diagram
+
 
 
 
