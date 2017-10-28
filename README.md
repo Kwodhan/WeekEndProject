@@ -14,10 +14,10 @@ cd WeekEndFront/
 docker build --tag "front" .     
 
 #### 3. Build All
-cd WeekEndFront/  
-or   
-cd WeekEndProject/ 
-docker-composer up    
+cd WeekEndFront/    
+or     
+cd WeekEndProject/    
+docker-composer up  
 
 ## User 
 Représente un utilisateur
