@@ -30,9 +30,7 @@ import fr.istic.taa.weekEndProject.service.exception.UserNotFound;
 @RestController
 @RequestMapping(value = "/users")
 public class UserRestController {
-	/*
-	 * Par defaut : Nb requete == Nb association
-	 */
+
 	@Autowired
 	UserService serviceP;
 

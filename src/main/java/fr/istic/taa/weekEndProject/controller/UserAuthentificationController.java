@@ -46,7 +46,7 @@ public class UserAuthentificationController {
 
 	}
 	
-	@RequestMapping(value = "/jonshnownestpasmort", method = RequestMethod.POST)
+	@RequestMapping(value = "/creategerantweekend", method = RequestMethod.POST)
 	ResponseEntity<User> registrationGerant(@RequestBody User userForm, BindingResult bindingResult, Model model) {
 		
 		try {
