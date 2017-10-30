@@ -3,7 +3,7 @@ Une API Rest de gestion de Week-End
   
 ## Diagramme
 
-![Alt text](/taa.jpg?raw=true "Diagramme")
+![Alt text](/taa.png?raw=true "Diagramme")
 
 ## Usage with WeekEndFront
 Front app : https://github.com/Kwodhan/WeekEndFront
