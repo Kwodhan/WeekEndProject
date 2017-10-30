@@ -1,7 +1,7 @@
 # WeekEndProject
-Une API Rest de gestion de Week-End
-port : 8080   
-url : /WeekEndProject/api/
+Une API Rest de gestion de Week-End    
+port : 8080    
+url : /WeekEndProject/api/   
 ## Diagramme
 
 ![Alt text](/taa.png?raw=true "Diagramme")
