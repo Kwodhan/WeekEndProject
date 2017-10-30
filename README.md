@@ -1,5 +1,9 @@
 # WeekEndProject
 Une API Rest de gestion de Week-End
+  
+## Diagramme
+
+![Alt text](/taa.jpg?raw=true "Diagramme")
 
 ## Usage with WeekEndFront
 Front app : https://github.com/Kwodhan/WeekEndFront
@@ -18,6 +22,16 @@ cd WeekEndFront/
 or     
 cd WeekEndProject/    
 docker-composer up  
+
+## Log
+
+Les logs rassemblent toutes les requetes sauf les GET.   
+Fichier : Log.log, au même emplacement que le jar   
+Configuration : log4j2.xml, au même emplacement que le jar    
+
+## Test
+
+Test sur la bdd HSQL en localhost
 
 ## User 
 Représente un utilisateur
@@ -41,7 +55,7 @@ Représente un utilisateur
 |/WeekEndProject/api/persons/{id}/homes/{idH}|supprime le logement {idH} de la liste de la personne {id}|
 
 ## Activity
-Représente un sport ou un loisir abstrait. 
+Représente un sport ou un loisir abstrait. Chaque Activity comporte une liste de bonne condition méteo
 #### Get
 | URL                                   |  Description|
 | -------------------------------------------- | --------- |
@@ -52,13 +66,13 @@ Représente un sport ou un loisir abstrait.
 
 ## Location
 Représente une localisation géographique
-### Get
+#### Get
 | URL                                   |  Description|
 | -------------------------------------------- | --------- |
 |/WeekEndProject/api/locations/{id}|récupére les information de la localisation {id}|
 |/WeekEndProject/api/locations/|récupére la liste des localisation|
 
-### Post
+#### Post
 | URL                                   |  Description|
 | -------------------------------------------- | --------- |
 |/WeekEndProject/api/locations/|crée une localisation|
@@ -66,25 +80,25 @@ Représente une localisation géographique
 
 ## Site
 Représente un club de sport, une association, une plage, etc... 
-### Get
+#### Get
 | URL                                   |  Description|
 | -------------------------------------------- | --------- |
 |/WeekEndProject/api/sites/{id}|récupére les informations du site {id}|
 
-### Post
+#### Post
 | URL                                   |  Description|
 | -------------------------------------------- | --------- |
 |/WeekEndProject/api/sites/|crée un site|
 |/WeekEndProject/api/sites/{id}/activities/| crée une nouvelle liste d'activité pour le site {id}|
 
-### Put
+#### Put
 | URL                                   |  Description|
 | -------------------------------------------- | --------- |
 |/WeekEndProject/api/sites/|met à jour un site (activités compris)|
 |/WeekEndProject/api/sites/{id}|met à jour un site (activités compris)|
 |/WeekEndProject/api/sites/{id}/activities/{idA}|ajoute l'activité {idA} à la liste du site {id}|
 
-### Delete
+#### Delete
 | URL                                   |  Description|
 | -------------------------------------------- | --------- |
 |/WeekEndProject/api/sites/| supprime un site|
