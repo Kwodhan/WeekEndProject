@@ -22,7 +22,7 @@ docker build --tag "front" .
 cd WeekEndFront/    
 or     
 cd WeekEndProject/    
-docker-composer up  
+docker-compose up  
 
 ## Log
 
